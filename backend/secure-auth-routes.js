@@ -1,7 +1,7 @@
 // Secure Session-based Authentication Routes with bcrypt
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs'); // Use bcryptjs instead of bcrypt for better compatibility
 const { ObjectId } = require('mongodb');
 
 const SALT_ROUNDS = 12;
