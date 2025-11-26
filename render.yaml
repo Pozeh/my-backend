@@ -21,3 +21,15 @@ services:
     autoDeploy: yes
     # Specify the root directory for this service
     rootDir: backend
+
+  # Frontend Static Site Service
+  - type: web
+    name: ecoloop-frontend
+    runtime: static
+    plan: free
+    # Build and deployment configuration
+    buildCommand: "echo 'No build needed - static files'"
+    # Specify the root directory for this service
+    rootDir: frontend
+    # Auto-deploy configuration
+    autoDeploy: yes
