@@ -143,10 +143,10 @@
                     try {
                         const result = JSON.parse(text);
                         if (result.success) {
-                            showResult(`✅ Admin account created successfully!\n\nAdmin ID: ${result.adminId}\nEmail: ${ADMIN_CREDENTIALS.email}\nPassword: ${ADMIN_CREDENTIALS.password}\n\nYou can now login at: frontend/admin/admin-login.html`, 'success');
+                            showResult(`✅ Admin account created successfully!\n\nAdmin ID: ${result.adminId}\nEmail: ${ADMIN_CREDENTIALS.email}\nPassword: ${ADMIN_CREDENTIALS.password}\n\nYou can now login at: https://ecoloop-f93m.onrender.com/admin/admin-login.html`, 'success');
                         } else {
                             if (result.error && result.error.includes('already exists')) {
-                                showResult(`ℹ️ Admin account already exists!\n\nEmail: ${ADMIN_CREDENTIALS.email}\nPassword: ${ADMIN_CREDENTIALS.password}\n\nYou can login at: frontend/admin/admin-login.html`, 'info');
+                                showResult(`ℹ️ Admin account already exists!\n\nEmail: ${ADMIN_CREDENTIALS.email}\nPassword: ${ADMIN_CREDENTIALS.password}\n\nYou can login at: https://ecoloop-f93m.onrender.com/admin/admin-login.html`, 'info');
                             } else {
                                 showResult(`❌ Failed to create admin:\n\n${result.error}`, 'error');
                             }
