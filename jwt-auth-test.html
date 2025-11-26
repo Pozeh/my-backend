@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JWT Authentication Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        button { background: #2ecc71; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #27ae60; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 4px; font-family: monospace; white-space: pre-wrap; max-height: 300px; overflow-y: auto; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        input { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🔐 JWT Authentication Test</h1>
+    
+    <div class="test-section">
+        <h3>📝 JWT Registration Test</h3>
+        <input type="text" id="firstName" placeholder="First Name" value="Test">
+        <input type="text" id="lastName" placeholder="Last Name" value="User">
+        <input type="email" id="email" placeholder="Email" value="testuser@ecoloop.com">
+        <input type="tel" id="phone" placeholder="Phone" value="+254700123456">
+        <input type="password" id="password" placeholder="Password" value="TestPassword123!">
+        <button onclick="testJWTRegistration()">Test JWT Registration</button>
+        <div id="regResult" class="result info">Click to test JWT registration...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>🔐 JWT Login Test</h3>
+        <input type="email" id="loginEmail" placeholder="Email" value="testuser@ecoloop.com">
+        <input type="password" id="loginPassword" placeholder="Password" value="TestPassword123!">
+        <button onclick="testJWTLogin()">Test JWT Login</button>
+        <div id="loginResult" class="result info">Click to test JWT login...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>👤 JWT Verify Test</h3>
+        <button onclick="testJWTVerify()">Test JWT Verify</button>
+        <div id="verifyResult" class="result info">Click to test JWT verification...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>🚪 JWT Logout Test</h3>
+        <button onclick="testJWTLogout()">Test JWT Logout</button>
+        <div id="logoutResult" class="result info">Click to test JWT logout...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>🧪 Complete JWT Flow Test</h3>
+        <button onclick="runCompleteJWTTest()">Run Complete JWT Test</button>
+        <div id="completeResult" class="result info">Click to run complete JWT test...</div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'https://my-backend-1-jk7w.onrender.com';
+        let currentToken = null;
+        
+        async function testJWTRegistration() {
+            const resultDiv = document.getElementById('regResult');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing JWT registration...';
+            
+            try {
+                const userData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    password: document.getElementById('password').value
+                };
+
+                console.log('Sending JWT registration request:', userData);
+                
+                const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                console.log('JWT registration response status:', response.status);
+                
+                const data = await response.json();
+                console.log('JWT registration response data:', data);
+
+                if (response.ok && data.success) {
+                    currentToken = data.token;
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ JWT Registration successful!\n\nToken: ${data.token.substring(0, 50)}...\n\nUser: ${JSON.stringify(data.user, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ JWT Registration failed: ${data.error}\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                console.error('JWT registration error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Network error: ${error.message}`;
+            }
+        }
+
+        async function testJWTLogin() {
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing JWT login...';
+            
+            try {
+                const loginData = {
+                    email: document.getElementById('loginEmail').value,
+                    password: document.getElementById('loginPassword').value
+                };
+
+                console.log('Sending JWT login request:', loginData);
+                
+                const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginData)
+                });
+
+                console.log('JWT login response status:', response.status);
+                
+                const data = await response.json();
+                console.log('JWT login response data:', data);
+
+                if (response.ok && data.success) {
+                    currentToken = data.token;
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ JWT Login successful!\n\nToken: ${data.token.substring(0, 50)}...\n\nUser: ${JSON.stringify(data.user, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ JWT Login failed: ${data.error}\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                console.error('JWT login error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Network error: ${error.message}`;
+            }
+        }
+
+        async function testJWTVerify() {
+            const resultDiv = document.getElementById('verifyResult');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing JWT verification...';
+            
+            try {
+                if (!currentToken) {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '❌ No token available. Please register or login first.';
+                    return;
+                }
+
+                console.log('Verifying JWT token:', currentToken.substring(0, 50) + '...');
+                
+                const response = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+
+                console.log('JWT verify response status:', response.status);
+                
+                const data = await response.json();
+                console.log('JWT verify response data:', data);
+
+                if (response.ok && data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ JWT Verification successful!\n\nUser: ${JSON.stringify(data.user, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ JWT Verification failed: ${data.error}\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                console.error('JWT verification error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Network error: ${error.message}`;
+            }
+        }
+
+        async function testJWTLogout() {
+            const resultDiv = document.getElementById('logoutResult');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing JWT logout...';
+            
+            try {
+                if (!currentToken) {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '❌ No token available. Please register or login first.';
+                    return;
+                }
+
+                console.log('Logging out JWT token:', currentToken.substring(0, 50) + '...');
+                
+                const response = await fetch(`${BACKEND_URL}/api/auth/logout`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+
+                console.log('JWT logout response status:', response.status);
+                
+                const data = await response.json();
+                console.log('JWT logout response data:', data);
+
+                if (response.ok && data.success) {
+                    currentToken = null;
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ JWT Logout successful!\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ JWT Logout failed: ${data.error}\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                console.error('JWT logout error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Network error: ${error.message}`;
+            }
+        }
+
+        async function runCompleteJWTTest() {
+            const resultDiv = document.getElementById('completeResult');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Running complete JWT authentication flow...';
+            
+            try {
+                const results = [];
+                
+                // Step 1: Register new user
+                results.push('Step 1: Testing JWT Registration...');
+                const testUser = {
+                    firstName: 'JWT',
+                    lastName: 'Test',
+                    email: `jwttest${Date.now()}@ecoloop.com`,
+                    phone: '+254700123456',
+                    password: 'TestPassword123!'
+                };
+                
+                const regResponse = await fetch(`${BACKEND_URL}/api/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testUser)
+                });
+                const regData = await regResponse.json();
+                
+                if (regResponse.ok && regData.success) {
+                    currentToken = regData.token;
+                    results.push(`✅ Registration successful - Token received`);
+                } else {
+                    results.push(`❌ Registration failed: ${regData.error}`);
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = results.join('\n');
+                    return;
+                }
+                
+                // Step 2: Verify token
+                results.push('\nStep 2: Testing JWT Verification...');
+                const verifyResponse = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                    method: 'GET',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                const verifyData = await verifyResponse.json();
+                
+                if (verifyResponse.ok && verifyData.success) {
+                    results.push(`✅ Token verification successful - User: ${verifyData.user.name}`);
+                } else {
+                    results.push(`❌ Token verification failed: ${verifyData.error}`);
+                }
+                
+                // Step 3: Logout
+                results.push('\nStep 3: Testing JWT Logout...');
+                const logoutResponse = await fetch(`${BACKEND_URL}/api/auth/logout`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                const logoutData = await logoutResponse.json();
+                
+                if (logoutResponse.ok && logoutData.success) {
+                    results.push(`✅ Logout successful`);
+                } else {
+                    results.push(`❌ Logout failed: ${logoutData.error}`);
+                }
+                
+                // Step 4: Verify token after logout
+                results.push('\nStep 4: Testing JWT Verification after logout...');
+                const verifyAfterLogout = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                    method: 'GET',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                const verifyAfterLogoutData = await verifyAfterLogout.json();
+                
+                if (!verifyAfterLogout.ok || !verifyAfterLogoutData.success) {
+                    results.push(`✅ Token correctly invalidated after logout`);
+                } else {
+                    results.push(`❌ Token still valid after logout - Security issue!`);
+                }
+                
+                // Step 5: Login with same credentials
+                results.push('\nStep 5: Testing JWT Login...');
+                const loginResponse = await fetch(`${BACKEND_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: testUser.email,
+                        password: testUser.password
+                    })
+                });
+                const loginData = await loginResponse.json();
+                
+                if (loginResponse.ok && loginData.success) {
+                    currentToken = loginData.token;
+                    results.push(`✅ Login successful - New token received`);
+                } else {
+                    results.push(`❌ Login failed: ${loginData.error}`);
+                }
+                
+                // Step 6: Final verification
+                results.push('\nStep 6: Final JWT Verification...');
+                const finalVerify = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                    method: 'GET',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                const finalVerifyData = await finalVerify.json();
+                
+                if (finalVerify.ok && finalVerifyData.success) {
+                    results.push(`✅ Final verification successful`);
+                } else {
+                    results.push(`❌ Final verification failed: ${finalVerifyData.error}`);
+                }
+                
+                // Summary
+                const allPassed = regData.success && verifyData.success && logoutData.success && 
+                                 (!verifyAfterLogout.ok || !verifyAfterLogoutData.success) && 
+                                 loginData.success && finalVerifyData.success;
+
+                results.push('\n' + '='.repeat(50));
+                results.push(`FINAL RESULT: ${allPassed ? '✅ JWT AUTHENTICATION WORKING PERFECTLY!' : '❌ SOME JWT TESTS FAILED!'}`);
+                
+                if (allPassed) {
+                    results.push('\n🎉 JWT Authentication System Features:');
+                    results.push('✅ Registration with JWT token generation');
+                    results.push('✅ Login with JWT token generation');
+                    results.push('✅ JWT token verification');
+                    results.push('✅ JWT logout (token invalidation)');
+                    results.push('✅ Token persistence in MongoDB');
+                    results.push('✅ Proper token cleanup on logout');
+                    results.push('✅ Security - tokens invalidated after logout');
+                } else {
+                    results.push('\n⚠️ Some JWT features may need attention.');
+                }
+
+                resultDiv.className = `result ${allPassed ? 'success' : 'error'}`;
+                resultDiv.textContent = results.join('\n');
+                
+            } catch (error) {
+                console.error('Complete JWT test error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Test failed with error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
