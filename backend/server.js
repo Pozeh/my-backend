@@ -1185,6 +1185,21 @@ app.post("/api/admin/settings", async (req, res) => {
 // Add secure session-based authentication routes
 app.use('/api/user', secureAuthRoutes);
 
+// Test endpoint for debugging
+app.get('/api/test', (req, res) => {
+  res.json({ 
+    success: true, 
+    message: "Backend is working",
+    timestamp: new Date().toISOString(),
+    routes: [
+      '/api/user/register',
+      '/api/user/login', 
+      '/api/user/session',
+      '/api/user/logout'
+    ]
+  });
+});
+
 // Start server
 connectToMongo().then(() => {
   // Make database available to routes
