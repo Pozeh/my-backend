@@ -1,3 +1,7 @@
+# This render.yaml is for the main repository structure
+# Backend deployment should be configured in the backend repository
+# Frontend deployment should be configured in the frontend repository
+
 services:
   # Frontend Static Site Service
   - type: web
@@ -12,26 +16,3 @@ services:
     healthCheckPath: /
     # Auto-deploy configuration
     autoDeploy: yes
-
-  # Backend API Service
-  - type: web
-    name: ecoloop-backend
-    runtime: node
-    plan: free
-    # Build and deployment configuration
-    buildCommand: "npm install"
-    startCommand: "npm start"
-    # Environment variables
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: MONGO_URI
-        sync: false
-      - key: PORT
-        value: 3000
-    # Health check - use root endpoint
-    healthCheckPath: /
-    # Auto-deploy configuration
-    autoDeploy: yes
-    # Specify the root directory for this service
-    rootDir: backend
