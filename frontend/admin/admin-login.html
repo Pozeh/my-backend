@@ -651,28 +651,44 @@
 
         // Test backend connection
         async function testBackendConnection() {
+            // First test deployed backend admin endpoint specifically
             try {
-                const response = await fetch(`${CONFIG.backendUrl}/api/test`);
-                if (response.ok) {
-                    console.log('✅ Backend connection successful');
+                const response = await fetch(`${CONFIG.backendUrl}/api/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: 'test@test.com', password: 'test' })
+                });
+                
+                if (response.status === 401 || response.status === 400) {
+                    // 401/400 means endpoint exists but credentials are wrong
+                    console.log('✅ Deployed admin backend available');
                     isUsingLocalBackend = false;
-                } else {
-                    throw new Error('Backend not responding');
+                    return;
+                } else if (response.status === 404) {
+                    throw new Error('Admin endpoint not found');
                 }
             } catch (error) {
-                console.log('⚠️ Deployed backend failed, trying local backend...');
+                console.log('⚠️ Deployed admin backend failed, trying local backend...');
+                
+                // Try local backend admin endpoint
                 try {
-                    const response = await fetch(`${CONFIG.localBackendUrl}/api/test`);
-                    if (response.ok) {
-                        console.log('✅ Local backend connection successful');
+                    const localResponse = await fetch(`${CONFIG.localBackendUrl}/api/admin/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: 'test@test.com', password: 'test' })
+                    });
+                    
+                    if (localResponse.status === 401 || localResponse.status === 400) {
+                        console.log('✅ Local admin backend available');
                         isUsingLocalBackend = true;
                         showAlert('Using local backend for development', 'info');
+                        return;
                     } else {
-                        throw new Error('Local backend not responding');
+                        throw new Error('Local admin endpoint not found');
                     }
                 } catch (localError) {
-                    console.error('❌ No backend available');
-                    showAlert('No backend connection available. Some features may not work.', 'warning');
+                    console.error('❌ No admin backend available');
+                    showAlert('No admin backend connection available. Please ensure backend is running.', 'warning');
                 }
             }
         }
@@ -867,20 +883,25 @@
         }
 
         async function testConnection() {
-            showAlert('Testing backend connection...', 'info');
+            showAlert('Testing admin backend connection...', 'info');
             
             try {
                 const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
-                const response = await fetch(`${backendUrl}/api/test`);
                 
-                if (response.ok) {
-                    const result = await response.json();
-                    showAlert(`✅ Backend connected! MongoDB: ${result.connected ? 'Online' : 'Offline'}`, 'success');
+                // Test admin endpoint specifically
+                const response = await fetch(`${backendUrl}/api/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: 'test@test.com', password: 'test' })
+                });
+                
+                if (response.status === 401 || response.status === 400) {
+                    showAlert(`✅ Admin backend connected! Using: ${isUsingLocalBackend ? 'Local' : 'Deployed'}`, 'success');
                 } else {
-                    showAlert('❌ Backend connection failed', 'danger');
+                    showAlert('❌ Admin backend not available', 'danger');
                 }
             } catch (error) {
-                showAlert('❌ Unable to connect to backend', 'danger');
+                showAlert('❌ Unable to connect to admin backend', 'danger');
             }
         }
 
