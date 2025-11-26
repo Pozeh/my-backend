@@ -17,7 +17,12 @@ const corsOptions = {
     const allowedOrigins = [
       'https://my-backend-1-jk7w.onrender.com',
       // Add your frontend URL here when deployed
-      // 'https://your-frontend-name.onrender.com',
+      'https://ecoloop-f93m.onrender.com',
+      'https://ecoloop-f93m.onrender.com/',
+      'https://ecoloop-f93m.onrender.com/admin',
+      'https://ecoloop-f93m.onrender.com/admin/',
+      'https://ecoloop-f93m.onrender.com/frontend',
+      'https://ecoloop-f93m.onrender.com/frontend/',
       'http://localhost:3000',
       'http://127.0.0.1:3000',
       'http://localhost:5500',
