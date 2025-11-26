@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - EcoLoop Kenya</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>EcoLoop Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #7c3aed;
-            --success-color: #16a34a;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --text-muted: #9ca3af;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --card-bg: #ffffff;
-            --border-color: #e5e7eb;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
+            --primary-color: #ff6b35;
+            --secondary-color: #f7931e;
+            --accent-color: #8e44ad;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-dark: linear-gradient(135deg, var(--dark-color) 0%, #34495e 100%);
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.15);
+            --shadow-lg: 0 8px 16px rgba(0,0,0,0.2);
+            --shadow-xl: 0 12px 24px rgba(0,0,0,0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -35,17 +32,136 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            line-height: 1.6;
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
         }
 
-        .admin-header {
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 16px 24px;
+        /* Dashboard Layout */
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--gradient-dark);
+            color: var(--white);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .sidebar-header {
+            padding: 30px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-logo i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .sidebar-logo span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .admin-info {
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        .admin-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 1.5rem;
+        }
+
+        .admin-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .admin-role {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 15px 25px;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+            padding-left: 30px;
+        }
+
+        .nav-item.active {
+            background: var(--primary-color);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--secondary-color);
+        }
+
+        .nav-item i {
+            width: 20px;
+            margin-right: 12px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 20px 30px;
+            box-shadow: var(--shadow-sm);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -54,88 +170,69 @@
             z-index: 100;
         }
 
-        .admin-logo {
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .header-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.25rem;
-            font-weight: 700;
+            gap: 20px;
+        }
+
+        .header-btn {
+            background: none;
+            border: none;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .header-btn:hover {
             color: var(--primary-color);
         }
 
-        .admin-logo i {
-            font-size: 1.5rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-
-        .page-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .page-subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-        }
-
-        .seller-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .seller-actions {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .btn-sm {
-            padding: 6px 8px;
-            font-size: 0.75rem;
-            border-radius: 4px;
+        .logout-btn {
+            background: var(--danger-color);
+            color: var(--white);
             border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            color: white;
+            transition: var(--transition);
+            font-weight: 500;
         }
 
-        .btn-sm:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        .logout-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
         }
 
+        /* Content Area */
+        .content {
+            padding: 30px;
+        }
+
+        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-bottom: 32px;
+            gap: 25px;
+            margin-bottom: 30px;
         }
 
         .stat-card {
-            background: var(--card-bg);
-            padding: 24px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            border-color: var(--primary-color);
         }
 
         .stat-card::before {
@@ -144,2541 +241,974 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            height: 4px;
+            background: var(--gradient-primary);
         }
 
-        .stat-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .stat-card.pending:hover {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(251, 191, 36, 0.1));
-        }
-
-        .stat-card.approved:hover {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(34, 197, 94, 0.1));
-        }
-
-        .stat-card.rejected:hover {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.1));
-        }
-
-        .stat-card.total:hover {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.1));
-        }
-
-        .stat-card.sellers:hover {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(168, 85, 247, 0.1));
-        }
-
-        /* Management Panels */
-        .management-panel {
-            display: block;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .panel-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--light-bg);
-        }
-
-        .panel-header h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .product-filters {
-            display: flex;
-            gap: 8px;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-md);
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
-            margin-bottom: 16px;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
         }
 
-        .stat-icon.pending {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning-color);
-        }
-
-        .stat-icon.approved {
-            background: rgba(16, 185, 129, 0.1);
+        .stat-icon.users {
+            background: rgba(40, 167, 69, 0.1);
             color: var(--success-color);
         }
 
-        .stat-icon.rejected {
-            background: rgba(239, 68, 68, 0.1);
+        .stat-icon.sellers {
+            background: rgba(23, 162, 184, 0.1);
+            color: var(--info-color);
+        }
+
+        .stat-icon.products {
+            background: rgba(255, 193, 7, 0.1);
+            color: var(--warning-color);
+        }
+
+        .stat-icon.orders {
+            background: rgba(220, 53, 69, 0.1);
             color: var(--danger-color);
         }
 
-        .stat-icon.total {
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--primary-color);
-        }
-
-        .stat-icon.sellers {
-            background: linear-gradient(135deg, var(--secondary-color), #8b5cf6);
-        }
-
-        .stat-number {
+        .stat-value {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 8px;
+            color: var(--dark-color);
+            margin-bottom: 5px;
         }
 
         .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            color: #6c757d;
+            font-size: 0.9rem;
         }
 
-        .products-section {
-            background: var(--card-bg);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
+        .stat-change {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+
+        .stat-change.positive {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+        }
+
+        .stat-change.negative {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+        }
+
+        /* Tables */
+        .table-container {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
             overflow: hidden;
+            margin-bottom: 30px;
         }
 
-        .section-header {
-            padding: 24px;
-            border-bottom: 1px solid var(--border-color);
+        .table-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e0e0e0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
+        .table-title {
+            font-size: 1.3rem;
             font-weight: 600;
-            color: var(--text-primary);
+            color: var(--dark-color);
         }
 
-        .filter-tabs {
+        .table-actions {
             display: flex;
-            gap: 8px;
-        }
-
-        .filter-tab {
-            padding: 8px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            background: var(--bg-primary);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .filter-tab.active {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .filter-tab:hover:not(.active) {
-            background: var(--bg-secondary);
-        }
-
-        .products-list {
-            max-height: 600px;
-            overflow-y: auto;
-        }
-
-        .product-item {
-            padding: 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: grid;
-            grid-template-columns: 80px 1fr auto;
-            gap: 24px;
-            align-items: center;
-            transition: background 0.3s ease;
-        }
-
-        .product-item:hover {
-            background: var(--bg-secondary);
-        }
-
-        .product-item:last-child {
-            border-bottom: none;
-        }
-
-        .product-image {
-            width: 80px;
-            height: 80px;
-            border-radius: var(--radius-md);
-            object-fit: cover;
-            background: var(--bg-secondary);
-        }
-
-        .product-details h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .product-meta {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 8px;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .meta-item i {
-            font-size: 0.75rem;
-        }
-
-        .product-description {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            line-height: 1.5;
-            display: -webkit-box;
-            display: box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-            box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* Pending Alert Styles */
-        .pending-alert {
-            background: linear-gradient(135deg, var(--warning-color), #f97316);
-            color: white;
-            padding: 12px 20px;
-            border-radius: var(--radius-md);
-            margin: 16px 24px;
-            box-shadow: var(--shadow-lg);
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .alert-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .alert-content i {
-            font-size: 1.25rem;
-            animation: pulse 2s infinite;
-        }
-
-        .alert-content span {
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .alert-close {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .alert-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.7;
-            }
-        }
-
-        /* Enhanced Seller Info */
-        .seller-info {
-            background: var(--bg-secondary);
-            padding: 8px 12px;
-            border-radius: var(--radius-sm);
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .seller-info i {
-            color: var(--primary-color);
-        }
-
-        .seller-details {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .seller-name {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .seller-email {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        /* Product Status Badge */
-        .product-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .product-status.pending {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning-color);
-        }
-
-        .product-status.approved {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success-color);
-        }
-
-        .product-status.rejected {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger-color);
-        }
-
-        /* Priority Indicator */
-        .priority-indicator {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--warning-color);
-            animation: pulse 2s infinite;
-        }
-
-        .product-item.pending {
-            border-left: 3px solid var(--warning-color);
-        }
-
-        .product-item.pending .priority-indicator {
-            display: block;
-        }
-
-        .product-item:not(.pending) .priority-indicator {
-            display: none;
-        }
-
-        .product-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: flex-end;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .btn {
-            padding: 8px 16px;
+            padding: 10px 20px;
             border: none;
-            border-radius: var(--radius-md);
-            font-weight: 500;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.875rem;
+            transition: var(--transition);
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: var(--white);
         }
 
         .btn-success {
             background: var(--success-color);
-            color: white;
+            color: var(--white);
         }
 
         .btn-danger {
             background: var(--danger-color);
-            color: white;
+            color: var(--white);
         }
 
-        .btn-warning {
-            background: var(--warning-color);
-            color: white;
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
         }
 
-        .btn-secondary {
-            background: var(--text-secondary);
-            color: white;
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark-color);
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
         }
 
         .status-badge {
             padding: 4px 12px;
-            border-radius: var(--radius-md);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-badge.active {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
         }
 
         .status-badge.pending {
-            background: rgba(245, 158, 11, 0.1);
+            background: rgba(255, 193, 7, 0.1);
             color: var(--warning-color);
         }
 
-        .status-badge.approved {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success-color);
-        }
-
-        .status-badge.rejected {
-            background: rgba(239, 68, 68, 0.1);
+        .status-badge.inactive {
+            background: rgba(220, 53, 69, 0.1);
             color: var(--danger-color);
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 8px;
+        /* Loading Spinner */
+        .loading {
+            text-align: center;
+            padding: 40px;
         }
 
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-success {
-            background: var(--success-color);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #15803d;
-        }
-
-        .btn-danger {
-            background: var(--danger-color);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        .btn-secondary {
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            background: var(--border-color);
-        }
-
-        /* Seller Management Styles */
-        .seller-management {
-            background: var(--card-bg);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-md);
-        }
-
-        .sellers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
-        }
-
-        .seller-card {
-            background: var(--bg-secondary);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .seller-card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
-        }
-
-        .seller-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .seller-avatar {
-            width: 48px;
-            height: 48px;
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            display: flex;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
             align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 1.125rem;
+            gap: 10px;
         }
 
-        .seller-info-card {
-            flex: 1;
-        }
-
-        .seller-name-card {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 2px;
-        }
-
-        .seller-email-card {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        .seller-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .seller-status.approved {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success-color);
-        }
-
-        .seller-status.pending {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning-color);
-        }
-
-        .seller-stats {
+        .alert.show {
             display: flex;
-            gap: 16px;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-color);
         }
 
-        .seller-stat {
-            flex: 1;
-            text-align: center;
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
 
-        .seller-stat-value {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
 
-        .seller-stat-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 2px;
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
         }
 
-        .btn-primary {
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        /* Mobile Responsive */
+        .mobile-menu-toggle {
+            display: none;
             background: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-
-        .empty-sellers {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 48px;
-            color: var(--text-muted);
-        }
-
-        .empty-sellers i {
-            font-size: 3rem;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-
-        .empty-sellers h3 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-
-        /* Seller Categories */
-        .seller-category {
-            margin-bottom: 32px;
-        }
-
-        .category-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 20px;
-            background: linear-gradient(135deg, var(--card-bg), var(--bg-secondary));
-            border-radius: var(--radius-lg);
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .category-header h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .category-header h3 i {
-            color: var(--primary-color);
-        }
-
-        .category-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        /* Pulse Animation */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
-            }
-            50% {
-                transform: scale(1.02);
-                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
-            }
-        }
-
-        .empty-state {
-            padding: 64px 24px;
-            text-align: center;
-            color: var(--text-muted);
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-
-        .empty-state h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-
-        .seller-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-top: 8px;
-        }
-
-        .seller-info i {
-            font-size: 0.75rem;
+            color: var(--white);
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 16px;
+            .sidebar {
+                transform: translateX(-100%);
             }
 
-            .product-item {
-                grid-template-columns: 60px 1fr;
-                gap: 16px;
+            .sidebar.active {
+                transform: translateX(0);
             }
 
-            .product-image {
-                width: 60px;
-                height: 60px;
+            .main-content {
+                margin-left: 0;
             }
 
-            .product-actions {
-                grid-column: 1 / -1;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .header-title {
+                font-size: 1.4rem;
             }
 
             .stats-grid {
                 grid-template-columns: 1fr;
             }
 
-            .filter-tabs {
-                flex-wrap: wrap;
-            }
-        }
-
-        /* Mobile responsive for admin dashboard */
-        @media (max-width: 768px) {
-            .admin-header {
-                padding: 15px;
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-            .admin-logo {
-                font-size: 1.5rem;
-            }
-
-            .admin-nav {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .admin-nav a {
-                padding: 8px 15px;
-                font-size: 0.9rem;
-            }
-
-            .admin-container {
+            .content {
                 padding: 20px 15px;
             }
 
-            .admin-header-content {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-
-            .admin-title {
-                font-size: 2rem;
-            }
-
-            .admin-actions {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .stat-card {
-                padding: 20px;
-            }
-
-            .stat-number {
-                font-size: 2rem;
-            }
-
-            .stat-label {
-                font-size: 0.9rem;
-            }
-
-            .admin-tabs {
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .tab-btn {
-                padding: 12px 15px;
-                font-size: 0.9rem;
-                text-align: center;
-            }
-
-            .tab-content {
-                padding: 20px 15px;
-            }
-
-            .section-header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
-
-            .filter-controls {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .search-box {
-                max-width: 100%;
-            }
-
-            .search-box input {
-                padding: 10px 15px;
-                font-size: 1rem;
-            }
-
-            .filter-tabs {
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-
-            .filter-tabs .tab {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-            }
-
-            .data-table {
-                font-size: 0.85rem;
-            }
-
-            .data-table th,
-            .data-table td {
-                padding: 8px 5px;
-            }
-
-            .table-responsive {
+            .table-container {
                 overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .btn {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-            }
-
-            .modal-content {
-                margin: 10px;
-                padding: 20px;
-                max-width: calc(100% - 20px);
-            }
-
-            .modal-header {
-                padding: 0 0 15px 0;
-            }
-
-            .modal-header h2 {
-                font-size: 1.3rem;
-            }
-
-            .modal-body {
-                padding: 0 0 20px 0;
-            }
-
-            .modal-footer {
-                padding: 15px 0 0 0;
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .form-group {
-                margin-bottom: 20px;
-            }
-
-            .form-label {
-                font-size: 0.9rem;
-                margin-bottom: 8px;
-            }
-
-            .form-input,
-            .form-select,
-            .form-textarea {
-                padding: 12px 15px;
-                font-size: 1rem;
-            }
-
-            .toast {
-                left: 10px;
-                right: 10px;
-                margin: 0;
-                max-width: none;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .admin-container {
-                padding: 15px 10px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .stat-card {
-                padding: 15px;
-            }
-
-            .stat-number {
-                font-size: 1.8rem;
-            }
-
-            .admin-title {
-                font-size: 1.8rem;
-            }
-
-            .tab-btn {
-                padding: 10px 12px;
-                font-size: 0.85rem;
-            }
-
-            .section-title {
-                font-size: 1.3rem;
             }
 
             .data-table {
-                font-size: 0.8rem;
-            }
-
-            .data-table th,
-            .data-table td {
-                padding: 6px 3px;
-            }
-
-            .btn {
-                padding: 6px 10px;
-                font-size: 0.8rem;
-            }
-
-            .action-buttons {
-                gap: 5px;
+                min-width: 600px;
             }
         }
     </style>
 </head>
 <body>
-    <header class="admin-header">
-        <div class="admin-logo">
-            <i class="fas fa-leaf"></i>
-            EcoLoop Admin
-        </div>
-        <div class="header-actions">
-            <button class="btn btn-secondary" onclick="bulkApproveProducts()">
-                <i class="fas fa-check-double"></i> Approve All
-            </button>
-            <button class="btn btn-secondary" onclick="bulkRejectProducts()">
-                <i class="fas fa-times-circle"></i> Reject All
-            </button>
-            <button class="btn btn-secondary" onclick="exportData()">
-                <i class="fas fa-download"></i> Export
-            </button>
-            <button class="btn btn-secondary" onclick="runFullTest()">
-                <i class="fas fa-play"></i> Full Test
-            </button>
-            <button class="btn btn-secondary" onclick="simulateSellerWorkflow()">
-                <i class="fas fa-user-tag"></i> Simulate Seller
-            </button>
-            <button class="btn btn-danger" onclick="clearAllData()">
-                <i class="fas fa-trash"></i> Clear All
-            </button>
-            <button class="btn btn-primary" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </div>
-    </header>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-leaf"></i>
+                    <span>EcoLoop</span>
+                </div>
+            </div>
 
-    <div class="container">
-        <h1 class="page-title">EcoLoop Kenya - Admin Dashboard</h1>
-        <p class="page-subtitle">Modern E-Commerce Platform Management Center</p>
+            <div class="admin-info">
+                <div class="admin-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="admin-name" id="adminName">Admin User</div>
+                <div class="admin-role" id="adminRole">Administrator</div>
+            </div>
 
-        <!-- Stats Cards -->
-        <div class="stats-grid">
-            <div class="stat-card pending" onclick="showProductsByStatus('pending')">
-                <div class="stat-icon pending">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <div class="stat-content">
-                    <h3 id="pendingCount">0</h3>
-                    <p>Pending</p>
-                </div>
-            </div>
-            <div class="stat-card approved" onclick="showProductsByStatus('approved')">
-                <div class="stat-icon approved">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <div class="stat-content">
-                    <h3 id="approvedCount">0</h3>
-                    <p>Approved</p>
-                </div>
-            </div>
-            <div class="stat-card rejected" onclick="showProductsByStatus('rejected')">
-                <div class="stat-icon rejected">
-                    <i class="fas fa-times-circle"></i>
-                </div>
-                <div class="stat-content">
-                    <h3 id="rejectedCount">0</h3>
-                    <p>Rejected</p>
-                </div>
-            </div>
-            <div class="stat-card total" onclick="showProductsByStatus('all')">
-                <div class="stat-icon total">
-                    <i class="fas fa-box"></i>
-                </div>
-                <div class="stat-content">
-                    <h3 id="totalCount">0</h3>
-                    <p>Total</p>
-                </div>
-            </div>
-            <div class="stat-card sellers" onclick="showSellersPanel()">
-                <div class="stat-icon sellers">
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item" data-section="users">
                     <i class="fas fa-users"></i>
-                </div>
-                <div class="stat-content">
-                    <h3 id="sellersCount">0</h3>
-                    <p>Sellers</p>
-                </div>
-            </div>
-        </div>
+                    Users Management
+                </a>
+                <a href="#" class="nav-item" data-section="sellers">
+                    <i class="fas fa-store"></i>
+                    Sellers
+                </a>
+                <a href="#" class="nav-item" data-section="products">
+                    <i class="fas fa-box"></i>
+                    Products
+                </a>
+                <a href="#" class="nav-item" data-section="orders">
+                    <i class="fas fa-shopping-cart"></i>
+                    Orders
+                </a>
+                <a href="#" class="nav-item" data-section="messages">
+                    <i class="fas fa-envelope"></i>
+                    Messages
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
 
-        <!-- Product Approval Section with Integrated Sellers -->
-        <div class="products-section">
-            <div class="section-header">
-                <h2 class="section-title">Admin Management Panel</h2>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="header-title" id="pageTitle">Dashboard</h1>
+                </div>
+
                 <div class="header-actions">
-                    <a href="product-approval.html" class="btn btn-primary" target="_blank">
-                        <i class="fas fa-clipboard-check"></i> Advanced Product Approval
-                    </a>
-                    <div class="filter-tabs">
-                        <button class="filter-tab active" onclick="switchTab('products')">Products</button>
-                        <button class="filter-tab" onclick="switchTab('sellers')">Sellers</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Products Panel -->
-            <div id="productsPanel" class="management-panel">
-                <div class="panel-header">
-                    <h3>Product Queue</h3>
-                    <div class="filter-tabs product-filters">
-                        <button class="filter-tab active" onclick="filterProducts('all')">All</button>
-                        <button class="filter-tab" onclick="filterProducts('pending')">Pending</button>
-                        <button class="filter-tab" onclick="filterProducts('approved')">Approved</button>
-                        <button class="filter-tab" onclick="filterProducts('rejected')">Rejected</button>
-                    </div>
-                </div>
-                <div class="products-list" id="productsList">
-                    <!-- Products will be loaded here -->
-                </div>
-            </div>
-            
-            <!-- Sellers Panel -->
-            <div id="sellersPanel" class="management-panel" style="display: none;">
-                <div class="panel-header">
-                    <h3>Seller Management</h3>
-                    <button class="btn btn-primary" onclick="refreshSellers()">
-                        <i class="fas fa-sync"></i> Refresh
+                    <button class="header-btn" onclick="refreshData()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="header-btn" onclick="showNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span style="position: absolute; top: -5px; right: -5px; background: var(--danger-color); color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem;">3</span>
+                    </button>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
                 </div>
-                <div class="sellers-grid" id="sellersGrid">
-                    <!-- Sellers will be loaded here -->
+            </header>
+
+            <!-- Content Area -->
+            <div class="content">
+                <!-- Alert Messages -->
+                <div id="alertMessage" class="alert">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="alertText"></span>
                 </div>
+
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="content-section">
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-value" id="totalUsers">0</div>
+                            <div class="stat-label">Total Users</div>
+                            <span class="stat-change positive">+12%</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon sellers">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="stat-value" id="totalSellers">0</div>
+                            <div class="stat-label">Active Sellers</div>
+                            <span class="stat-change positive">+8%</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon products">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="stat-value" id="totalProducts">0</div>
+                            <div class="stat-label">Total Products</div>
+                            <span class="stat-change positive">+15%</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon orders">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-value" id="totalOrders">0</div>
+                            <div class="stat-label">Total Orders</div>
+                            <span class="stat-change negative">-3%</span>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2 class="table-title">Recent Activity</h2>
+                            <div class="table-actions">
+                                <button class="btn btn-primary btn-sm" onclick="exportData()">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>User</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentActivity">
+                                <tr>
+                                    <td colspan="5" class="loading">
+                                        <div class="spinner"></div>
+                                        <p>Loading recent activity...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Sellers Section -->
+                <section id="sellers-section" class="content-section" style="display: none;">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2 class="table-title">Seller Management</h2>
+                            <div class="table-actions">
+                                <button class="btn btn-primary btn-sm" onclick="addSeller()">
+                                    <i class="fas fa-plus"></i> Add Seller
+                                </button>
+                            </div>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Store</th>
+                                    <th>Products</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sellersTable">
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        <div class="spinner"></div>
+                                        <p>Loading sellers...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Products Section -->
+                <section id="products-section" class="content-section" style="display: none;">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2 class="table-title">Product Management</h2>
+                            <div class="table-actions">
+                                <button class="btn btn-primary btn-sm" onclick="addProduct()">
+                                    <i class="fas fa-plus"></i> Add Product
+                                </button>
+                            </div>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Seller</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable">
+                                <tr>
+                                    <td colspan="7" class="loading">
+                                        <div class="spinner"></div>
+                                        <p>Loading products...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </div>
-        </div>
+        </main>
     </div>
 
     <script>
-        let currentFilter = 'all';
+        // Configuration
+        const CONFIG = {
+            backendUrl: 'https://my-backend-1-jk7w.onrender.com',
+            localBackendUrl: 'http://localhost:3000',
+            sessionKey: 'ecoloop_admin_session'
+        };
 
-        // Check admin authentication
-        function checkAdminAuth() {
-            const adminSession = localStorage.getItem('adminSession');
-            if (!adminSession) {
-                console.log('Admin not authenticated, redirecting to login');
-                alert('You must be logged in as admin to access this page');
-                window.location.href = 'admin-login.html';
-                return false;
-            }
-            
-            try {
-                const sessionData = JSON.parse(adminSession);
-                // Check if session is still valid (less than 24 hours)
-                const loginTime = new Date(sessionData.loginTime);
-                const now = new Date();
-                const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
-                
-                if (hoursDiff >= 24) {
-                    console.log('Admin session expired, redirecting to login');
-                    localStorage.removeItem('adminSession');
-                    alert('Your session has expired. Please login again.');
-                    window.location.href = 'admin-login.html';
-                    return false;
-                }
-                
-                console.log('Admin authenticated:', sessionData.email);
-                return true;
-            } catch (error) {
-                console.log('Invalid admin session, redirecting to login');
-                localStorage.removeItem('adminSession');
-                window.location.href = 'admin-login.html';
-                return false;
-            }
-        }
-
-        // Show products by status (from stat cards)
-        function showProductsByStatus(status) {
-            // Switch to products tab
-            switchTab('products');
-            
-            // Filter products by status
-            filterProducts(status);
-            
-            // Update filter tabs
-            document.querySelectorAll('.product-filters .filter-tab').forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.textContent.toLowerCase() === status || 
-                    (status === 'all' && tab.textContent === 'All')) {
-                    tab.classList.add('active');
-                }
-            });
-            
-            // Scroll to products section
-            document.querySelector('.products-section').scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'start' 
-            });
-            
-            showToast(`Showing ${status} products`, 'info');
-        }
-
-        // Show sellers panel (from sellers stat card)
-        function showSellersPanel() {
-            switchTab('sellers');
-            
-            // Scroll to products section
-            document.querySelector('.products-section').scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'start' 
-            });
-            
-            showToast('Showing sellers panel', 'info');
-        }
-
-        // Switch between products and sellers tabs
-        function switchTab(tab) {
-            const productsPanel = document.getElementById('productsPanel');
-            const sellersPanel = document.getElementById('sellersPanel');
-            const mainTabs = document.querySelectorAll('.section-header .filter-tab');
-            
-            mainTabs.forEach(t => t.classList.remove('active'));
-            
-            if (tab === 'products') {
-                productsPanel.style.display = 'block';
-                sellersPanel.style.display = 'none';
-                mainTabs[0].classList.add('active');
-            } else if (tab === 'sellers') {
-                productsPanel.style.display = 'none';
-                sellersPanel.style.display = 'block';
-                mainTabs[1].classList.add('active');
-                
-                // Load sellers when switching to sellers tab
-                loadSellersByCategory();
-            }
-        }
+        // State Management
+        let isUsingLocalBackend = false;
+        let currentSection = 'dashboard';
+        let adminSession = null;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Check authentication first
-            if (!checkAdminAuth()) {
-                return;
-            }
-            
-            loadProducts();
-            loadSellersByCategory();
-            updateDashboardCounts();
-            setupRealTimeUpdates();
+            initializeDashboard();
         });
 
-        // Manual refresh function
-        function manualRefresh() {
-            console.log('Admin Panel - Manual refresh triggered');
-            loadProducts();
-            loadSellersByCategory();
-            updateDashboardCounts();
-            showToast('Dashboard refreshed', 'success');
+        function initializeDashboard() {
+            // Check admin session
+            checkAdminSession();
+            
+            // Setup navigation
+            setupNavigation();
+            
+            // Test backend connection
+            testBackendConnection();
+            
+            // Load dashboard data
+            loadDashboardData();
         }
 
-        // Add test product function
-        function addTestProduct() {
-            const testProduct = {
-                id: Date.now(),
-                sellerId: 999,
-                sellerName: 'Test Seller',
-                sellerEmail: 'test@example.com',
-                name: 'Test Product - ' + new Date().toLocaleTimeString(),
-                category: 'Electronics',
-                price: 1500,
-                condition: 'Good',
-                description: 'This is a test product to verify the admin panel is working correctly.',
-                status: 'pending',
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
-            };
-            
-            let products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-            products.push(testProduct);
-            localStorage.setItem('sellerProducts', JSON.stringify(products));
-            
-            console.log('Admin Panel - Test product added:', testProduct);
-            loadProducts();
-            showToast('Test product added successfully!', 'success');
-        }
-
-        // Full test function - Create seller, login, add product
-        function runFullTest() {
-            console.log('🧪 Starting Full Test Workflow...');
-            
-            // Step 1: Create fake seller account
-            const testSeller = {
-                id: Date.now(),
-                name: 'Test Seller User',
-                email: 'testseller@example.com',
-                password: 'test123',
-                business: 'Test Business',
-                phone: '+254712345678',
-                location: 'Nairobi, Kenya',
-                status: 'approved', // Auto-approve for testing
-                createdAt: new Date().toISOString()
-            };
-            
-            // Save seller to registeredSellers
-            let registeredSellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-            
-            // Check if seller already exists
-            const existingSeller = registeredSellers.find(s => s.email === testSeller.email);
-            if (!existingSeller) {
-                registeredSellers.push(testSeller);
-                localStorage.setItem('registeredSellers', JSON.stringify(registeredSellers));
-                console.log('✅ Step 1: Created test seller account:', testSeller);
-            } else {
-                console.log('✅ Step 1: Using existing test seller account:', existingSeller);
-            }
-            
-            // Step 2: Simulate seller login (set current user session)
-            const sellerSession = {
-                id: testSeller.id,
-                name: testSeller.name,
-                email: testSeller.email,
-                type: 'seller',
-                business: testSeller.business
-            };
-            localStorage.setItem('currentUser', JSON.stringify(sellerSession));
-            localStorage.setItem('sellerData', JSON.stringify(testSeller));
-            console.log('✅ Step 2: Simulated seller login for:', testSeller.email);
-            
-            // Step 3: Create a realistic test product as the seller
-            const sellerProduct = {
-                id: Date.now() + 1,
-                sellerId: testSeller.id,
-                sellerName: testSeller.name,
-                sellerEmail: testSeller.email,
-                name: 'iPhone 12 - Excellent Condition',
-                category: 'Electronics',
-                price: 45000,
-                originalPrice: 55000,
-                condition: 'Excellent',
-                description: 'iPhone 12 in excellent condition. Used for 6 months, no scratches, battery health 95%. Comes with original box, charger, and earphones.',
-                brand: 'Apple',
-                model: 'iPhone 12',
-                color: 'Black',
-                location: 'Nairobi, Kenya',
-                negotiable: 'Slightly negotiable',
-                tags: ['iphone', 'apple', 'smartphone', '5g'],
-                images: ['https://picsum.photos/seed/iphone12/400/300.jpg'],
-                status: 'pending',
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
-            };
-            
-            // Save product to sellerProducts
-            let sellerProducts = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-            sellerProducts.push(sellerProduct);
-            localStorage.setItem('sellerProducts', JSON.stringify(sellerProducts));
-            console.log('✅ Step 3: Created test product as seller:', sellerProduct);
-            
-            // Step 4: Verify product appears in admin panel
-            setTimeout(() => {
-                console.log('✅ Step 4: Checking admin panel...');
-                loadProducts();
-                
-                // Check if product is visible
-                const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-                const pendingProducts = products.filter(p => p.status === 'pending');
-                
-                console.log('📊 Test Results:');
-                console.log('- Total products in storage:', products.length);
-                console.log('- Pending products:', pendingProducts.length);
-                console.log('- Our test product found:', pendingProducts.some(p => p.id === sellerProduct.id));
-                
-                if (pendingProducts.some(p => p.id === sellerProduct.id)) {
-                    showToast('✅ Full test PASSED! Product visible in admin panel.', 'success');
-                    console.log('🎉 FULL TEST PASSED - Admin panel is working correctly!');
-                } else {
-                    showToast('❌ Test failed - Product not visible in admin panel', 'error');
-                    console.log('❌ TEST FAILED - Product not found in admin panel');
-                }
-                
-                // Show detailed breakdown
-                console.log('🔍 Detailed breakdown:');
-                console.log('1. Seller account created:', !!registeredSellers.find(s => s.email === testSeller.email));
-                console.log('2. Product saved to localStorage:', !!sellerProducts.find(p => p.id === sellerProduct.id));
-                console.log('3. Product has pending status:', sellerProduct.status === 'pending');
-                console.log('4. Admin panel loading products:', products.length > 0);
-                console.log('5. Filter showing pending:', pendingProducts.length > 0);
-                
-            }, 1000);
-            
-            showToast('🧪 Running full test... Check console for details', 'info');
-        }
-
-        // Simulate actual seller workflow
-        function simulateSellerWorkflow() {
-            console.log('🛒 Starting Seller Workflow Simulation...');
-            showToast('🛒 Simulating real seller workflow...', 'info');
-            
-            // Step 1: Register as a new seller (like going through the registration form)
-            const newSeller = {
-                id: Date.now(),
-                name: 'John Doe Seller',
-                email: 'johndoe@sellers.com',
-                password: 'seller123',
-                business: 'John\'s Electronics Shop',
-                phone: '+254723456789',
-                location: 'Nairobi, Kenya',
-                status: 'approved', // In real scenario, this would be 'pending' until admin approves
-                createdAt: new Date().toISOString()
-            };
-            
-            // Save to registered sellers
-            let sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-            if (!sellers.find(s => s.email === newSeller.email)) {
-                sellers.push(newSeller);
-                localStorage.setItem('registeredSellers', JSON.stringify(sellers));
-                console.log('✅ Seller registered:', newSeller.email);
-            }
-            
-            // Step 2: Login as seller (simulate login form submission)
-            const sellerSession = {
-                id: newSeller.id,
-                name: newSeller.name,
-                email: newSeller.email,
-                type: 'seller',
-                business: newSeller.business
-            };
-            localStorage.setItem('currentUser', JSON.stringify(sellerSession));
-            localStorage.setItem('sellerData', JSON.stringify(newSeller));
-            console.log('✅ Seller logged in:', newSeller.email);
-            
-            // Step 3: Add multiple realistic products (like seller using the product form)
-            const products = [
-                {
-                    id: Date.now() + 1,
-                    sellerId: newSeller.id,
-                    sellerName: newSeller.name,
-                    sellerEmail: newSeller.email,
-                    name: 'Samsung Galaxy S21 - Like New',
-                    category: 'Electronics',
-                    price: 35000,
-                    originalPrice: 45000,
-                    condition: 'Like New',
-                    description: 'Samsung Galaxy S21 in like-new condition. Only used for 2 months. No scratches, no issues. Comes with original box and all accessories.',
-                    brand: 'Samsung',
-                    model: 'Galaxy S21',
-                    color: 'Phantom Gray',
-                    location: 'Nairobi, Kenya',
-                    negotiable: 'Slightly negotiable',
-                    tags: ['samsung', 'galaxy', 'android', '5g'],
-                    images: ['https://picsum.photos/seed/galaxys21/400/300.jpg'],
-                    status: 'pending',
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
-                },
-                {
-                    id: Date.now() + 2,
-                    sellerId: newSeller.id,
-                    sellerName: newSeller.name,
-                    sellerEmail: newSeller.email,
-                    name: 'MacBook Air M1 - Excellent',
-                    category: 'Computers',
-                    price: 85000,
-                    originalPrice: 95000,
-                    condition: 'Excellent',
-                    description: 'MacBook Air M1 chip, 8GB RAM, 256GB SSD. Excellent condition, barely used. Battery cycle count less than 50.',
-                    brand: 'Apple',
-                    model: 'MacBook Air',
-                    color: 'Space Gray',
-                    location: 'Nairobi, Kenya',
-                    negotiable: 'Fixed price',
-                    tags: ['apple', 'macbook', 'laptop', 'm1'],
-                    images: ['https://picsum.photos/seed/macbookair/400/300.jpg'],
-                    status: 'pending',
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
-                },
-                {
-                    id: Date.now() + 3,
-                    sellerId: newSeller.id,
-                    sellerName: newSeller.name,
-                    sellerEmail: newSeller.email,
-                    name: 'Sony PlayStation 5 - Good Condition',
-                    category: 'Gaming',
-                    price: 45000,
-                    originalPrice: 55000,
-                    condition: 'Good',
-                    description: 'PS5 console with one controller. Good working condition. Some minor scratches on the body but fully functional.',
-                    brand: 'Sony',
-                    model: 'PlayStation 5',
-                    color: 'White',
-                    location: 'Nairobi, Kenya',
-                    negotiable: 'Negotiable',
-                    tags: ['playstation', 'gaming', 'console', 'sony'],
-                    images: ['https://picsum.photos/seed/ps5console/400/300.jpg'],
-                    status: 'pending',
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
-                }
-            ];
-            
-            // Save all products to sellerProducts (like seller submitting the form)
-            let sellerProducts = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-            products.forEach(product => {
-                sellerProducts.push(product);
-                console.log('✅ Product submitted:', product.name);
-            });
-            localStorage.setItem('sellerProducts', JSON.stringify(sellerProducts));
-            
-            console.log(`✅ Submitted ${products.length} products for approval`);
-            
-            // Step 4: Check admin panel visibility
-            setTimeout(() => {
-                console.log('🔍 Checking admin panel visibility...');
-                loadProducts();
-                loadSellers();
-                
-                const allProducts = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-                const pendingProducts = allProducts.filter(p => p.status === 'pending');
-                const ourProducts = pendingProducts.filter(p => p.sellerId === newSeller.id);
-                
-                console.log('📊 Workflow Test Results:');
-                console.log('- Total sellers registered:', sellers.length);
-                console.log('- Total products in system:', allProducts.length);
-                console.log('- Pending products:', pendingProducts.length);
-                console.log('- Our seller\'s pending products:', ourProducts.length);
-                
-                if (ourProducts.length === products.length) {
-                    showToast('✅ Seller workflow PASSED! All products visible.', 'success');
-                    console.log('🎉 SELLER WORKFLOW PASSED!');
-                    console.log('Admin panel should show', ourProducts.length, 'pending products from', newSeller.name);
-                } else {
-                    showToast('❌ Workflow failed - Not all products visible', 'error');
-                    console.log('❌ SELLER WORKFLOW FAILED');
-                    console.log('Expected', products.length, 'products, found', ourProducts.length);
-                }
-                
-                // Show what should be visible
-                console.log('👀 Admin panel should display:');
-                ourProducts.forEach(p => {
-                    console.log(`- ${p.name} (KES ${p.price}) - ${p.status}`);
-                });
-                
-            }, 1500);
-        }
-
-        // Setup real-time updates
-        function setupRealTimeUpdates() {
-            // Check for new pending products every 5 seconds
-            setInterval(() => {
-                checkForNewProducts();
-            }, 5000);
-            
-            // Listen for storage changes (when sellers submit products)
-            window.addEventListener('storage', function(e) {
-                console.log('Admin Panel - Storage event detected:', e);
-                console.log('- Key changed:', e.key);
-                console.log('- New value:', e.newValue);
-                
-                if (e.key === 'sellerProducts') {
-                    loadProducts();
-                    showPendingAlert();
-                }
-            });
-        }
-
-        // Check for new products
-        function checkForNewProducts() {
-            const previousPendingCount = parseInt(document.getElementById('pendingCount').textContent) || 0;
-            const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-            const currentPendingCount = products.filter(p => p.status === 'pending').length;
-            
-            // Debug: Log the check
-            console.log('Admin Panel - Checking for new products:');
-            console.log('- Previous pending count:', previousPendingCount);
-            console.log('- Current pending count:', currentPendingCount);
-            console.log('- All products:', products);
-            
-            if (currentPendingCount > previousPendingCount) {
-                loadProducts();
-                showPendingAlert();
-            }
-        }
-
-        // Show pending alert
-        function showPendingAlert() {
-            const pendingCount = parseInt(document.getElementById('pendingCount').textContent) || 0;
-            if (pendingCount > 0) {
-                // Create notification banner
-                const existingAlert = document.getElementById('pendingAlert');
-                if (existingAlert) {
-                    existingAlert.remove();
-                }
-                
-                const alert = document.createElement('div');
-                alert.id = 'pendingAlert';
-                alert.className = 'pending-alert';
-                alert.innerHTML = `
-                    <div class="alert-content">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span><strong>${pendingCount}</strong> new product${pendingCount > 1 ? 's' : ''} pending approval!</span>
-                        <button onclick="this.parentElement.parentElement.remove()" class="alert-close">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `;
-                
-                document.querySelector('.admin-header').after(alert);
-                
-                // Auto-remove after 10 seconds
+        // Check admin session
+        function checkAdminSession() {
+            const session = localStorage.getItem(CONFIG.sessionKey);
+            if (!session) {
+                showAlert('No session found. Redirecting to login...', 'danger');
                 setTimeout(() => {
-                    if (alert.parentElement) {
-                        alert.remove();
+                    window.location.href = 'admin-login.html';
+                }, 2000);
+                return;
+            }
+
+            try {
+                adminSession = JSON.parse(session);
+                if (adminSession.expiry && adminSession.expiry < Date.now()) {
+                    // Session expired
+                    localStorage.removeItem(CONFIG.sessionKey);
+                    showAlert('Session expired. Redirecting to login...', 'danger');
+                    setTimeout(() => {
+                        window.location.href = 'admin-login.html';
+                    }, 2000);
+                    return;
+                }
+
+                // Update admin info
+                document.getElementById('adminName').textContent = adminSession.name || 'Admin User';
+                document.getElementById('adminRole').textContent = adminSession.role || 'Administrator';
+
+            } catch (error) {
+                console.error('Session parsing error:', error);
+                localStorage.removeItem(CONFIG.sessionKey);
+                window.location.href = 'admin-login.html';
+            }
+        }
+
+        // Setup navigation
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all items
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Show corresponding section
+                    const section = this.dataset.section;
+                    showSection(section);
+                });
+            });
+        }
+
+        // Show section
+        function showSection(section) {
+            currentSection = section;
+            
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.style.display = 'none';
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(`${section}-section`);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+            
+            // Update page title
+            updatePageTitle(section);
+            
+            // Load section data
+            loadSectionData(section);
+        }
+
+        // Update page title
+        function updatePageTitle(section) {
+            const titles = {
+                dashboard: 'Dashboard',
+                users: 'Users Management',
+                sellers: 'Seller Management',
+                products: 'Product Management',
+                orders: 'Order Management',
+                messages: 'Messages',
+                settings: 'Settings'
+            };
+            
+            document.getElementById('pageTitle').textContent = titles[section] || 'Dashboard';
+        }
+
+        // Test backend connection
+        async function testBackendConnection() {
+            try {
+                const response = await fetch(`${CONFIG.backendUrl}/api/test`);
+                if (response.ok) {
+                    isUsingLocalBackend = false;
+                    console.log('✅ Using deployed backend');
+                } else {
+                    throw new Error('Deployed backend not responding');
+                }
+            } catch (error) {
+                try {
+                    const response = await fetch(`${CONFIG.localBackendUrl}/api/test`);
+                    if (response.ok) {
+                        isUsingLocalBackend = true;
+                        console.log('✅ Using local backend');
+                        showAlert('Using local backend for development', 'info');
+                    } else {
+                        throw new Error('Local backend not responding');
                     }
-                }, 10000);
+                } catch (localError) {
+                    console.error('❌ No backend available');
+                    showAlert('No backend connection available', 'warning');
+                }
+            }
+        }
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/stats`);
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const stats = result.stats;
+                    document.getElementById('totalUsers').textContent = stats.totalUsers || 0;
+                    document.getElementById('totalSellers').textContent = stats.totalSellers || 0;
+                    document.getElementById('totalProducts').textContent = stats.totalProducts || 0;
+                    document.getElementById('totalOrders').textContent = stats.totalOrders || 0;
+                } else {
+                    console.error('Failed to load dashboard stats');
+                }
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+
+            // Load recent activity
+            loadRecentActivity();
+        }
+
+        // Load recent activity
+        async function loadRecentActivity() {
+            const tbody = document.getElementById('recentActivity');
+            
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/data`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    const activities = data.slice(0, 10); // Get last 10 items
+                    tbody.innerHTML = activities.map(item => `
+                        <tr>
+                            <td>${item.type || 'Unknown'}</td>
+                            <td>${item.title || item.name || 'No description'}</td>
+                            <td>${item.email || 'Unknown'}</td>
+                            <td>${new Date(item.createdAt || item.timestamp).toLocaleDateString()}</td>
+                            <td><span class="status-badge ${item.status || 'active'}">${item.status || 'Active'}</span></td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5">Failed to load activity</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading recent activity:', error);
+                tbody.innerHTML = '<tr><td colspan="5">Error loading activity</td></tr>';
+            }
+        }
+
+        // Load section data
+        function loadSectionData(section) {
+            switch (section) {
+                case 'sellers':
+                    loadSellers();
+                    break;
+                case 'products':
+                    loadProducts();
+                    break;
+                // Add more sections as needed
+            }
+        }
+
+        // Load sellers
+        async function loadSellers() {
+            const tbody = document.getElementById('sellersTable');
+            
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/sellers`);
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const sellers = result.sellers || [];
+                    tbody.innerHTML = sellers.map(seller => `
+                        <tr>
+                            <td>${seller.name || 'Unknown'}</td>
+                            <td>${seller.email || 'Unknown'}</td>
+                            <td>${seller.storeName || 'No store'}</td>
+                            <td>${seller.productCount || 0}</td>
+                            <td><span class="status-badge ${seller.status || 'pending'}">${seller.status || 'Pending'}</span></td>
+                            <td>
+                                <button class="btn btn-success btn-sm" onclick="approveSeller('${seller._id}')">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="rejectSeller('${seller._id}')">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6">No sellers found</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading sellers:', error);
+                tbody.innerHTML = '<tr><td colspan="6">Error loading sellers</td></tr>';
             }
         }
 
         // Load products
-        function loadProducts() {
-            const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
+        async function loadProducts() {
+            const tbody = document.getElementById('productsTable');
             
-            // Debug: Log the products to console
-            console.log('Admin Panel - Loading products:', products);
-            console.log('Admin Panel - Pending products:', products.filter(p => p.status === 'pending'));
-            
-            // Update stats
-            const pending = products.filter(p => p.status === 'pending').length;
-            const approved = products.filter(p => p.status === 'approved').length;
-            const rejected = products.filter(p => p.status === 'rejected').length;
-            
-            document.getElementById('pendingCount').textContent = pending;
-            document.getElementById('approvedCount').textContent = approved;
-            document.getElementById('rejectedCount').textContent = rejected;
-            document.getElementById('totalCount').textContent = products.length;
-            
-            // Load sellers count
-            loadSellersCount();
-            
-            // Filter and display products
-            displayProducts(products);
-        }
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/products`);
+                const result = await response.json();
 
-        // Load sellers count and display
-        function loadSellersCount() {
-            const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-            document.getElementById('sellersCount').textContent = sellers.length;
-        }
-
-        // Load sellers grid
-        function loadSellers() {
-            const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-            const sellersGrid = document.getElementById('sellersGrid');
-            
-            if (sellers.length === 0) {
-                sellersGrid.innerHTML = `
-                    <div class="empty-sellers">
-                        <i class="fas fa-users"></i>
-                        <h3>No registered sellers</h3>
-                        <p>When sellers register, they will appear here for management.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Get product counts for each seller
-            const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-            
-            sellersGrid.innerHTML = sellers.map(seller => {
-                const sellerProducts = products.filter(p => p.sellerId === seller.id);
-                const pendingCount = sellerProducts.filter(p => p.status === 'pending').length;
-                const approvedCount = sellerProducts.filter(p => p.status === 'approved').length;
-                
-                return `
-                    <div class="seller-card">
-                        <div class="seller-header">
-                            <div class="seller-avatar">
-                                ${(seller.name || 'S').charAt(0).toUpperCase()}
-                            </div>
-                            <div class="seller-info-card">
-                                <div class="seller-name-card">${seller.name || 'Unknown Seller'}</div>
-                                <div class="seller-email-card">${seller.email}</div>
-                            </div>
-                        </div>
-                        <div class="seller-status ${seller.status || 'approved'}">
-                            <i class="fas fa-${seller.status === 'approved' ? 'check-circle' : 'clock'}"></i>
-                            ${(seller.status || 'approved').toUpperCase()}
-                        </div>
-                        <div class="seller-stats">
-                            <div class="seller-stat">
-                                <div class="seller-stat-value">${pendingCount}</div>
-                                <div class="seller-stat-label">Pending</div>
-                            </div>
-                            <div class="seller-stat">
-                                <div class="seller-stat-value">${approvedCount}</div>
-                                <div class="seller-stat-label">Approved</div>
-                            </div>
-                            <div class="seller-stat">
-                                <div class="seller-stat-value">${sellerProducts.length}</div>
-                                <div class="seller-stat-label">Total</div>
-                            </div>
-                        </div>
-                        <div class="seller-actions">
-                            <button class="btn btn-sm btn-primary" onclick="viewSellerDetails(${seller.id})" title="View Details">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            ${seller.status === 'pending' ? `
-                                <button class="btn btn-sm btn-success" onclick="approveSeller(${seller.id})" title="Approve Seller">
-                                    <i class="fas fa-check"></i>
+                if (response.ok && result.success) {
+                    const products = result.products || [];
+                    tbody.innerHTML = products.map(product => `
+                        <tr>
+                            <td>${product.title || product.name || 'Unknown'}</td>
+                            <td>${product.category || 'Uncategorized'}</td>
+                            <td>${product.sellerName || 'Unknown'}</td>
+                            <td>KES ${product.price || 0}</td>
+                            <td>${product.stock || 0}</td>
+                            <td><span class="status-badge ${product.status || 'pending'}">${product.status || 'Pending'}</span></td>
+                            <td>
+                                <button class="btn btn-success btn-sm" onclick="approveProduct('${product._id}')">
+                                    <i class="fas fa-check"></i> Approve
                                 </button>
-                                <button class="btn btn-sm btn-danger" onclick="rejectSeller(${seller.id})" title="Reject Seller">
-                                    <i class="fas fa-times"></i>
+                                <button class="btn btn-danger btn-sm" onclick="rejectProduct('${product._id}')">
+                                    <i class="fas fa-times"></i> Reject
                                 </button>
-                            ` : ''}
-                            ${seller.status === 'approved' ? `
-                                <button class="btn btn-sm btn-warning" onclick="rejectSeller(${seller.id})" title="Revoke Access">
-                                    <i class="fas fa-ban"></i>
-                                </button>
-                            ` : ''}
-                            <button class="btn btn-sm btn-danger" onclick="deleteSeller(${seller.id})" title="Delete Seller">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Load dashboard data
-        function loadDashboardData() {
-            loadProducts();
-            loadSellersByCategory();
-            updateDashboardCounts();
-        }
-
-        // Refresh sellers
-        function refreshSellers() {
-            loadSellersByCategory();
-            updateDashboardCounts();
-            showToast('Sellers list refreshed', 'success');
-        }
-
-        // Filter products
-        function filterProducts(filter) {
-            currentFilter = filter;
-            
-            // Update active tab
-            document.querySelectorAll('.filter-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            loadProducts();
-        }
-
-        // Display products
-        function displayProducts(products) {
-            const productsList = document.getElementById('productsList');
-            
-            let filteredProducts = products;
-            if (currentFilter !== 'all') {
-                filteredProducts = products.filter(p => p.status === currentFilter);
-            }
-            
-            if (filteredProducts.length === 0) {
-                productsList.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3>No products found</h3>
-                        <p>No products match the current filter criteria.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            productsList.innerHTML = filteredProducts.map(product => `
-                <div class="product-item ${product.status || 'pending'}">
-                    <div class="priority-indicator"></div>
-                    <img src="${product.images && product.images.length > 0 ? product.images[0] : 'https://picsum.photos/seed/product' + product.id + '/80/80.jpg'}" alt="${product.name}" class="product-image">
-                    <div class="product-details">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <h3>${product.name}</h3>
-                            <span class="product-status ${product.status || 'pending'}">
-                                <i class="fas fa-${product.status === 'approved' ? 'check' : product.status === 'rejected' ? 'times' : 'clock'}"></i>
-                                ${(product.status || 'pending').toUpperCase()}
-                            </span>
-                        </div>
-                        <div class="product-meta">
-                            <span class="meta-item">
-                                <i class="fas fa-tag"></i> ${product.category}
-                            </span>
-                            <span class="meta-item">
-                                <i class="fas fa-shilling-sign"></i> KES ${product.price}
-                            </span>
-                            <span class="meta-item">
-                                <i class="fas fa-check-circle"></i> ${product.condition}
-                            </span>
-                        </div>
-                        <p class="product-description">${product.description}</p>
-                        <div class="seller-info">
-                            <i class="fas fa-store"></i>
-                            <div class="seller-details">
-                                <span class="seller-name">${product.sellerName}</span>
-                                <span class="seller-email">${product.sellerEmail}</span>
-                            </div>
-                        </div>
-                        ${product.originalPrice ? `
-                            <div class="meta-item" style="margin-top: 4px;">
-                                <i class="fas fa-chart-line"></i> Original: KES ${product.originalPrice}
-                                ${product.originalPrice > product.price ? 
-                                    `<span style="color: var(--success-color); font-weight: 600;"> (Save ${Math.round((product.originalPrice - product.price) / product.originalPrice * 100)}%)</span>` 
-                                    : ''}
-                            </div>
-                        ` : ''}
-                        ${product.location ? `
-                            <div class="meta-item" style="margin-top: 4px;">
-                                <i class="fas fa-map-marker-alt"></i> ${product.location}
-                            </div>
-                        ` : ''}
-                        ${product.createdAt ? `
-                            <div class="meta-item" style="margin-top: 4px; font-size: 0.75rem;">
-                                <i class="fas fa-calendar"></i> Submitted: ${new Date(product.createdAt).toLocaleDateString()}
-                            </div>
-                        ` : ''}
-                    </div>
-                    <div class="product-actions">
-                        <span class="status-badge ${product.status || 'pending'}">${(product.status || 'pending').toUpperCase()}</span>
-                        <div class="action-buttons">
-                            <button class="btn btn-sm btn-primary" onclick="viewProductDetails(${product.id})" title="View Details">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            ${product.status === 'pending' ? `
-                                <button class="btn btn-sm btn-success" onclick="approveProduct(${product.id})" title="Approve Product">
-                                    <i class="fas fa-check"></i>
-                                </button>
-                                <button class="btn btn-sm btn-danger" onclick="rejectProduct(${product.id})" title="Reject Product">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            ` : ''}
-                            ${product.status === 'approved' ? `
-                                <button class="btn btn-sm btn-warning" onclick="rejectProduct(${product.id})" title="Revoke Approval">
-                                    <i class="fas fa-ban"></i>
-                                </button>
-                            ` : ''}
-                            <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.id})" title="Delete Product">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Approve product
-        function approveProduct(productId) {
-            const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-            const productIndex = products.findIndex(p => p.id === productId);
-            
-            if (productIndex !== -1) {
-                products[productIndex].status = 'approved';
-                products[productIndex].approvedAt = new Date().toISOString();
-                
-                localStorage.setItem('sellerProducts', JSON.stringify(products));
-                
-                // Add to main products list
-                const mainProducts = JSON.parse(localStorage.getItem('products') || '[]');
-                const existingIndex = mainProducts.findIndex(p => p.id === productId);
-                
-                if (existingIndex !== -1) {
-                    mainProducts[existingIndex] = products[productIndex];
+                            </td>
+                        </tr>
+                    `).join('');
                 } else {
-                    mainProducts.push(products[productIndex]);
+                    tbody.innerHTML = '<tr><td colspan="7">No products found</td></tr>';
                 }
-                
-                localStorage.setItem('products', JSON.stringify(mainProducts));
-                
-                // Create notification for seller
-                createNotification(products[productIndex].sellerId, 'approved', products[productIndex]);
-                
-                loadProducts();
-                alert('Product approved and published to the marketplace!');
+            } catch (error) {
+                console.error('Error loading products:', error);
+                tbody.innerHTML = '<tr><td colspan="7">Error loading products</td></tr>';
             }
         }
 
-        // Reject product
-        function rejectProduct(productId) {
-            const reason = prompt('Please provide a reason for rejection (optional):');
+        // Utility Functions
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alertMessage');
+            const alertText = document.getElementById('alertText');
+            const icon = alertDiv.querySelector('i');
             
-            const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-            const productIndex = products.findIndex(p => p.id === productId);
+            // Set alert type
+            alertDiv.className = `alert alert-${type} show`;
             
-            if (productIndex !== -1) {
-                products[productIndex].status = 'rejected';
-                products[productIndex].rejectedAt = new Date().toISOString();
-                if (reason) {
-                    products[productIndex].rejectionReason = reason;
-                }
-                
-                localStorage.setItem('sellerProducts', JSON.stringify(products));
-                
-                // Remove from main products list if it was there
-                const mainProducts = JSON.parse(localStorage.getItem('products') || '[]');
-                const filteredMainProducts = mainProducts.filter(p => p.id !== productId);
-                localStorage.setItem('products', JSON.stringify(filteredMainProducts));
-                
-                // Create notification for seller
-                createNotification(products[productIndex].sellerId, 'rejected', products[productIndex], reason);
-                
-                loadProducts();
-                alert('Product rejected and removed from marketplace.');
-            }
-        }
-
-        // Approve seller
-        function approveSeller(sellerId) {
-            const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-            const sellerIndex = sellers.findIndex(s => s.id === sellerId);
-            
-            if (sellerIndex !== -1) {
-                sellers[sellerIndex].status = 'approved';
-                sellers[sellerIndex].approvedAt = new Date().toISOString();
-                
-                localStorage.setItem('registeredSellers', JSON.stringify(sellers));
-                
-                // Create notification for seller
-                createSellerNotification(sellerId, 'approved', 'Your seller account has been approved! You can now access your dashboard.');
-                
-                // Real-time update - update seller card immediately
-                updateSellerCard(sellers[sellerIndex]);
-                
-                // Update counts
-                updateDashboardCounts();
-                
-                showToast('Seller approved successfully! They can now access their dashboard.', 'success');
-            }
-        }
-
-        // Reject seller
-        function rejectSeller(sellerId) {
-            const reason = prompt('Please provide a reason for rejection:');
-            
-            const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-            const sellerIndex = sellers.findIndex(s => s.id === sellerId);
-            
-            if (sellerIndex !== -1) {
-                sellers[sellerIndex].status = 'rejected';
-                sellers[sellerIndex].rejectedAt = new Date().toISOString();
-                if (reason) {
-                    sellers[sellerIndex].rejectionReason = reason;
-                }
-                
-                localStorage.setItem('registeredSellers', JSON.stringify(sellers));
-                
-                // Create notification for seller
-                createSellerNotification(sellerId, 'rejected', `Your seller account has been rejected. Reason: ${reason || 'Not specified'}`);
-                
-                // Real-time update - update seller card immediately
-                updateSellerCard(sellers[sellerIndex]);
-                
-                // Update counts
-                updateDashboardCounts();
-                
-                showToast('Seller rejected. They will be notified.', 'warning');
-            }
-        }
-
-        // Delete seller
-        function deleteSeller(sellerId) {
-            if (confirm('Are you sure you want to delete this seller? This action cannot be undone.')) {
-                const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-                const filteredSellers = sellers.filter(s => s.id !== sellerId);
-                
-                localStorage.setItem('registeredSellers', JSON.stringify(filteredSellers));
-                
-                // Also delete seller's products
-                const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-                const filteredProducts = products.filter(p => p.sellerId !== sellerId);
-                localStorage.setItem('sellerProducts', JSON.stringify(filteredProducts));
-                
-                // Refresh data
-                loadDashboardData();
-                
-                showToast('Seller and all their products have been deleted.', 'error');
-            }
-        }
-
-        // Create notification for seller
-        function createSellerNotification(sellerId, action, message) {
-            const notifications = JSON.parse(localStorage.getItem('sellerNotifications') || '[]');
-            
-            const notification = {
-                id: Date.now(),
-                sellerId: sellerId,
-                action: action,
-                message: message,
-                createdAt: new Date().toISOString(),
-                read: false
+            // Set icon based on type
+            const icons = {
+                success: 'fas fa-check-circle',
+                danger: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
             };
+            icon.className = icons[type] || icons.info;
             
-            notifications.push(notification);
-            localStorage.setItem('sellerNotifications', JSON.stringify(notifications));
-        }
-
-        // Real-time seller card update
-        function updateSellerCard(seller) {
-            const sellerCard = document.querySelector(`[data-seller-id="${seller.id}"]`);
-            if (sellerCard) {
-                // Update status badge
-                const statusBadge = sellerCard.querySelector('.seller-status');
-                if (statusBadge) {
-                    statusBadge.className = `seller-status ${seller.status || 'approved'}`;
-                    statusBadge.innerHTML = `
-                        <i class="fas fa-${seller.status === 'approved' ? 'check-circle' : seller.status === 'rejected' ? 'times-circle' : 'clock'}"></i>
-                        ${(seller.status || 'approved').toUpperCase()}
-                    `;
-                }
-                
-                // Update action buttons
-                const actionsDiv = sellerCard.querySelector('.seller-actions');
-                if (actionsDiv) {
-                    actionsDiv.innerHTML = `
-                        <button class="btn btn-sm btn-primary" onclick="viewSellerDetails(${seller.id})" title="View Details">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        ${seller.status === 'pending' ? `
-                            <button class="btn btn-sm btn-success" onclick="approveSeller(${seller.id})" title="Approve Seller">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button class="btn btn-sm btn-danger" onclick="rejectSeller(${seller.id})" title="Reject Seller">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        ` : ''}
-                        ${seller.status === 'approved' ? `
-                            <button class="btn btn-sm btn-warning" onclick="rejectSeller(${seller.id})" title="Revoke Access">
-                                <i class="fas fa-ban"></i>
-                            </button>
-                        ` : ''}
-                        <button class="btn btn-sm btn-danger" onclick="deleteSeller(${seller.id})" title="Delete Seller">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    `;
-                }
-                
-                // Add animation effect
-                sellerCard.style.animation = 'pulse 0.5s ease-in-out';
-                setTimeout(() => {
-                    sellerCard.style.animation = '';
-                }, 500);
-            }
-        }
-
-        // Update dashboard counts
-        function updateDashboardCounts() {
-            const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-            const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
+            // Set message
+            alertText.textContent = message;
             
-            // Update seller count
-            const sellersCount = document.getElementById('sellersCount');
-            if (sellersCount) {
-                sellersCount.textContent = sellers.length;
-            }
-            
-            // Update product counts
-            const pendingCount = products.filter(p => p.status === 'pending').length;
-            const approvedCount = products.filter(p => p.status === 'approved').length;
-            const rejectedCount = products.filter(p => p.status === 'rejected').length;
-            const totalCount = products.length;
-            
-            document.getElementById('pendingCount').textContent = pendingCount;
-            document.getElementById('approvedCount').textContent = approvedCount;
-            document.getElementById('rejectedCount').textContent = rejectedCount;
-            document.getElementById('totalCount').textContent = totalCount;
-        }
-
-        // Load sellers by category
-        function loadSellersByCategory() {
-            const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-            const sellersGrid = document.getElementById('sellersGrid');
-            
-            if (sellers.length === 0) {
-                sellersGrid.innerHTML = `
-                    <div class="empty-sellers">
-                        <i class="fas fa-users"></i>
-                        <h3>No registered sellers</h3>
-                        <p>When sellers register, they will appear here for management.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Get product counts for each seller
-            const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-            
-            // Categorize sellers
-            const pendingSellers = sellers.filter(s => s.status === 'pending');
-            const approvedSellers = sellers.filter(s => s.status === 'approved');
-            const rejectedSellers = sellers.filter(s => s.status === 'rejected');
-            
-            let html = '';
-            
-            // Pending Sellers Section
-            if (pendingSellers.length > 0) {
-                html += `
-                    <div class="seller-category">
-                        <div class="category-header">
-                            <h3><i class="fas fa-clock"></i> Pending Sellers (${pendingSellers.length})</h3>
-                            <div class="category-actions">
-                                <button class="btn btn-sm btn-success" onclick="bulkApproveSellers()">Approve All</button>
-                                <button class="btn btn-sm btn-danger" onclick="bulkRejectSellers()">Reject All</button>
-                            </div>
-                        </div>
-                        <div class="sellers-grid">
-                            ${pendingSellers.map(seller => createSellerCard(seller, products)).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Approved Sellers Section
-            if (approvedSellers.length > 0) {
-                html += `
-                    <div class="seller-category">
-                        <div class="category-header">
-                            <h3><i class="fas fa-check-circle"></i> Approved Sellers (${approvedSellers.length})</h3>
-                            <div class="category-actions">
-                                <button class="btn btn-sm btn-warning" onclick="bulkRevokeSellers()">Revoke All Access</button>
-                            </div>
-                        </div>
-                        <div class="sellers-grid">
-                            ${approvedSellers.map(seller => createSellerCard(seller, products)).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Rejected Sellers Section
-            if (rejectedSellers.length > 0) {
-                html += `
-                    <div class="seller-category">
-                        <div class="category-header">
-                            <h3><i class="fas fa-times-circle"></i> Rejected Sellers (${rejectedSellers.length})</h3>
-                            <div class="category-actions">
-                                <button class="btn btn-sm btn-danger" onclick="bulkDeleteRejectedSellers()">Delete All</button>
-                            </div>
-                        </div>
-                        <div class="sellers-grid">
-                            ${rejectedSellers.map(seller => createSellerCard(seller, products)).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            sellersGrid.innerHTML = html;
-        }
-
-        // Create seller card HTML
-        function createSellerCard(seller, products) {
-            const sellerProducts = products.filter(p => p.sellerId === seller.id);
-            const pendingCount = sellerProducts.filter(p => p.status === 'pending').length;
-            const approvedCount = sellerProducts.filter(p => p.status === 'approved').length;
-            
-            return `
-                <div class="seller-card" data-seller-id="${seller.id}">
-                    <div class="seller-header">
-                        <div class="seller-avatar">
-                            ${(seller.name || 'S').charAt(0).toUpperCase()}
-                        </div>
-                        <div class="seller-info-card">
-                            <div class="seller-name-card">${seller.name || 'Unknown Seller'}</div>
-                            <div class="seller-email-card">${seller.email}</div>
-                        </div>
-                    </div>
-                    <div class="seller-status ${seller.status || 'approved'}">
-                        <i class="fas fa-${seller.status === 'approved' ? 'check-circle' : seller.status === 'rejected' ? 'times-circle' : 'clock'}"></i>
-                        ${(seller.status || 'approved').toUpperCase()}
-                    </div>
-                    <div class="seller-stats">
-                        <div class="seller-stat">
-                            <div class="seller-stat-value">${pendingCount}</div>
-                            <div class="seller-stat-label">Pending</div>
-                        </div>
-                        <div class="seller-stat">
-                            <div class="seller-stat-value">${approvedCount}</div>
-                            <div class="seller-stat-label">Approved</div>
-                        </div>
-                        <div class="seller-stat">
-                            <div class="seller-stat-value">${sellerProducts.length}</div>
-                            <div class="seller-stat-label">Total</div>
-                        </div>
-                    </div>
-                    <div class="seller-actions">
-                        <button class="btn btn-sm btn-primary" onclick="viewSellerDetails(${seller.id})" title="View Details">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        ${seller.status === 'pending' ? `
-                            <button class="btn btn-sm btn-success" onclick="approveSeller(${seller.id})" title="Approve Seller">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button class="btn btn-sm btn-danger" onclick="rejectSeller(${seller.id})" title="Reject Seller">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        ` : ''}
-                        ${seller.status === 'approved' ? `
-                            <button class="btn btn-sm btn-warning" onclick="rejectSeller(${seller.id})" title="Revoke Access">
-                                <i class="fas fa-ban"></i>
-                            </button>
-                        ` : ''}
-                        <button class="btn btn-sm btn-danger" onclick="deleteSeller(${seller.id})" title="Delete Seller">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Bulk operations for sellers
-        function bulkApproveSellers() {
-            if (confirm('Approve all pending sellers?')) {
-                const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-                const pendingSellers = sellers.filter(s => s.status === 'pending');
-                
-                pendingSellers.forEach(seller => {
-                    seller.status = 'approved';
-                    seller.approvedAt = new Date().toISOString();
-                    createSellerNotification(seller.id, 'approved', 'Your seller account has been approved! You can now access your dashboard.');
-                });
-                
-                localStorage.setItem('registeredSellers', JSON.stringify(sellers));
-                loadSellersByCategory();
-                updateDashboardCounts();
-                showToast(`Approved ${pendingSellers.length} sellers!`, 'success');
-            }
-        }
-
-        function bulkRejectSellers() {
-            const reason = prompt('Please provide a reason for bulk rejection:');
-            
-            if (reason !== null) {
-                const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-                const pendingSellers = sellers.filter(s => s.status === 'pending');
-                
-                pendingSellers.forEach(seller => {
-                    seller.status = 'rejected';
-                    seller.rejectedAt = new Date().toISOString();
-                    seller.rejectionReason = reason;
-                    createSellerNotification(seller.id, 'rejected', `Your seller account has been rejected. Reason: ${reason}`);
-                });
-                
-                localStorage.setItem('registeredSellers', JSON.stringify(sellers));
-                loadSellersByCategory();
-                updateDashboardCounts();
-                showToast(`Rejected ${pendingSellers.length} sellers.`, 'warning');
-            }
-        }
-
-        function bulkRevokeSellers() {
-            if (confirm('Revoke access from all approved sellers?')) {
-                const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-                const approvedSellers = sellers.filter(s => s.status === 'approved');
-                
-                approvedSellers.forEach(seller => {
-                    seller.status = 'rejected';
-                    seller.rejectedAt = new Date().toISOString();
-                    seller.rejectionReason = 'Access revoked by admin';
-                    createSellerNotification(seller.id, 'rejected', 'Your seller account access has been revoked by admin.');
-                });
-                
-                localStorage.setItem('registeredSellers', JSON.stringify(sellers));
-                loadSellersByCategory();
-                updateDashboardCounts();
-                showToast(`Revoked access from ${approvedSellers.length} sellers.`, 'warning');
-            }
-        }
-
-        function bulkDeleteRejectedSellers() {
-            if (confirm('Delete all rejected sellers? This action cannot be undone.')) {
-                const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-                const rejectedSellers = sellers.filter(s => s.status !== 'rejected');
-                
-                localStorage.setItem('registeredSellers', JSON.stringify(rejectedSellers));
-                loadSellersByCategory();
-                updateDashboardCounts();
-                showToast(`Deleted ${sellers.length - rejectedSellers.length} rejected sellers.`, 'error');
-            }
-        }
-
-        // Delete product
-        function deleteProduct(productId) {
-            if (confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
-                const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-                const filteredProducts = products.filter(p => p.id !== productId);
-                
-                localStorage.setItem('sellerProducts', JSON.stringify(filteredProducts));
-                
-                // Also remove from main products if it was approved
-                const mainProducts = JSON.parse(localStorage.getItem('products') || '[]');
-                const filteredMainProducts = mainProducts.filter(p => p.id !== productId);
-                localStorage.setItem('products', JSON.stringify(filteredMainProducts));
-                
-                // Refresh data
-                loadDashboardData();
-                
-                showToast('Product deleted successfully.', 'error');
-            }
-        }
-
-        // View product details
-        function viewProductDetails(productId) {
-            const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-            const product = products.find(p => p.id === productId);
-            
-            if (product) {
-                const details = `
-                    Product Details:
-                    Name: ${product.name}
-                    Category: ${product.category}
-                    Price: KES ${product.price}
-                    Condition: ${product.condition}
-                    Seller: ${product.sellerName}
-                    Email: ${product.sellerEmail}
-                    Description: ${product.description}
-                    Status: ${product.status}
-                    Created: ${new Date(product.createdAt).toLocaleDateString()}
-                `;
-                
-                alert(details);
-            }
-        }
-
-        // View seller details
-        function viewSellerDetails(sellerId) {
-            const sellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
-            const seller = sellers.find(s => s.id === sellerId);
-            
-            if (seller) {
-                const details = `
-                    Seller Details:
-                    Name: ${seller.name}
-                    Email: ${seller.email}
-                    Phone: ${seller.phone || 'Not provided'}
-                    Business: ${seller.business || 'Not provided'}
-                    Location: ${seller.location || 'Not provided'}
-                    Status: ${seller.status || 'pending'}
-                    Registered: ${new Date(seller.createdAt).toLocaleDateString()}
-                    ${seller.approvedAt ? `Approved: ${new Date(seller.approvedAt).toLocaleDateString()}` : ''}
-                    ${seller.rejectionReason ? `Rejection Reason: ${seller.rejectionReason}` : ''}
-                `;
-                
-                alert(details);
-            }
-        }
-
-        // Bulk approve products
-        function bulkApproveProducts() {
-            if (confirm('Approve all pending products?')) {
-                const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-                const pendingProducts = products.filter(p => p.status === 'pending');
-                
-                pendingProducts.forEach(product => {
-                    product.status = 'approved';
-                    product.approvedAt = new Date().toISOString();
-                    
-                    // Create notification for seller
-                    createNotification(product.sellerId, 'approved', product);
-                });
-                
-                localStorage.setItem('sellerProducts', JSON.stringify(products));
-                
-                // Add to main products
-                const mainProducts = JSON.parse(localStorage.getItem('products') || '[]');
-                pendingProducts.forEach(product => {
-                    if (!mainProducts.find(p => p.id === product.id)) {
-                        mainProducts.push({
-                            ...product,
-                            id: product.id,
-                            approvedBy: 'admin'
-                        });
-                    }
-                });
-                localStorage.setItem('products', JSON.stringify(mainProducts));
-                
-                loadDashboardData();
-                showToast(`Approved ${pendingProducts.length} products successfully!`, 'success');
-            }
-        }
-
-        // Bulk reject products
-        function bulkRejectProducts() {
-            const reason = prompt('Please provide a reason for bulk rejection:');
-            
-            if (reason !== null) {
-                const products = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
-                const pendingProducts = products.filter(p => p.status === 'pending');
-                
-                pendingProducts.forEach(product => {
-                    product.status = 'rejected';
-                    product.rejectedAt = new Date().toISOString();
-                    product.rejectionReason = reason;
-                    
-                    // Create notification for seller
-                    createNotification(product.sellerId, 'rejected', product, reason);
-                });
-                
-                localStorage.setItem('sellerProducts', JSON.stringify(products));
-                loadDashboardData();
-                showToast(`Rejected ${pendingProducts.length} products.`, 'warning');
-            }
-        }
-
-        // Clear all data (for testing)
-        function clearAllData() {
-            if (confirm('⚠️ WARNING: This will delete ALL data including users, sellers, products, and orders. This action cannot be undone. Continue?')) {
-                if (confirm('Are you absolutely sure? This will reset the entire system.')) {
-                    localStorage.removeItem('registeredUsers');
-                    localStorage.removeItem('registeredSellers');
-                    localStorage.removeItem('sellerProducts');
-                    localStorage.removeItem('products');
-                    localStorage.removeItem('orders');
-                    localStorage.removeItem('sellerNotifications');
-                    localStorage.removeItem('conversations');
-                    localStorage.removeItem('contactSubmissions');
-                    
-                    loadDashboardData();
-                    showToast('All data has been cleared. System reset complete.', 'error');
-                }
-            }
-        }
-
-        // Export data
-        function exportData() {
-            const data = {
-                users: JSON.parse(localStorage.getItem('registeredUsers') || '[]'),
-                sellers: JSON.parse(localStorage.getItem('registeredSellers') || '[]'),
-                products: JSON.parse(localStorage.getItem('sellerProducts') || '[]'),
-                mainProducts: JSON.parse(localStorage.getItem('products') || '[]'),
-                orders: JSON.parse(localStorage.getItem('orders') || '[]'),
-                notifications: JSON.parse(localStorage.getItem('sellerNotifications') || '[]'),
-                exportDate: new Date().toISOString()
-            };
-            
-            const dataStr = JSON.stringify(data, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            
-            const exportFileDefaultName = `ecoloop-data-${new Date().toISOString().split('T')[0]}.json`;
-            
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
-            
-            showToast('Data exported successfully!', 'success');
-        }
-
-        // Create notification for seller
-        function createNotification(sellerId, action, product, reason = null) {
-            const notifications = JSON.parse(localStorage.getItem('sellerNotifications') || '[]');
-            
-            const notification = {
-                id: Date.now(),
-                sellerId: sellerId,
-                productId: product.id,
-                productName: product.name,
-                action: action,
-                reason: reason,
-                createdAt: new Date().toISOString(),
-                read: false
-            };
-            
-            notifications.push(notification);
-            localStorage.setItem('sellerNotifications', JSON.stringify(notifications));
-        }
-
-        // Toast notification function
-        function showToast(message, type = 'info') {
-            // Create toast element
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 12px 20px;
-                border-radius: var(--radius-md);
-                color: white;
-                font-weight: 500;
-                z-index: 10000;
-                animation: slideIn 0.3s ease-out;
-                box-shadow: var(--shadow-lg);
-            `;
-            
-            // Set background color based on type
-            switch(type) {
-                case 'success':
-                    toast.style.background = 'linear-gradient(135deg, var(--success-color), #16a34a)';
-                    break;
-                case 'error':
-                    toast.style.background = 'linear-gradient(135deg, var(--danger-color), #dc2626)';
-                    break;
-                case 'warning':
-                    toast.style.background = 'linear-gradient(135deg, var(--warning-color), #f59e0b)';
-                    break;
-                default:
-                    toast.style.background = 'linear-gradient(135deg, var(--primary-color), #2563eb)';
-            }
-            
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            
-            // Remove after 3 seconds
+            // Auto-hide after 5 seconds
             setTimeout(() => {
-                toast.style.animation = 'slideOut 0.3s ease-out';
-                setTimeout(() => {
-                    if (toast.parentElement) {
-                        toast.remove();
-                    }
-                }, 300);
-            }, 3000);
+                alertDiv.classList.remove('show');
+            }, 5000);
         }
 
-        // Add animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
 
-        // Logout function
+        function refreshData() {
+            showAlert('Refreshing data...', 'info');
+            loadSectionData(currentSection);
+        }
+
         function logout() {
-            console.log('Admin logging out...');
-            
-            // Clear admin session
-            localStorage.removeItem('adminSession');
-            
-            // Show message
-            alert('Logged out successfully');
-            
-            // Redirect to admin login
-            window.location.href = 'admin-login.html';
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem(CONFIG.sessionKey);
+                showAlert('Logging out...', 'info');
+                setTimeout(() => {
+                    window.location.href = 'admin-login.html';
+                }, 1000);
+            }
+        }
+
+        function showNotifications() {
+            showAlert('You have 3 new notifications', 'info');
+        }
+
+        function exportData() {
+            showAlert('Exporting data...', 'info');
+            // Implement export functionality
+        }
+
+        function addSeller() {
+            showAlert('Add seller functionality coming soon', 'info');
+        }
+
+        function addProduct() {
+            showAlert('Add product functionality coming soon', 'info');
+        }
+
+        async function approveSeller(sellerId) {
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/sellers/${sellerId}/approve`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminEmail: adminSession.email })
+                });
+
+                if (response.ok) {
+                    showAlert('Seller approved successfully', 'success');
+                    loadSellers();
+                } else {
+                    showAlert('Failed to approve seller', 'danger');
+                }
+            } catch (error) {
+                console.error('Error approving seller:', error);
+                showAlert('Error approving seller', 'danger');
+            }
+        }
+
+        async function rejectSeller(sellerId) {
+            if (confirm('Are you sure you want to reject this seller?')) {
+                try {
+                    const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                    const response = await fetch(`${backendUrl}/api/admin/sellers/${sellerId}/reject`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ adminEmail: adminSession.email, reason: 'Rejected by admin' })
+                    });
+
+                    if (response.ok) {
+                        showAlert('Seller rejected successfully', 'success');
+                        loadSellers();
+                    } else {
+                        showAlert('Failed to reject seller', 'danger');
+                    }
+                } catch (error) {
+                    console.error('Error rejecting seller:', error);
+                    showAlert('Error rejecting seller', 'danger');
+                }
+            }
+        }
+
+        async function approveProduct(productId) {
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/products/${productId}/approve`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminEmail: adminSession.email })
+                });
+
+                if (response.ok) {
+                    showAlert('Product approved successfully', 'success');
+                    loadProducts();
+                } else {
+                    showAlert('Failed to approve product', 'danger');
+                }
+            } catch (error) {
+                console.error('Error approving product:', error);
+                showAlert('Error approving product', 'danger');
+            }
+        }
+
+        async function rejectProduct(productId) {
+            if (confirm('Are you sure you want to reject this product?')) {
+                try {
+                    const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                    const response = await fetch(`${backendUrl}/api/admin/products/${productId}/reject`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ adminEmail: adminSession.email, reason: 'Rejected by admin' })
+                    });
+
+                    if (response.ok) {
+                        showAlert('Product rejected successfully', 'success');
+                        loadProducts();
+                    } else {
+                        showAlert('Failed to reject product', 'danger');
+                    }
+                } catch (error) {
+                    console.error('Error rejecting product:', error);
+                    showAlert('Error rejecting product', 'danger');
+                }
+            }
         }
     </script>
 </body>

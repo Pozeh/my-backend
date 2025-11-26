@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Admin Login Debug Test</h1>
+    
+    <div class="test-section">
+        <h2>🔧 Test Local Backend (http://localhost:3000)</h2>
+        <button onclick="testLocalBackend()">Test Local Admin Login</button>
+        <button onclick="testLocalSetup()">Test Local Admin Setup</button>
+        <div id="localResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🌐 Test Deployed Backend (https://my-backend-1-jk7w.onrender.com)</h2>
+        <button onclick="testDeployedBackend()">Test Deployed Admin Login</button>
+        <button onclick="testDeployedSetup()">Test Deployed Admin Setup</button>
+        <button onclick="testDeployedConnection()">Test Deployed Connection</button>
+        <div id="deployedResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>📊 Admin Credentials</h2>
+        <div class="info">
+            <strong>Email:</strong> pmuiruri9657@gmail.com<br>
+            <strong>Password:</strong> paul965757<br>
+            <strong>Name:</strong> Paul Muiruri
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_CREDENTIALS = {
+            email: 'pmuiruri9657@gmail.com',
+            password: 'paul965757',
+            name: 'Paul Muiruri'
+        };
+
+        async function testLocalBackend() {
+            const resultDiv = document.getElementById('localResult');
+            resultDiv.innerHTML = '<div class="info">Testing local backend...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: ADMIN_CREDENTIALS.email,
+                        password: ADMIN_CREDENTIALS.password
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ Local Backend: Login Successful!</div>
+                        <div class="info">Response: ${JSON.stringify(result, null, 2)}</div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">❌ Local Backend: Login Failed</div>
+                        <div class="info">Status: ${response.status}</div>
+                        <div class="info">Response: ${JSON.stringify(result, null, 2)}</div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ Local Backend: Connection Error</div>
+                    <div class="info">Error: ${error.message}</div>
+                `;
+            }
+        }
+
+        async function testLocalSetup() {
+            const resultDiv = document.getElementById('localResult');
+            resultDiv.innerHTML = '<div class="info">Testing local admin setup...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/admin/setup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(ADMIN_CREDENTIALS)
+                });
+                
+                const result = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="${response.ok ? 'success' : 'error'}">${response.ok ? '✅' : '❌'} Local Admin Setup</div>
+                    <div class="info">Status: ${response.status}</div>
+                    <div class="info">Response: ${JSON.stringify(result, null, 2)}</div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ Local Setup: Connection Error</div>
+                    <div class="info">Error: ${error.message}</div>
+                `;
+            }
+        }
+
+        async function testDeployedBackend() {
+            const resultDiv = document.getElementById('deployedResult');
+            resultDiv.innerHTML = '<div class="info">Testing deployed backend...</div>';
+            
+            try {
+                const response = await fetch('https://my-backend-1-jk7w.onrender.com/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: ADMIN_CREDENTIALS.email,
+                        password: ADMIN_CREDENTIALS.password
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ Deployed Backend: Login Successful!</div>
+                        <div class="info">Response: ${JSON.stringify(result, null, 2)}</div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">❌ Deployed Backend: Login Failed</div>
+                        <div class="info">Status: ${response.status}</div>
+                        <div class="info">Response: ${JSON.stringify(result, null, 2)}</div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ Deployed Backend: Connection Error</div>
+                    <div class="info">Error: ${error.message}</div>
+                `;
+            }
+        }
+
+        async function testDeployedSetup() {
+            const resultDiv = document.getElementById('deployedResult');
+            resultDiv.innerHTML = '<div class="info">Testing deployed admin setup...</div>';
+            
+            try {
+                const response = await fetch('https://my-backend-1-jk7w.onrender.com/api/admin/setup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(ADMIN_CREDENTIALS)
+                });
+                
+                const result = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="${response.ok ? 'success' : 'error'}">${response.ok ? '✅' : '❌'} Deployed Admin Setup</div>
+                    <div class="info">Status: ${response.status}</div>
+                    <div class="info">Response: ${JSON.stringify(result, null, 2)}</div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ Deployed Setup: Connection Error</div>
+                    <div class="info">Error: ${error.message}</div>
+                `;
+            }
+        }
+
+        async function testDeployedConnection() {
+            const resultDiv = document.getElementById('deployedResult');
+            resultDiv.innerHTML = '<div class="info">Testing deployed connection...</div>';
+            
+            try {
+                const response = await fetch('https://my-backend-1-jk7w.onrender.com/api/test');
+                const result = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="${response.ok ? 'success' : 'error'}">${response.ok ? '✅' : '❌'} Deployed Connection</div>
+                    <div class="info">Status: ${response.status}</div>
+                    <div class="info">Response: ${JSON.stringify(result, null, 2)}</div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">❌ Deployed Connection: Error</div>
+                    <div class="info">Error: ${error.message}</div>
+                `;
+            }
+        }
+
+        // Auto-test deployed connection on load
+        window.onload = function() {
+            testDeployedConnection();
+        };
+    </script>
+</body>
+</html>
