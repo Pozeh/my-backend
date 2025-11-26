@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>EcoLoop Kenya - Modern E-Commerce Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- MongoDB Integration -->
@@ -18,6 +18,16 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Mobile-first reset */
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            position: relative;
         }
 
         :root {
@@ -54,6 +64,9 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             min-height: 100vh;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         /* Header Styles */
@@ -3988,10 +4001,26 @@
 
         /* Mobile Responsive Design */
         @media (max-width: 768px) {
+            /* Ensure full viewport coverage */
+            html, body {
+                width: 100%;
+                min-height: 100vh;
+                overflow-x: hidden;
+                margin: 0;
+                padding: 0;
+            }
+
             /* Base responsive adjustments */
             body {
                 font-size: 14px;
                 line-height: 1.5;
+                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            }
+
+            /* Ensure all elements respect viewport */
+            * {
+                max-width: 100%;
+                box-sizing: border-box;
             }
 
             /* Header responsive */
@@ -3999,6 +4028,8 @@
                 padding: 0 15px;
                 flex-wrap: wrap;
                 gap: 10px;
+                width: 100%;
+                max-width: none;
             }
 
             .top-header .contact-info {
@@ -4062,6 +4093,12 @@
             /* Navigation responsive */
             .main-nav .container {
                 padding: 0 15px;
+                width: 100%;
+                max-width: none;
+            }
+
+            .main-nav {
+                width: 100%;
             }
 
             .nav-menu {
@@ -4440,6 +4477,19 @@
             /* Responsive containers */
             .container {
                 padding: 0 15px;
+                width: 100%;
+                max-width: none;
+            }
+
+            /* Sections full width */
+            .hero-section,
+            .categories-section,
+            .products-section,
+            .featured-section,
+            .sell-dashboard {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
             }
 
             /* Responsive text */
@@ -4621,6 +4671,74 @@
             .categories-grid,
             .footer-content {
                 overflow: hidden;
+            }
+        }
+
+        /* Small Mobile Devices (375px and below) */
+        @media (max-width: 375px) {
+            html, body {
+                width: 100vw;
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+
+            .container {
+                padding: 0 10px;
+                width: 100%;
+                max-width: none;
+            }
+
+            .hero-section,
+            .categories-section,
+            .products-section,
+            .featured-section,
+            .sell-dashboard {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                padding: 20px 0;
+            }
+
+            .hero-content {
+                padding: 20px 10px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 0 10px;
+            }
+
+            .category-card,
+            .product-card {
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        /* Ultra Small Mobile (320px and below) */
+        @media (max-width: 320px) {
+            html, body {
+                width: 100vw;
+                min-height: 100vh;
+                overflow-x: hidden;
+                font-size: 12px;
+            }
+
+            .container {
+                padding: 0 5px;
+                width: 100%;
+                max-width: none;
+            }
+
+            .hero-content {
+                padding: 15px 5px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 0 5px;
             }
         }
     </style>
