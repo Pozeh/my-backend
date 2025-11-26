@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Session Authentication Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .success {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+        button {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        button:hover {
+            background: #27ae60;
+        }
+        button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #2ecc71;
+        }
+        .result {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .status.authenticated {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.not-authenticated {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔐 Session Authentication Test</h1>
+    
+    <div class="test-section info">
+        <h3>📋 Test Session-Based Authentication</h3>
+        <p>This page tests the new session-based authentication system using cookies instead of JWT tokens.</p>
+        <div id="authStatus" class="status not-authenticated">Not Authenticated</div>
+    </div>
+
+    <div class="test-section">
+        <h3>👤 User Registration</h3>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" required value="Test">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" required value="User">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required value="testuser@ecoloop.com">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" required value="+254700123456">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required value="TestPassword123!">
+            </div>
+            <button type="submit">Register User</button>
+        </form>
+        <div id="registerResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>🔐 User Login</h3>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" required value="testuser@ecoloop.com">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" required value="TestPassword123!">
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div id="loginResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>👤 Authentication Status</h3>
+        <button onclick="checkAuthStatus()">Check Auth Status</button>
+        <div id="authResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>🚪 Logout</h3>
+        <button onclick="logout()">Logout</button>
+        <div id="logoutResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>🧪 Complete Test Flow</h3>
+        <button onclick="runCompleteTest()">Run Complete Test</button>
+        <div id="completeTestResult"></div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'https://my-backend-1-jk7w.onrender.com';
+        
+        // Check authentication status on page load
+        window.addEventListener('load', function() {
+            checkAuthStatus();
+        });
+
+        async function checkAuthStatus() {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                    method: 'GET',
+                    credentials: 'include' // Important for session cookies
+                });
+
+                const data = await response.json();
+                const statusDiv = document.getElementById('authStatus');
+                const resultDiv = document.getElementById('authResult');
+
+                if (response.ok && data.success) {
+                    statusDiv.className = 'status authenticated';
+                    statusDiv.textContent = `Authenticated as: ${data.user.name || data.user.email}`;
+                    resultDiv.innerHTML = `<div class="result success">${JSON.stringify(data, null, 2)}</div>`;
+                } else {
+                    statusDiv.className = 'status not-authenticated';
+                    statusDiv.textContent = 'Not Authenticated';
+                    resultDiv.innerHTML = `<div class="result error">${JSON.stringify(data, null, 2)}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('authStatus').className = 'status not-authenticated';
+                document.getElementById('authStatus').textContent = 'Error checking auth status';
+                document.getElementById('authResult').innerHTML = `<div class="result error">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function register(event) {
+            event.preventDefault();
+            const resultDiv = document.getElementById('registerResult');
+            resultDiv.innerHTML = '<div class="result info">Registering...</div>';
+
+            try {
+                const formData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    password: document.getElementById('password').value
+                };
+
+                const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = `<div class="result success">Registration successful! Auto-logged in.\n\n${JSON.stringify(data, null, 2)}</div>`;
+                    // Update auth status after successful registration
+                    setTimeout(checkAuthStatus, 1000);
+                } else {
+                    resultDiv.innerHTML = `<div class="result error">Registration failed: ${data.error}\n\n${JSON.stringify(data, null, 2)}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">Network error: ${error.message}</div>`;
+            }
+        }
+
+        async function login(event) {
+            event.preventDefault();
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.innerHTML = '<div class="result info">Logging in...</div>';
+
+            try {
+                const formData = {
+                    email: document.getElementById('loginEmail').value,
+                    password: document.getElementById('loginPassword').value
+                };
+
+                const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = `<div class="result success">Login successful!\n\n${JSON.stringify(data, null, 2)}</div>`;
+                    // Update auth status after successful login
+                    setTimeout(checkAuthStatus, 1000);
+                } else {
+                    resultDiv.innerHTML = `<div class="result error">Login failed: ${data.error}\n\n${JSON.stringify(data, null, 2)}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">Network error: ${error.message}</div>`;
+            }
+        }
+
+        async function logout() {
+            const resultDiv = document.getElementById('logoutResult');
+            resultDiv.innerHTML = '<div class="result info">Logging out...</div>';
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/auth/logout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = `<div class="result success">Logout successful!\n\n${JSON.stringify(data, null, 2)}</div>`;
+                    // Update auth status after logout
+                    setTimeout(checkAuthStatus, 1000);
+                } else {
+                    resultDiv.innerHTML = `<div class="result error">Logout failed: ${data.error}\n\n${JSON.stringify(data, null, 2)}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">Network error: ${error.message}</div>`;
+            }
+        }
+
+        async function runCompleteTest() {
+            const resultDiv = document.getElementById('completeTestResult');
+            resultDiv.innerHTML = '<div class="result info">Running complete authentication test...</div>';
+
+            try {
+                const results = [];
+                
+                // Step 1: Check initial auth status
+                results.push('🔍 Step 1: Checking initial auth status...');
+                const initialAuth = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                    credentials: 'include'
+                });
+                const initialData = await initialAuth.json();
+                results.push(`Initial auth status: ${initialAuth.status} - ${initialData.success ? 'Authenticated' : 'Not Authenticated'}\n`);
+
+                // Step 2: Register new user
+                results.push('📝 Step 2: Registering new user...');
+                const testUser = {
+                    firstName: 'Test',
+                    lastName: 'User',
+                    email: `testuser${Date.now()}@ecoloop.com`,
+                    phone: '+254700123456',
+                    password: 'TestPassword123!'
+                };
+                
+                const regResponse = await fetch(`${BACKEND_URL}/api/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(testUser)
+                });
+                const regData = await regResponse.json();
+                results.push(`Registration: ${regResponse.status} - ${regData.success ? 'Success' : 'Failed'}\n`);
+
+                // Step 3: Check auth status after registration
+                results.push('👤 Step 3: Checking auth status after registration...');
+                const authAfterReg = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                    credentials: 'include'
+                });
+                const authAfterRegData = await authAfterReg.json();
+                results.push(`Auth after registration: ${authAfterReg.status} - ${authAfterRegData.success ? 'Authenticated' : 'Not Authenticated'}\n`);
+
+                // Step 4: Logout
+                results.push('🚪 Step 4: Logging out...');
+                const logoutResponse = await fetch(`${BACKEND_URL}/api/auth/logout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                const logoutData = await logoutResponse.json();
+                results.push(`Logout: ${logoutResponse.status} - ${logoutData.success ? 'Success' : 'Failed'}\n`);
+
+                // Step 5: Check auth status after logout
+                results.push('👤 Step 5: Checking auth status after logout...');
+                const authAfterLogout = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                    credentials: 'include'
+                });
+                const authAfterLogoutData = await authAfterLogout.json();
+                results.push(`Auth after logout: ${authAfterLogout.status} - ${authAfterLogoutData.success ? 'Authenticated' : 'Not Authenticated'}\n`);
+
+                // Step 6: Login
+                results.push('🔐 Step 6: Logging in...');
+                const loginResponse = await fetch(`${BACKEND_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email: testUser.email,
+                        password: testUser.password
+                    })
+                });
+                const loginData = await loginResponse.json();
+                results.push(`Login: ${loginResponse.status} - ${loginData.success ? 'Success' : 'Failed'}\n`);
+
+                // Step 7: Final auth status check
+                results.push('👤 Step 7: Final auth status check...');
+                const finalAuth = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                    credentials: 'include'
+                });
+                const finalAuthData = await finalAuth.json();
+                results.push(`Final auth status: ${finalAuth.status} - ${finalAuthData.success ? 'Authenticated' : 'Not Authenticated'}\n`);
+
+                // Summary
+                const allPassed = regData.success && authAfterRegData.success && logoutData.success && 
+                                 !authAfterLogoutData.success && loginData.success && finalAuthData.success;
+
+                results.push('\n🎉 TEST SUMMARY');
+                results.push('='.repeat(50));
+                results.push(`Overall Result: ${allPassed ? '✅ ALL TESTS PASSED' : '❌ SOME TESTS FAILED'}\n`);
+                
+                results.push('Detailed Results:\n');
+                results.push(`• Registration: ${regData.success ? '✅ PASS' : '❌ FAIL'}\n`);
+                results.push(`• Auto-Login after Registration: ${authAfterRegData.success ? '✅ PASS' : '❌ FAIL'}\n`);
+                results.push(`• Logout: ${logoutData.success ? '✅ PASS' : '❌ FAIL'}\n`);
+                results.push(`• Auth Status after Logout: ${!authAfterLogoutData.success ? '✅ PASS' : '❌ FAIL'}\n`);
+                results.push(`• Login: ${loginData.success ? '✅ PASS' : '❌ FAIL'}\n`);
+                results.push(`• Final Auth Status: ${finalAuthData.success ? '✅ PASS' : '❌ FAIL'}\n`);
+
+                if (allPassed) {
+                    results.push('\n🎊 CONCLUSION: Session-based authentication system is working perfectly!\n');
+                    results.push('✅ Registration with auto-login works\n');
+                    results.push('✅ Session management is functional\n');
+                    results.push('✅ Logout properly clears sessions\n');
+                    results.push('✅ Login creates new sessions\n');
+                    results.push('✅ The system is ready for production!\n');
+                } else {
+                    results.push('\n⚠️ CONCLUSION: Some issues need attention.\n');
+                    results.push('❌ Please check the failed tests above.\n');
+                }
+
+                resultDiv.innerHTML = `<div class="result ${allPassed ? 'success' : 'error'}">${results.join('')}</div>`;
+                
+                // Update main auth status
+                setTimeout(checkAuthStatus, 1000);
+
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">Test failed with error: ${error.message}</div>`;
+            }
+        }
+
+        // Add event listeners
+        document.getElementById('registerForm').addEventListener('submit', register);
+        document.getElementById('loginForm').addEventListener('submit', login);
+    </script>
+</body>
+</html>
