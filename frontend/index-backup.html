@@ -287,162 +287,6 @@
             opacity: 0.8;
         }
 
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 10000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-
-        .modal-content {
-            background-color: var(--white);
-            margin: 5% auto;
-            padding: 0;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-            animation: modalSlideIn 0.3s ease-out;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 20px;
-            border-radius: 15px 15px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-        }
-
-        .close {
-            color: var(--white);
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .close:hover {
-            opacity: 0.7;
-        }
-
-        .modal-body {
-            padding: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .error {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary-color);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn-primary:hover {
-            background: var(--secondary-color);
-        }
-
-        .btn-primary:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        .form-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--text-light);
-        }
-
-        .form-footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .form-footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* User authentication styles */
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
         /* Toast Notification */
         .toast {
             position: fixed;
@@ -479,23 +323,6 @@
                 opacity: 1;
             }
         }
-
-        /* Loading spinner */
-        .spinner {
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid var(--primary-color);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
@@ -503,30 +330,27 @@
     <div class="top-header">
         <div class="container">
             <div class="contact-info">
-                <span><i class="fas fa-phone"></i> +254 700 000 000</span>
-                <span><i class="fas fa-envelope"></i> info@ecoloop.co.ke</span>
+                <span><i class="fas fa-phone"></i> +254 705 424364</span>
+                <span><i class="fas fa-envelope"></i> pmuiruri9657@gmail.com</span>
             </div>
             <div class="user-actions">
                 <a href="#" onclick="showLoginModal(); return false;"><i class="fas fa-user"></i> Login</a>
                 <a href="#" onclick="showRegisterModal(); return false;"><i class="fas fa-user-plus"></i> Register</a>
                 <a href="#" onclick="showSellerRegisterModal(); return false;"><i class="fas fa-store"></i> Sell</a>
                 <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
-                <a href="admin/admin-login.html"><i class="fas fa-leaf"></i> Admin</a>
+                <a href="admin/admin-login.html" onclick="console.log('Admin login clicked');"><i class="fas fa-leaf"></i> Admin</a>
             </div>
         </div>
     </div>
 
     <!-- Main Header -->
     <header class="main-header">
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">🌿 EcoLoop Kenya</a>
-                <div class="search-bar">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search for products...">
-                </div>
-                <div class="header-actions">
-                    <a href="#" class="btn">Start Selling</a>
-                </div>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <i class="fas fa-shopping-cart"></i> EcoLoop Kenya
+            </a>
+            <div class="search-bar">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search for products...">
             </div>
         </div>
     </header>
@@ -535,7 +359,7 @@
     <section class="hero">
         <div class="container">
             <h1>Welcome to EcoLoop Kenya</h1>
-            <p>Your sustainable marketplace for eco-friendly products and services</p>
+            <p>Your sustainable marketplace for quality products</p>
             <a href="#products" class="btn">Start Shopping</a>
         </div>
     </section>
@@ -565,33 +389,32 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>About EcoLoop</h3>
-                    <p>We are Kenya's leading sustainable marketplace, connecting eco-conscious buyers with responsible sellers.</p>
+                    <h3>About EcoLoop Kenya</h3>
+                    <p>Your trusted marketplace for sustainable and quality products. Connecting buyers with trusted sellers across Kenya.</p>
                 </div>
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">How It Works</a></li>
-                        <li><a href="#">Sustainability</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="#categories">Categories</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#" onclick="showToast('Seller registration coming soon!', 'info'); return false;">Become a Seller</a></li>
+                        <li><a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;">Help & Support</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Categories</h3>
+                    <h3>Contact Us</h3>
                     <ul>
-                        <li><a href="#">Electronics</a></li>
-                        <li><a href="#">Fashion</a></li>
-                        <li><a href="#">Home & Kitchen</a></li>
-                        <li><a href="#">Sports</a></li>
+                        <li><i class="fas fa-phone"></i> +254 705 424364</li>
+                        <li><i class="fas fa-envelope"></i> pmuiruri9657@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Connect</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    <h3>Follow Us</h3>
+                    <div style="font-size: 24px;">
+                        <a href="#" style="margin-right: 15px;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="margin-right: 15px;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="margin-right: 15px;"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
@@ -600,230 +423,9 @@
                 <p>&copy; 2024 EcoLoop Kenya. All rights reserved.</p>
             </div>
         </div>
-    </footer>
+    </footer</div>
 
     <!-- Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Login</h2>
-                <span class="close" onclick="closeModal('loginModal')">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="loginForm" onsubmit="handleLogin(event)">
-                    <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" required placeholder="Enter your email">
-                        <div class="error" id="loginEmailError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" required placeholder="Enter your password">
-                        <div class="error" id="loginPasswordError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="rememberMe"> Remember me
-                        </label>
-                    </div>
-                    <button type="submit" class="btn-primary" id="loginBtn">
-                        <span id="loginBtnText">Login</span>
-                    </button>
-                </form>
-                <div class="form-footer">
-                    <p>Don't have an account? <a href="#" onclick="switchModal('loginModal', 'registerModal')">Register</a></p>
-                    <p>Want to sell? <a href="#" onclick="switchModal('loginModal', 'sellerRegisterModal')">Register as Seller</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Register Modal -->
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Register</h2>
-                <span class="close" onclick="closeModal('registerModal')">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="registerForm" onsubmit="handleRegister(event)">
-                    <div class="form-group">
-                        <label for="registerFirstName">First Name</label>
-                        <input type="text" id="registerFirstName" required placeholder="Enter your first name">
-                        <div class="error" id="registerFirstNameError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerLastName">Last Name</label>
-                        <input type="text" id="registerLastName" required placeholder="Enter your last name">
-                        <div class="error" id="registerLastNameError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" required placeholder="Enter your email">
-                        <div class="error" id="registerEmailError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPhone">Phone</label>
-                        <input type="tel" id="registerPhone" required placeholder="Enter your phone number">
-                        <div class="error" id="registerPhoneError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Password</label>
-                        <input type="password" id="registerPassword" required placeholder="Enter your password">
-                        <div class="error" id="registerPasswordError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerConfirmPassword">Confirm Password</label>
-                        <input type="password" id="registerConfirmPassword" required placeholder="Confirm your password">
-                        <div class="error" id="registerConfirmPasswordError"></div>
-                    </div>
-                    <button type="submit" class="btn-primary" id="registerBtn">
-                        <span id="registerBtnText">Register</span>
-                    </button>
-                </form>
-                <div class="form-footer">
-                    <p>Already have an account? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Login</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Seller Register Modal -->
-    <div id="sellerRegisterModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Register as Seller</h2>
-                <span class="close" onclick="closeModal('sellerRegisterModal')">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="sellerRegisterForm" onsubmit="handleSellerRegister(event)">
-                    <div class="form-group">
-                        <label for="sellerFirstName">First Name</label>
-                        <input type="text" id="sellerFirstName" required placeholder="Enter your first name">
-                        <div class="error" id="sellerFirstNameError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="sellerLastName">Last Name</label>
-                        <input type="text" id="sellerLastName" required placeholder="Enter your last name">
-                        <div class="error" id="sellerLastNameError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="sellerEmail">Email</label>
-                        <input type="email" id="sellerEmail" required placeholder="Enter your email">
-                        <div class="error" id="sellerEmailError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="sellerPhone">Phone</label>
-                        <input type="tel" id="sellerPhone" required placeholder="Enter your phone number">
-                        <div class="error" id="sellerPhoneError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="sellerPassword">Password</label>
-                        <input type="password" id="sellerPassword" required placeholder="Enter your password">
-                        <div class="error" id="sellerPasswordError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="sellerConfirmPassword">Confirm Password</label>
-                        <input type="password" id="sellerConfirmPassword" required placeholder="Confirm your password">
-                        <div class="error" id="sellerConfirmPasswordError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="businessName">Business Name</label>
-                        <input type="text" id="businessName" required placeholder="Enter your business name">
-                        <div class="error" id="businessNameError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="businessType">Business Type</label>
-                        <select id="businessType" required>
-                            <option value="">Select business type</option>
-                            <option value="retail">Retail Store</option>
-                            <option value="manufacturer">Manufacturer</option>
-                            <option value="distributor">Distributor</option>
-                            <option value="service">Service Provider</option>
-                            <option value="individual">Individual Seller</option>
-                        </select>
-                        <div class="error" id="businessTypeError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="businessDescription">Business Description</label>
-                        <textarea id="businessDescription" required placeholder="Describe your business" rows="3"></textarea>
-                        <div class="error" id="businessDescriptionError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="businessAddress">Business Address</label>
-                        <input type="text" id="businessAddress" placeholder="Enter your business address">
-                    </div>
-                    <div class="form-group">
-                        <label for="businessCity">City</label>
-                        <input type="text" id="businessCity" placeholder="Enter your city">
-                    </div>
-                    <div class="form-group">
-                        <label for="businessCountry">Country</label>
-                        <input type="text" id="businessCountry" placeholder="Enter your country">
-                    </div>
-                    <button type="submit" class="btn-primary" id="sellerRegisterBtn">
-                        <span id="sellerRegisterBtnText">Register as Seller</span>
-                    </button>
-                </form>
-                <div class="form-footer">
-                    <p>Already have an account? <a href="#" onclick="switchModal('sellerRegisterModal', 'loginModal')">Login</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Backend API URL
-        const BACKEND_URL = 'https://my-backend-1-jk7w.onrender.com';
-
-        // Global state
-        let currentUser = null;
-
-        // Modal functions - Make them global immediately
-        window.showLoginModal = function() {
-            console.log('showLoginModal called');
-            const modal = document.getElementById('loginModal');
-            if (modal) {
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-                console.log('Login modal opened');
-            } else {
-                console.error('Login modal not found');
-            }
-        };
-
-        window.showRegisterModal = function() {
-            console.log('showRegisterModal called');
-            const modal = document.getElementById('registerModal');
-            if (modal) {
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-                console.log('Register modal opened');
-            } else {
-                console.error('Register modal not found');
-            }
-        };
-
-        window.showSellerRegisterModal = function() {
-            console.log('showSellerRegisterModal called');
-            const modal = document.getElementById('sellerRegisterModal');
-            if (modal) {
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-                console.log('Seller register modal opened');
-            } else {
-                console.error('Seller register modal not found');
-            }
-        };
-
-        window.closeModal = function(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            document.body.style.overflow = 'auto';
-            clearFormErrors(modalId);
-        };
-
-        // Authentication System
-        class AuthManager {
             constructor() {
                 this.init();
             }
@@ -836,20 +438,29 @@
 
             async checkAuthStatus() {
                 try {
-                    const response = await fetch(`${BACKEND_URL}/api/auth/verify`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        credentials: 'include' // Use cookies instead of tokens
-                    });
+                    const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+                    if (token) {
+                        const response = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            }
+                        });
 
-                    if (response.ok) {
-                        const data = await response.json();
-                        currentUser = data.user;
+                        if (response.ok) {
+                            const data = await response.json();
+                            currentUser = data.user;
+                            authToken = token;
+                        } else {
+                            localStorage.removeItem('authToken');
+                            sessionStorage.removeItem('authToken');
+                        }
                     }
                 } catch (error) {
                     console.error('Auth check failed:', error);
+                    localStorage.removeItem('authToken');
+                    sessionStorage.removeItem('authToken');
                 }
             }
 
@@ -860,8 +471,7 @@
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        credentials: 'include', // Use cookies for session management
-                        body: JSON.stringify({ email, password, rememberMe })
+                        body: JSON.stringify({ email, password })
                     });
 
                     const data = await response.json();
@@ -873,6 +483,13 @@
                             email: data.session.email,
                             role: data.session.role
                         };
+                        authToken = data.session.email; // Use email as token for now
+                        
+                        if (rememberMe) {
+                            localStorage.setItem('authToken', authToken);
+                        } else {
+                            sessionStorage.setItem('authToken', authToken);
+                        }
 
                         this.updateUI();
                         showToast('Login successful!', 'success');
@@ -934,18 +551,11 @@
                 }
             }
 
-            async logout() {
-                try {
-                    // Call backend logout endpoint to clear session
-                    await fetch(`${BACKEND_URL}/api/auth/logout`, {
-                        method: 'POST',
-                        credentials: 'include'
-                    });
-                } catch (error) {
-                    console.error('Logout error:', error);
-                }
-                
+            logout() {
                 currentUser = null;
+                authToken = null;
+                localStorage.removeItem('authToken');
+                sessionStorage.removeItem('authToken');
                 this.updateUI();
                 showToast('Logged out successfully!', 'info');
             }
@@ -964,7 +574,7 @@
                         </div>
                         <a href="#" onclick="authManager.logout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
                         <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
-                        <a href="admin/admin-login.html"><i class="fas fa-leaf"></i> Admin</a>
+                        <a href="admin/admin-login.html" onclick="console.log('Admin login clicked');"><i class="fas fa-leaf"></i> Admin</a>
                     `;
                 } else {
                     // User is not logged in
@@ -973,7 +583,7 @@
                         <a href="#" onclick="showRegisterModal(); return false;"><i class="fas fa-user-plus"></i> Register</a>
                         <a href="#" onclick="showSellerRegisterModal(); return false;"><i class="fas fa-store"></i> Sell</a>
                         <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
-                        <a href="admin/admin-login.html"><i class="fas fa-leaf"></i> Admin</a>
+                        <a href="admin/admin-login.html" onclick="console.log('Admin login clicked');"><i class="fas fa-leaf"></i> Admin</a>
                     `;
                 }
             }
@@ -982,26 +592,26 @@
         // Initialize auth manager
         const authManager = new AuthManager();
 
-        // Helper functions
-        function clearFormErrors(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                const errorElements = modal.querySelectorAll('.error');
-                errorElements.forEach(element => element.textContent = '');
-            }
+        // Modal functions
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
 
-        function setButtonLoading(buttonId, loading) {
-            const button = document.getElementById(buttonId);
-            const buttonText = document.getElementById(buttonId.replace('Btn', 'BtnText'));
-            
-            if (loading) {
-                button.disabled = true;
-                buttonText.innerHTML = '<div class="spinner"></div>Processing...';
-            } else {
-                button.disabled = false;
-                buttonText.textContent = buttonText.textContent.replace('Processing...', '').replace('<div class="spinner"></div>', '');
-            }
+        function showRegisterModal() {
+            document.getElementById('registerModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showSellerRegisterModal() {
+            document.getElementById('sellerRegisterModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+            clearFormErrors(modalId);
         }
 
         function switchModal(fromModal, toModal) {
@@ -1249,7 +859,812 @@
             }
         });
 
-        // Toast notification function
+        // Toast notification function (existing)
+        function showToast(message, type = 'info', duration = 3000) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, duration);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .close {
+            color: var(--white);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .close:hover {
+            opacity: 1;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .form-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required placeholder="Enter your email">
+                        <div class="error" id="loginEmailError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required placeholder="Enter your password">
+                        <div class="error" id="loginPasswordError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="rememberMe"> Remember me
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary" id="loginBtn">
+                        <span id="loginBtnText">Login</span>
+                    </button>
+                </form>
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="#" onclick="switchModal('loginModal', 'registerModal')">Register</a></p>
+                    <p>Want to sell? <a href="#" onclick="switchModal('loginModal', 'sellerRegisterModal')">Register as Seller</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Register</h2>
+                <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="registerFirstName">First Name</label>
+                        <input type="text" id="registerFirstName" required placeholder="Enter your first name">
+                        <div class="error" id="registerFirstNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerLastName">Last Name</label>
+                        <input type="text" id="registerLastName" required placeholder="Enter your last name">
+                        <div class="error" id="registerLastNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required placeholder="Enter your email">
+                        <div class="error" id="registerEmailError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPhone">Phone</label>
+                        <input type="tel" id="registerPhone" required placeholder="Enter your phone number">
+                        <div class="error" id="registerPhoneError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required placeholder="Enter your password" minlength="6">
+                        <div class="error" id="registerPasswordError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">Confirm Password</label>
+                        <input type="password" id="registerConfirmPassword" required placeholder="Confirm your password">
+                        <div class="error" id="registerConfirmPasswordError"></div>
+                    </div>
+                    <button type="submit" class="btn-primary" id="registerBtn">
+                        <span id="registerBtnText">Register</span>
+                    </button>
+                </form>
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Login</a></p>
+                    <p>Want to sell? <a href="#" onclick="switchModal('registerModal', 'sellerRegisterModal')">Register as Seller</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seller Register Modal -->
+    <div id="sellerRegisterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Register as Seller</h2>
+                <span class="close" onclick="closeModal('sellerRegisterModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="sellerRegisterForm" onsubmit="handleSellerRegister(event)">
+                    <div class="form-group">
+                        <label for="sellerFirstName">First Name</label>
+                        <input type="text" id="sellerFirstName" required placeholder="Enter your first name">
+                        <div class="error" id="sellerFirstNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sellerLastName">Last Name</label>
+                        <input type="text" id="sellerLastName" required placeholder="Enter your last name">
+                        <div class="error" id="sellerLastNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sellerEmail">Email</label>
+                        <input type="email" id="sellerEmail" required placeholder="Enter your email">
+                        <div class="error" id="sellerEmailError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sellerPhone">Phone</label>
+                        <input type="tel" id="sellerPhone" required placeholder="Enter your phone number">
+                        <div class="error" id="sellerPhoneError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sellerPassword">Password</label>
+                        <input type="password" id="sellerPassword" required placeholder="Enter your password" minlength="6">
+                        <div class="error" id="sellerPasswordError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sellerConfirmPassword">Confirm Password</label>
+                        <input type="password" id="sellerConfirmPassword" required placeholder="Confirm your password">
+                        <div class="error" id="sellerConfirmPasswordError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessName">Business Name</label>
+                        <input type="text" id="businessName" required placeholder="Enter your business name">
+                        <div class="error" id="businessNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessType">Business Type</label>
+                        <select id="businessType" required>
+                            <option value="">Select business type</option>
+                            <option value="individual">Individual</option>
+                            <option value="sole_proprietorship">Sole Proprietorship</option>
+                            <option value="partnership">Partnership</option>
+                            <option value="limited_company">Limited Company</option>
+                            <option value="corporation">Corporation</option>
+                        </select>
+                        <div class="error" id="businessTypeError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessDescription">Business Description</label>
+                        <textarea id="businessDescription" required placeholder="Describe your business" rows="3"></textarea>
+                        <div class="error" id="businessDescriptionError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessAddress">Business Address</label>
+                        <input type="text" id="businessAddress" required placeholder="Enter your business address">
+                        <div class="error" id="businessAddressError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessCity">Business City</label>
+                        <input type="text" id="businessCity" required placeholder="Enter your business city">
+                        <div class="error" id="businessCityError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessCountry">Business Country</label>
+                        <input type="text" id="businessCountry" required placeholder="Enter your business country">
+                        <div class="error" id="businessCountryError"></div>
+                    </div>
+                    <button type="submit" class="btn-primary" id="sellerRegisterBtn">
+                        <span id="sellerRegisterBtnText">Register as Seller</span>
+                    </button>
+                </form>
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#" onclick="switchModal('sellerRegisterModal', 'loginModal')">Login</a></p>
+                    <p>Want to buy? <a href="#" onclick="switchModal('sellerRegisterModal', 'registerModal')">Register as Buyer</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Backend API URL
+        const BACKEND_URL = 'https://my-backend-1-jk7w.onrender.com';
+
+        // Global state
+        let currentUser = null;
+        let authToken = null;
+
+        // Authentication System
+        class AuthManager {
+            constructor() {
+                this.init();
+            }
+
+            async init() {
+                // Check if user is already logged in
+                await this.checkAuthStatus();
+                this.updateUI();
+            }
+
+            async checkAuthStatus() {
+                try {
+                    const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+                    if (token) {
+                        const response = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            currentUser = data.user;
+                            authToken = token;
+                        } else {
+                            localStorage.removeItem('authToken');
+                            sessionStorage.removeItem('authToken');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Auth check failed:', error);
+                    localStorage.removeItem('authToken');
+                    sessionStorage.removeItem('authToken');
+                }
+            }
+
+            async login(email, password, rememberMe = false) {
+                try {
+                    const response = await fetch(`${BACKEND_URL}/api/user/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        currentUser = {
+                            id: data.session.userId,
+                            name: data.session.name,
+                            email: data.session.email,
+                            role: data.session.role
+                        };
+                        authToken = data.session.email; // Use email as token for now
+                        
+                        if (rememberMe) {
+                            localStorage.setItem('authToken', authToken);
+                        } else {
+                            sessionStorage.setItem('authToken', authToken);
+                        }
+
+                        this.updateUI();
+                        showToast('Login successful!', 'success');
+                        return { success: true };
+                    } else {
+                        return { success: false, error: data.error || 'Login failed' };
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    return { success: false, error: 'Network error. Please try again.' };
+                }
+            }
+
+            async register(userData) {
+                try {
+                    const response = await fetch(`${BACKEND_URL}/api/user/register`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(userData)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        showToast('Registration successful! Please login.', 'success');
+                        return { success: true };
+                    } else {
+                        return { success: false, error: data.error || 'Registration failed' };
+                    }
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    return { success: false, error: 'Network error. Please try again.' };
+                }
+            }
+
+            async sellerRegister(sellerData) {
+                try {
+                    const response = await fetch(`${BACKEND_URL}/api/seller/register`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(sellerData)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        showToast('Seller registration successful! Please wait for admin approval.', 'success');
+                        return { success: true };
+                    } else {
+                        return { success: false, error: data.error || 'Registration failed' };
+                    }
+                } catch (error) {
+                    console.error('Seller registration error:', error);
+                    return { success: false, error: 'Network error. Please try again.' };
+                }
+            }
+
+            logout() {
+                currentUser = null;
+                authToken = null;
+                localStorage.removeItem('authToken');
+                sessionStorage.removeItem('authToken');
+                this.updateUI();
+                showToast('Logged out successfully!', 'info');
+            }
+
+            updateUI() {
+                const userActions = document.querySelector('.user-actions');
+                if (!userActions) return;
+
+                if (currentUser) {
+                    // User is logged in
+                    const initials = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : currentUser.email.charAt(0).toUpperCase();
+                    userActions.innerHTML = `
+                        <div class="user-info">
+                            <div class="user-avatar">${initials}</div>
+                            <span>${currentUser.name || currentUser.email}</span>
+                        </div>
+                        <a href="#" onclick="authManager.logout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
+                        <a href="admin/admin-login.html" onclick="console.log('Admin login clicked');"><i class="fas fa-leaf"></i> Admin</a>
+                    `;
+                } else {
+                    // User is not logged in
+                    userActions.innerHTML = `
+                        <a href="#" onclick="showLoginModal(); return false;"><i class="fas fa-user"></i> Login</a>
+                        <a href="#" onclick="showRegisterModal(); return false;"><i class="fas fa-user-plus"></i> Register</a>
+                        <a href="#" onclick="showSellerRegisterModal(); return false;"><i class="fas fa-store"></i> Sell</a>
+                        <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
+                        <a href="admin/admin-login.html" onclick="console.log('Admin login clicked');"><i class="fas fa-leaf"></i> Admin</a>
+                    `;
+                }
+            }
+        }
+
+        // Initialize auth manager
+        const authManager = new AuthManager();
+
+        // Modal functions
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showRegisterModal() {
+            document.getElementById('registerModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showSellerRegisterModal() {
+            document.getElementById('sellerRegisterModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+            clearFormErrors(modalId);
+        }
+
+        function switchModal(fromModal, toModal) {
+            closeModal(fromModal);
+            setTimeout(() => {
+                if (toModal === 'registerModal') showRegisterModal();
+                else if (toModal === 'sellerRegisterModal') showSellerRegisterModal();
+                else if (toModal === 'loginModal') showLoginModal();
+            }, 300);
+        }
+
+        function clearFormErrors(modalId) {
+            const modal = document.getElementById(modalId);
+            const errorElements = modal.querySelectorAll('.error');
+            errorElements.forEach(element => element.textContent = '');
+        }
+
+        function setButtonLoading(buttonId, loading) {
+            const button = document.getElementById(buttonId);
+            const buttonText = document.getElementById(buttonId.replace('Btn', 'BtnText'));
+            
+            if (loading) {
+                button.disabled = true;
+                buttonText.innerHTML = '<div class="spinner"></div>Processing...';
+            } else {
+                button.disabled = false;
+                buttonText.textContent = buttonText.textContent.replace('Processing...', '').replace('<div class="spinner"></div>', '');
+            }
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            const re = /^[\d\s\-\+\(\)]+$/;
+            return re.test(phone) && phone.length >= 10;
+        }
+
+        // Form handlers
+        async function handleLogin(event) {
+            event.preventDefault();
+            clearFormErrors('loginModal');
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            let isValid = true;
+
+            if (!validateEmail(email)) {
+                document.getElementById('loginEmailError').textContent = 'Please enter a valid email';
+                isValid = false;
+            }
+
+            if (password.length < 6) {
+                document.getElementById('loginPasswordError').textContent = 'Password must be at least 6 characters';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            setButtonLoading('loginBtn', true);
+
+            const result = await authManager.login(email, password, rememberMe);
+
+            setButtonLoading('loginBtn', false);
+
+            if (result.success) {
+                closeModal('loginModal');
+                document.getElementById('loginForm').reset();
+            } else {
+                document.getElementById('loginEmailError').textContent = result.error;
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            clearFormErrors('registerModal');
+
+            const firstName = document.getElementById('registerFirstName').value;
+            const lastName = document.getElementById('registerLastName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            let isValid = true;
+
+            if (firstName.length < 2) {
+                document.getElementById('registerFirstNameError').textContent = 'First name must be at least 2 characters';
+                isValid = false;
+            }
+
+            if (lastName.length < 2) {
+                document.getElementById('registerLastNameError').textContent = 'Last name must be at least 2 characters';
+                isValid = false;
+            }
+
+            if (!validateEmail(email)) {
+                document.getElementById('registerEmailError').textContent = 'Please enter a valid email';
+                isValid = false;
+            }
+
+            if (!validatePhone(phone)) {
+                document.getElementById('registerPhoneError').textContent = 'Please enter a valid phone number';
+                isValid = false;
+            }
+
+            if (password.length < 6) {
+                document.getElementById('registerPasswordError').textContent = 'Password must be at least 6 characters';
+                isValid = false;
+            }
+
+            if (password !== confirmPassword) {
+                document.getElementById('registerConfirmPasswordError').textContent = 'Passwords do not match';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            setButtonLoading('registerBtn', true);
+
+            const userData = {
+                name: `${firstName} ${lastName}`,
+                email,
+                phone,
+                password
+            };
+
+            const result = await authManager.register(userData);
+
+            setButtonLoading('registerBtn', false);
+
+            if (result.success) {
+                closeModal('registerModal');
+                document.getElementById('registerForm').reset();
+                setTimeout(() => showLoginModal(), 1000);
+            } else {
+                document.getElementById('registerEmailError').textContent = result.error;
+            }
+        }
+
+        async function handleSellerRegister(event) {
+            event.preventDefault();
+            clearFormErrors('sellerRegisterModal');
+
+            const firstName = document.getElementById('sellerFirstName').value;
+            const lastName = document.getElementById('sellerLastName').value;
+            const email = document.getElementById('sellerEmail').value;
+            const phone = document.getElementById('sellerPhone').value;
+            const password = document.getElementById('sellerPassword').value;
+            const confirmPassword = document.getElementById('sellerConfirmPassword').value;
+            const businessName = document.getElementById('businessName').value;
+            const businessType = document.getElementById('businessType').value;
+            const businessDescription = document.getElementById('businessDescription').value;
+            const businessAddress = document.getElementById('businessAddress').value;
+            const businessCity = document.getElementById('businessCity').value;
+            const businessCountry = document.getElementById('businessCountry').value;
+
+            let isValid = true;
+
+            if (firstName.length < 2) {
+                document.getElementById('sellerFirstNameError').textContent = 'First name must be at least 2 characters';
+                isValid = false;
+            }
+
+            if (lastName.length < 2) {
+                document.getElementById('sellerLastNameError').textContent = 'Last name must be at least 2 characters';
+                isValid = false;
+            }
+
+            if (!validateEmail(email)) {
+                document.getElementById('sellerEmailError').textContent = 'Please enter a valid email';
+                isValid = false;
+            }
+
+            if (!validatePhone(phone)) {
+                document.getElementById('sellerPhoneError').textContent = 'Please enter a valid phone number';
+                isValid = false;
+            }
+
+            if (password.length < 6) {
+                document.getElementById('sellerPasswordError').textContent = 'Password must be at least 6 characters';
+                isValid = false;
+            }
+
+            if (password !== confirmPassword) {
+                document.getElementById('sellerConfirmPasswordError').textContent = 'Passwords do not match';
+                isValid = false;
+            }
+
+            if (businessName.length < 2) {
+                document.getElementById('businessNameError').textContent = 'Business name must be at least 2 characters';
+                isValid = false;
+            }
+
+            if (!businessType) {
+                document.getElementById('businessTypeError').textContent = 'Please select a business type';
+                isValid = false;
+            }
+
+            if (businessDescription.length < 10) {
+                document.getElementById('businessDescriptionError').textContent = 'Business description must be at least 10 characters';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            setButtonLoading('sellerRegisterBtn', true);
+
+            const sellerData = {
+                name: `${firstName} ${lastName}`,
+                email,
+                phone,
+                password,
+                businessName,
+                businessType,
+                businessDescription,
+                businessAddress,
+                businessCity,
+                businessCountry
+            };
+
+            const result = await authManager.sellerRegister(sellerData);
+
+            setButtonLoading('sellerRegisterBtn', false);
+
+            if (result.success) {
+                closeModal('sellerRegisterModal');
+                document.getElementById('sellerRegisterForm').reset();
+                setTimeout(() => showLoginModal(), 2000);
+            } else {
+                document.getElementById('sellerEmailError').textContent = result.error;
+            }
+        }
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                clearFormErrors(event.target.id);
+            }
+        });
+
+        // Toast notification function (existing)
         function showToast(message, type = 'info', duration = 3000) {
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
@@ -1434,32 +1849,6 @@
             // Scroll to products section
             document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
         }
-
-        // Debug functions - Test modal functionality
-        function testModals() {
-            console.log('Testing modals...');
-            console.log('Login modal exists:', !!document.getElementById('loginModal'));
-            console.log('Register modal exists:', !!document.getElementById('registerModal'));
-            console.log('Seller modal exists:', !!document.getElementById('sellerRegisterModal'));
-            
-            // Test show functions
-            console.log('showLoginModal function exists:', typeof showLoginModal);
-            console.log('showRegisterModal function exists:', typeof showRegisterModal);
-        }
-
-        // Add test buttons when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add debug test buttons
-            const testDiv = document.createElement('div');
-            testDiv.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: white; padding: 10px; border: 2px solid #2ecc71; border-radius: 10px;';
-            testDiv.innerHTML = `
-                <div style="margin-bottom: 10px; font-weight: bold;">🔧 Modal Test:</div>
-                <button onclick="showLoginModal()" style="margin: 2px; padding: 5px 10px; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer;">Test Login</button>
-                <button onclick="showRegisterModal()" style="margin: 2px; padding: 5px 10px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Test Register</button>
-                <button onclick="testModals()" style="margin: 2px; padding: 5px 10px; background: #f39c12; color: white; border: none; border-radius: 5px; cursor: pointer;">Debug</button>
-            `;
-            document.body.appendChild(testDiv);
-        });
     </script>
 </body>
 </html>

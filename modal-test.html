@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modal Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        
+        .test-button {
+            background: #2ecc71;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        .test-button:hover {
+            background: #27ae60;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .modal-header {
+            background: #2ecc71;
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            background: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Modal Test Page</h1>
+    
+    <div>
+        <button class="test-button" onclick="showLoginModal()">Test Login Modal</button>
+        <button class="test-button" onclick="showRegisterModal()">Test Register Modal</button>
+        <button class="test-button" onclick="debugModals()">Debug Info</button>
+    </div>
+
+    <div id="debug-info" style="margin-top: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px;"></div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password">
+                    </div>
+                    <button type="button" class="btn-primary" onclick="closeModal('loginModal')">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Register</h2>
+                <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="registerFirstName">First Name</label>
+                        <input type="text" id="registerFirstName" placeholder="Enter your first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" placeholder="Enter your password">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">Confirm Password</label>
+                        <input type="password" id="registerConfirmPassword" placeholder="Confirm your password">
+                    </div>
+                    <button type="button" class="btn-primary" onclick="closeModal('registerModal')">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function showLoginModal() {
+            console.log('showLoginModal called');
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.style.display = 'block';
+                console.log('Login modal opened');
+            } else {
+                console.error('Login modal not found');
+            }
+        }
+
+        function showRegisterModal() {
+            console.log('showRegisterModal called');
+            const modal = document.getElementById('registerModal');
+            if (modal) {
+                modal.style.display = 'block';
+                console.log('Register modal opened');
+            } else {
+                console.error('Register modal not found');
+            }
+        }
+
+        function closeModal(modalId) {
+            console.log('closeModal called for:', modalId);
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+                console.log(modalId + ' closed');
+            } else {
+                console.error(modalId + ' not found');
+            }
+        }
+
+        function debugModals() {
+            const debugDiv = document.getElementById('debug-info');
+            const info = {
+                'Login modal exists': !!document.getElementById('loginModal'),
+                'Register modal exists': !!document.getElementById('registerModal'),
+                'Login modal display': document.getElementById('loginModal')?.style.display,
+                'Register modal display': document.getElementById('registerModal')?.style.display,
+                'showLoginModal function': typeof showLoginModal,
+                'showRegisterModal function': typeof showRegisterModal,
+                'closeModal function': typeof closeModal
+            };
+            
+            debugDiv.innerHTML = '<h3>Debug Information:</h3><pre>' + JSON.stringify(info, null, 2) + '</pre>';
+            console.log('Debug info:', info);
+        }
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                console.log('Modal closed by clicking outside');
+            }
+        });
+
+        // Auto-debug on page load
+        window.addEventListener('load', function() {
+            console.log('Page loaded, running auto-debug...');
+            debugModals();
+        });
+    </script>
+</body>
+</html>
