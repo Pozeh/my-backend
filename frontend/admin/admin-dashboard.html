@@ -701,9 +701,12 @@
                         <div class="table-header">
                             <h2 class="table-title">Seller Management</h2>
                             <div class="table-actions">
-                                <button class="btn btn-primary btn-sm" onclick="addSeller()">
-                                    <i class="fas fa-plus"></i> Add Seller
-                                </button>
+                                <select id="sellerStatusFilter" class="form-select" onchange="loadSellers()">
+                                    <option value="all">All Sellers</option>
+                                    <option value="pending">Pending Approval</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
                             </div>
                         </div>
                         <table class="data-table">
@@ -711,15 +714,16 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Business</th>
                                     <th>Store</th>
-                                    <th>Products</th>
+                                    <th>Applied</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="sellersTable">
                                 <tr>
-                                    <td colspan="6" class="loading">
+                                    <td colspan="7" class="loading">
                                         <div class="spinner"></div>
                                         <p>Loading sellers...</p>
                                     </td>
@@ -987,37 +991,155 @@
         // Load sellers
         async function loadSellers() {
             const tbody = document.getElementById('sellersTable');
+            const statusFilter = document.getElementById('sellerStatusFilter').value;
             
             try {
                 const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
-                const response = await fetch(`${backendUrl}/api/admin/sellers`);
+                const url = statusFilter !== 'all' 
+                    ? `${backendUrl}/api/admin/sellers?status=${statusFilter}`
+                    : `${backendUrl}/api/admin/sellers`;
+                    
+                const response = await fetch(url);
                 const result = await response.json();
 
                 if (response.ok && result.success) {
                     const sellers = result.sellers || [];
-                    tbody.innerHTML = sellers.map(seller => `
-                        <tr>
-                            <td>${seller.name || 'Unknown'}</td>
-                            <td>${seller.email || 'Unknown'}</td>
-                            <td>${seller.storeName || 'No store'}</td>
-                            <td>${seller.productCount || 0}</td>
-                            <td><span class="status-badge ${seller.status || 'pending'}">${seller.status || 'Pending'}</span></td>
-                            <td>
-                                <button class="btn btn-success btn-sm" onclick="approveSeller('${seller._id}')">
+                    tbody.innerHTML = sellers.map(seller => {
+                        const createdDate = seller.createdAt ? new Date(seller.createdAt).toLocaleDateString() : 'Unknown';
+                        const statusClass = seller.status || 'pending';
+                        const statusText = seller.status ? seller.status.charAt(0).toUpperCase() + seller.status.slice(1) : 'Pending';
+                        
+                        let actions = '';
+                        if (seller.status === 'pending') {
+                            actions = `
+                                <button class="btn btn-success btn-sm" onclick="approveSeller('${seller._id}')" title="Approve Seller">
                                     <i class="fas fa-check"></i> Approve
                                 </button>
-                                <button class="btn btn-danger btn-sm" onclick="rejectSeller('${seller._id}')">
+                                <button class="btn btn-danger btn-sm" onclick="rejectSeller('${seller._id}')" title="Reject Seller">
                                     <i class="fas fa-times"></i> Reject
                                 </button>
+                                <button class="btn btn-info btn-sm" onclick="viewSellerDetails('${seller._id}')" title="View Details">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            `;
+                        } else if (seller.status === 'approved') {
+                            actions = `
+                                <button class="btn btn-info btn-sm" onclick="viewSellerDetails('${seller._id}')" title="View Details">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-warning btn-sm" onclick="rejectSeller('${seller._id}')" title="Reject Seller">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            `;
+                        } else {
+                            actions = `
+                                <button class="btn btn-info btn-sm" onclick="viewSellerDetails('${seller._id}')" title="View Details">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-success btn-sm" onclick="approveSeller('${seller._id}')" title="Approve Seller">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                            `;
+                        }
+                        
+                        return `
+                            <tr>
+                                <td>
+                                    <div class="seller-info">
+                                        <strong>${seller.firstName || 'Unknown'} ${seller.lastName || ''}</strong>
+                                        <br><small>${seller.phone || 'No phone'}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="email-info">
+                                        ${seller.email || 'Unknown'}
+                                        <br><small>ID: ${seller._id ? seller._id.substring(0, 8) + '...' : 'Unknown'}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="business-info">
+                                        <strong>${seller.businessName || 'No business'}</strong>
+                                        <br><small>${seller.businessType ? seller.businessType.replace('_', ' ').toUpperCase() : 'Unknown'}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="store-info">
+                                        <strong>${seller.storeName || 'No store'}</strong>
+                                        <br><small>${seller.storeCategory || 'Uncategorized'}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-info">
+                                        ${createdDate}
+                                        <br><small>${seller.lastLogin ? 'Last: ' + new Date(seller.lastLogin).toLocaleDateString() : 'Never logged in'}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-badge ${statusClass}">${statusText}</span>
+                                    ${seller.rejectionReason ? `<br><small class="text-danger">${seller.rejectionReason}</small>` : ''}
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        ${actions}
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                    
+                    if (sellers.length === 0) {
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    <i class="fas fa-info-circle"></i> No sellers found
+                                </td>
+                            </tr>
+                        `;
+                    }
+                } else {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center text-danger">
+                                <i class="fas fa-exclamation-triangle"></i> Failed to load sellers
                             </td>
                         </tr>
-                    `).join('');
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="6">No sellers found</td></tr>';
+                    `;
                 }
             } catch (error) {
                 console.error('Error loading sellers:', error);
-                tbody.innerHTML = '<tr><td colspan="6">Error loading sellers</td></tr>';
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center text-danger">
+                            <i class="fas fa-exclamation-triangle"></i> Error loading sellers
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function viewSellerDetails(sellerId) {
+            // Show seller details modal (implement as needed)
+            showAlert(`Viewing details for seller: ${sellerId}`, 'info');
+        }
+
+        async function loadStats() {
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/stats`);
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const stats = result;
+                    document.getElementById('totalUsers').textContent = stats.totalUsers || 0;
+                    document.getElementById('totalSellers').textContent = stats.totalSellers || 0;
+                    document.getElementById('pendingSellers').textContent = stats.pendingSellers || 0;
+                    document.getElementById('totalProducts').textContent = stats.totalProducts || 0;
+                    document.getElementById('pendingProducts').textContent = stats.pendingProducts || 0;
+                    document.getElementById('totalOrders').textContent = stats.totalOrders || 0;
+                    document.getElementById('totalRevenue').textContent = 'KES ' + (stats.totalRevenue || 0).toLocaleString();
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
             }
         }
 
