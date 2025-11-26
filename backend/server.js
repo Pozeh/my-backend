@@ -1189,7 +1189,7 @@ app.use('/api/user', secureAuthRoutes);
 app.get('/api/test', (req, res) => {
   res.json({ 
     success: true, 
-    message: "Backend is working - Updated",
+    message: "Backend is working - Updated v2",
     timestamp: new Date().toISOString(),
     routes: [
       '/api/user/register',
@@ -1197,6 +1197,29 @@ app.get('/api/test', (req, res) => {
       '/api/user/session',
       '/api/user/logout'
     ]
+  });
+});
+
+// Simple test endpoint
+app.get('/api/simple-test', (req, res) => {
+  res.json({ 
+    success: true, 
+    message: "Simple test works",
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Debug endpoint to check request handling
+app.post('/api/debug-register', (req, res) => {
+  console.log('Debug register endpoint hit');
+  console.log('Headers:', req.headers);
+  console.log('Body:', req.body);
+  
+  res.json({ 
+    success: true, 
+    message: "Debug register works",
+    receivedData: req.body,
+    timestamp: new Date().toISOString()
   });
 });
 
