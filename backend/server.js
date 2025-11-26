@@ -93,17 +93,52 @@ async function connectToMongo() {
 // Root health check endpoint
 app.get("/", async (req, res) => {
   try {
-    await db.admin().ping();
-    res.json({ 
-      status: "healthy", 
-      message: "EcoLoop Kenya Backend API is running!",
-      mongo: "connected"
+    // Test MongoDB connection
+    await db.collection("users").findOne({});
+    
+    res.json({
+      success: true,
+      message: "EcoLoop Kenya Backend API is running",
+      status: "healthy",
+      mongodb: "connected",
+      timestamp: new Date().toISOString(),
+      version: "1.0.0"
     });
   } catch (error) {
-    res.status(500).json({ 
-      status: "unhealthy", 
-      message: "MongoDB connection failed",
-      error: error.message 
+    res.status(500).json({
+      success: false,
+      message: "Backend running but MongoDB connection failed",
+      error: error.message,
+      status: "unhealthy"
+    });
+  }
+});
+
+// MongoDB connection test endpoint
+app.get("/api/test/mongodb", async (req, res) => {
+  try {
+    // Test basic MongoDB operations
+    const collections = await db.listCollections().toArray();
+    const userCount = await db.collection("users").countDocuments();
+    const sellerCount = await db.collection("sellers").countDocuments();
+    const adminCount = await db.collection("admins").countDocuments();
+    
+    res.json({
+      success: true,
+      message: "MongoDB connection test successful",
+      collections: collections.map(c => c.name),
+      stats: {
+        users: userCount,
+        sellers: sellerCount,
+        admins: adminCount
+      },
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "MongoDB connection test failed",
+      error: error.message
     });
   }
 });
@@ -399,6 +434,364 @@ app.post("/api/admin/setup", async (req, res) => {
   }
 });
 
+// Comprehensive Seller Registration
+app.post("/api/seller/register", async (req, res) => {
+  try {
+    const {
+      // Personal Information
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+      
+      // Business Information
+      businessName,
+      businessType,
+      businessDescription,
+      businessAddress,
+      businessCity,
+      businessCountry,
+      
+      // Store Information
+      storeName,
+      storeDescription,
+      storeCategory,
+      
+      // Legal Information
+      businessLicense,
+      taxIdentification,
+      
+      // Banking Information
+      bankName,
+      accountNumber,
+      accountName,
+      
+      // Additional Information
+      website,
+      socialMedia,
+      operatingHours
+    } = req.body;
+    
+    // Check if seller already exists
+    const existingSeller = await db.collection("sellers").findOne({ 
+      $or: [{ email: email }, { phone: phone }] 
+    });
+    if (existingSeller) {
+      return res.status(400).json({ 
+        success: false, 
+        error: "Seller with this email or phone already exists" 
+      });
+    }
+    
+    // Create new seller with pending status
+    const seller = {
+      // Personal Details
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+      
+      // Business Details
+      businessName,
+      businessType,
+      businessDescription,
+      businessAddress,
+      businessCity,
+      businessCountry,
+      
+      // Store Details
+      storeName,
+      storeDescription,
+      storeCategory,
+      
+      // Legal Documents
+      businessLicense,
+      taxIdentification,
+      
+      // Banking Details
+      bankName,
+      accountNumber,
+      accountName,
+      
+      // Additional Info
+      website,
+      socialMedia,
+      operatingHours,
+      
+      // System Fields
+      status: "pending", // Requires admin approval
+      approvalStatus: "pending",
+      rejectionReason: null,
+      approvedBy: null,
+      approvedAt: null,
+      rejectedBy: null,
+      rejectedAt: null,
+      
+      // Statistics
+      totalProducts: 0,
+      totalSales: 0,
+      totalRevenue: 0,
+      
+      // Timestamps
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      lastLogin: null,
+      
+      // Verification
+      emailVerified: false,
+      phoneVerified: false,
+      businessVerified: false
+    };
+    
+    const result = await db.collection("sellers").insertOne(seller);
+    
+    console.log('Seller registration submitted:', { 
+      email, 
+      businessName, 
+      storeName,
+      id: result.insertedId 
+    });
+    
+    res.json({ 
+      success: true, 
+      message: "Seller registration submitted successfully. Awaiting admin approval.",
+      sellerId: result.insertedId,
+      status: "pending"
+    });
+  } catch (error) {
+    console.error('Seller registration error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: "Failed to register seller" 
+    });
+  }
+});
+
+// Comprehensive Buyer Registration
+app.post("/api/user/register", async (req, res) => {
+  try {
+    const {
+      // Personal Information
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+      
+      // Address Information
+      streetAddress,
+      city,
+      state,
+      postalCode,
+      country,
+      
+      // Preferences
+      preferences,
+      notifications,
+      
+      // Additional Information
+      dateOfBirth,
+      gender
+    } = req.body;
+    
+    // Check if user already exists
+    const existingUser = await db.collection("users").findOne({ 
+      $or: [{ email: email }, { phone: phone }] 
+    });
+    if (existingUser) {
+      return res.status(400).json({ 
+        success: false, 
+        error: "User with this email or phone already exists" 
+      });
+    }
+    
+    // Create new user
+    const user = {
+      // Personal Details
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+      
+      // Address Details
+      streetAddress,
+      city,
+      state,
+      postalCode,
+      country,
+      
+      // Preferences
+      preferences: preferences || {
+        categories: [],
+        priceRange: null,
+        brands: [],
+        notifications: true
+      },
+      notifications: notifications !== false, // Default to true
+      
+      // Additional Info
+      dateOfBirth,
+      gender,
+      
+      // Shopping Information
+      cart: [],
+      wishlist: [],
+      orders: [],
+      
+      // Statistics
+      totalOrders: 0,
+      totalSpent: 0,
+      favoriteProducts: [],
+      
+      // System Fields
+      status: "active",
+      emailVerified: false,
+      phoneVerified: false,
+      
+      // Timestamps
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      lastLogin: null
+    };
+    
+    const result = await db.collection("users").insertOne(user);
+    
+    console.log('User registered successfully:', { 
+      email, 
+      firstName, 
+      lastName,
+      id: result.insertedId 
+    });
+    
+    res.json({ 
+      success: true, 
+      message: "User registered successfully",
+      userId: result.insertedId
+    });
+  } catch (error) {
+    console.error('User registration error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: "Failed to register user" 
+    });
+  }
+});
+
+// Seller Login (only for approved sellers)
+app.post("/api/seller/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    // Find seller with approved status
+    const seller = await db.collection("sellers").findOne({ 
+      email: email, 
+      password: password,
+      status: "approved"
+    });
+    
+    if (!seller) {
+      return res.status(401).json({ 
+        success: false, 
+        error: "Invalid credentials or account not approved" 
+      });
+    }
+    
+    // Update last login
+    await db.collection("sellers").updateOne(
+      { _id: seller._id },
+      { $set: { lastLogin: new Date() } }
+    );
+    
+    // Create session
+    const session = {
+      sellerId: seller._id.toString(),
+      email: seller.email,
+      name: `${seller.firstName} ${seller.lastName}`,
+      businessName: seller.businessName,
+      storeName: seller.storeName,
+      role: "seller",
+      loginTime: new Date().toISOString(),
+      sessionId: new ObjectId().toString()
+    };
+    
+    console.log('Seller login successful:', { 
+      email, 
+      businessName: seller.businessName,
+      timestamp: session.loginTime 
+    });
+    
+    res.json({ 
+      success: true, 
+      message: "Login successful",
+      session: session
+    });
+  } catch (error) {
+    console.error('Seller login error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: "Login failed. Please try again." 
+    });
+  }
+});
+
+// User Login
+app.post("/api/user/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    // Find user
+    const user = await db.collection("users").findOne({ 
+      email: email, 
+      password: password,
+      status: "active"
+    });
+    
+    if (!user) {
+      return res.status(401).json({ 
+        success: false, 
+        error: "Invalid email or password" 
+      });
+    }
+    
+    // Update last login
+    await db.collection("users").updateOne(
+      { _id: user._id },
+      { $set: { lastLogin: new Date() } }
+    );
+    
+    // Create session
+    const session = {
+      userId: user._id.toString(),
+      email: user.email,
+      name: `${user.firstName} ${user.lastName}`,
+      role: "user",
+      loginTime: new Date().toISOString(),
+      sessionId: new ObjectId().toString()
+    };
+    
+    console.log('User login successful:', { 
+      email, 
+      name: `${user.firstName} ${user.lastName}`,
+      timestamp: session.loginTime 
+    });
+    
+    res.json({ 
+      success: true, 
+      message: "Login successful",
+      session: session
+    });
+  } catch (error) {
+    console.error('User login error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: "Login failed. Please try again." 
+    });
+  }
+});
+
 // Get dashboard statistics
 app.get("/api/admin/stats", async (req, res) => {
   try {
@@ -508,6 +901,110 @@ app.post("/api/admin/sellers/:sellerId/reject", async (req, res) => {
 
     res.json({ success: true, message: "Seller rejected successfully" });
   } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get all sellers (for admin management)
+app.get("/api/admin/sellers", async (req, res) => {
+  try {
+    const { status = "all", page = 1, limit = 20 } = req.query;
+    
+    let filter = {};
+    if (status !== "all") {
+      filter.status = status;
+    }
+
+    const sellers = await db.collection("sellers")
+      .find(filter)
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit))
+      .toArray();
+
+    const total = await db.collection("sellers").countDocuments(filter);
+
+    res.json({ 
+      success: true, 
+      sellers,
+      pagination: {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total,
+        pages: Math.ceil(total / limit)
+      }
+    });
+  } catch (error) {
+    console.error('Get sellers error:', error);
+    res.status(500).json({ success: false, error: "Failed to fetch sellers" });
+  }
+});
+
+// Approve seller
+app.post("/api/admin/sellers/:sellerId/approve", async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+    const { adminEmail } = req.body;
+
+    if (!adminEmail) {
+      return res.status(400).json({ success: false, error: "Admin email is required" });
+    }
+
+    const result = await db.collection("sellers").updateOne(
+      { _id: new ObjectId(sellerId) },
+      {
+        $set: {
+          status: "approved",
+          approvalStatus: "approved",
+          approvedAt: new Date(),
+          approvedBy: adminEmail,
+          updatedAt: new Date()
+        }
+      }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ success: false, error: "Seller not found" });
+    }
+
+    res.json({ success: true, message: "Seller approved successfully" });
+  } catch (error) {
+    console.error('Approve seller error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Reject seller
+app.post("/api/admin/sellers/:sellerId/reject", async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+    const { adminEmail, reason } = req.body;
+
+    if (!adminEmail) {
+      return res.status(400).json({ success: false, error: "Admin email is required" });
+    }
+
+    const result = await db.collection("sellers").updateOne(
+      { _id: new ObjectId(sellerId) },
+      {
+        $set: {
+          status: "rejected",
+          approvalStatus: "rejected",
+          rejectedAt: new Date(),
+          rejectedBy: adminEmail,
+          rejectionReason: reason || "Application does not meet requirements",
+          updatedAt: new Date()
+        }
+      }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ success: false, error: "Seller not found" });
+    }
+
+    res.json({ success: true, message: "Seller rejected successfully" });
+  } catch (error) {
+    console.error('Reject seller error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
