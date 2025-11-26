@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Authentication Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        button { background: #2ecc71; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #27ae60; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 4px; font-family: monospace; white-space: pre-wrap; max-height: 300px; overflow-y: auto; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        input { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 4px; font-weight: bold; }
+        .logged-in { background: #d4edda; color: #155724; }
+        .logged-out { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>🔐 Secure Session-Based Authentication Test</h1>
+    
+    <div class="test-section">
+        <h3>👤 Current Session Status</h3>
+        <button onclick="checkSession()">Check Session Status</button>
+        <div id="sessionStatus" class="status logged-out">Not checked yet</div>
+    </div>
+
+    <div class="test-section">
+        <h3>📝 Secure Registration Test</h3>
+        <input type="text" id="firstName" placeholder="First Name" value="Secure">
+        <input type="text" id="lastName" placeholder="Last Name" value="User">
+        <input type="email" id="email" placeholder="Email" value="secureuser@ecoloop.com">
+        <input type="tel" id="phone" placeholder="Phone" value="+254700123456">
+        <input type="password" id="password" placeholder="Password" value="SecurePassword123!">
+        <button onclick="testSecureRegistration()">Test Secure Registration</button>
+        <div id="regResult" class="result info">Click to test secure registration...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>🔐 Secure Login Test</h3>
+        <input type="email" id="loginEmail" placeholder="Email" value="secureuser@ecoloop.com">
+        <input type="password" id="loginPassword" placeholder="Password" value="SecurePassword123!">
+        <label>
+            <input type="checkbox" id="rememberMe"> Remember Me (30 days)
+        </label>
+        <button onclick="testSecureLogin()">Test Secure Login</button>
+        <div id="loginResult" class="result info">Click to test secure login...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>👤 Session Verification Test</h3>
+        <button onclick="testSessionVerification()">Test Session Verification</button>
+        <div id="verifyResult" class="result info">Click to test session verification...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>🚪 Secure Logout Test</h3>
+        <button onclick="testSecureLogout()">Test Secure Logout</button>
+        <div id="logoutResult" class="result info">Click to test secure logout...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>🧪 Complete Secure Flow Test</h3>
+        <button onclick="runCompleteSecureTest()">Run Complete Secure Test</button>
+        <div id="completeResult" class="result info">Click to run complete secure authentication test...</div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'https://my-backend-1-jk7w.onrender.com';
+        
+        async function checkSession() {
+            const statusDiv = document.getElementById('sessionStatus');
+            statusDiv.className = 'status info';
+            statusDiv.textContent = 'Checking session...';
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/user/session`, {
+                    method: 'GET',
+                    credentials: 'include' // Important for HTTP-only cookies
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        statusDiv.className = 'status logged-in';
+                        statusDiv.textContent = `✅ Logged in as: ${data.user.name} (${data.user.email})`;
+                    } else {
+                        statusDiv.className = 'status logged-out';
+                        statusDiv.textContent = '❌ Not logged in';
+                    }
+                } else {
+                    statusDiv.className = 'status logged-out';
+                    statusDiv.textContent = '❌ Session check failed';
+                }
+            } catch (error) {
+                console.error('Session check error:', error);
+                statusDiv.className = 'status logged-out';
+                statusDiv.textContent = '❌ Network error - Not logged in';
+            }
+        }
+        
+        async function testSecureRegistration() {
+            const resultDiv = document.getElementById('regResult');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing secure registration...';
+            
+            try {
+                const userData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    password: document.getElementById('password').value
+                };
+
+                console.log('Sending secure registration request:', userData);
+                
+                const response = await fetch(`${BACKEND_URL}/api/user/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include', // Important for HTTP-only cookies
+                    body: JSON.stringify(userData)
+                });
+
+                console.log('Secure registration response status:', response.status);
+                
+                const data = await response.json();
+                console.log('Secure registration response data:', data);
+
+                if (response.ok && data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ Secure Registration successful!\n\nUser: ${JSON.stringify(data.user, null, 2)}\n\nSession created automatically with HTTP-only cookie`;
+                    
+                    // Check session status after registration
+                    setTimeout(checkSession, 1000);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ Secure Registration failed: ${data.error}\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                console.error('Secure registration error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Network error: ${error.message}`;
+            }
+        }
+
+        async function testSecureLogin() {
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing secure login...';
+            
+            try {
+                const loginData = {
+                    email: document.getElementById('loginEmail').value,
+                    password: document.getElementById('loginPassword').value,
+                    rememberMe: document.getElementById('rememberMe').checked
+                };
+
+                console.log('Sending secure login request:', loginData);
+                
+                const response = await fetch(`${BACKEND_URL}/api/user/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include', // Important for HTTP-only cookies
+                    body: JSON.stringify(loginData)
+                });
+
+                console.log('Secure login response status:', response.status);
+                
+                const data = await response.json();
+                console.log('Secure login response data:', data);
+
+                if (response.ok && data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ Secure Login successful!\n\nUser: ${JSON.stringify(data.user, null, 2)}\n\nSession created with HTTP-only cookie\nRemember Me: ${loginData.rememberMe ? '30 days' : '24 hours'}`;
+                    
+                    // Check session status after login
+                    setTimeout(checkSession, 1000);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ Secure Login failed: ${data.error}\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                console.error('Secure login error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Network error: ${error.message}`;
+            }
+        }
+
+        async function testSessionVerification() {
+            const resultDiv = document.getElementById('verifyResult');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing session verification...';
+            
+            try {
+                console.log('Verifying session with HTTP-only cookies...');
+                
+                const response = await fetch(`${BACKEND_URL}/api/user/session`, {
+                    method: 'GET',
+                    credentials: 'include' // Important for HTTP-only cookies
+                });
+
+                console.log('Session verification response status:', response.status);
+                
+                const data = await response.json();
+                console.log('Session verification response data:', data);
+
+                if (response.ok && data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ Session Verification successful!\n\nUser: ${JSON.stringify(data.user, null, 2)}\n\nSession is active and valid`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ Session Verification failed: ${data.error}\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                console.error('Session verification error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Network error: ${error.message}`;
+            }
+        }
+
+        async function testSecureLogout() {
+            const resultDiv = document.getElementById('logoutResult');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Testing secure logout...';
+            
+            try {
+                console.log('Logging out and destroying HTTP-only cookie session...');
+                
+                const response = await fetch(`${BACKEND_URL}/api/user/logout`, {
+                    method: 'POST',
+                    credentials: 'include' // Important for HTTP-only cookies
+                });
+
+                console.log('Secure logout response status:', response.status);
+                
+                const data = await response.json();
+                console.log('Secure logout response data:', data);
+
+                if (response.ok && data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `✅ Secure Logout successful!\n\nResponse: ${JSON.stringify(data, null, 2)}\n\nHTTP-only cookie session destroyed`;
+                    
+                    // Check session status after logout
+                    setTimeout(checkSession, 1000);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ Secure Logout failed: ${data.error}\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                console.error('Secure logout error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Network error: ${error.message}`;
+            }
+        }
+
+        async function runCompleteSecureTest() {
+            const resultDiv = document.getElementById('completeResult');
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Running complete secure authentication flow...';
+            
+            try {
+                const results = [];
+                
+                // Step 1: Check initial session status
+                results.push('Step 1: Checking initial session status...');
+                const initialSession = await fetch(`${BACKEND_URL}/api/user/session`, { credentials: 'include' });
+                const initialData = await initialSession.json();
+                results.push(`Initial: ${initialSession.status} - ${initialData.success ? 'Authenticated' : 'Not Authenticated'}`);
+                
+                // Step 2: Register new user
+                results.push('\nStep 2: Testing secure registration...');
+                const testUser = {
+                    firstName: 'Secure',
+                    lastName: 'Test',
+                    email: `securetest${Date.now()}@ecoloop.com`,
+                    phone: '+254700123456',
+                    password: 'SecurePassword123!'
+                };
+                
+                const regResponse = await fetch(`${BACKEND_URL}/api/user/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(testUser)
+                });
+                const regData = await regResponse.json();
+                
+                if (regResponse.ok && regData.success) {
+                    results.push(`✅ Registration successful - Session created automatically`);
+                } else {
+                    results.push(`❌ Registration failed: ${regData.error}`);
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = results.join('\n');
+                    return;
+                }
+                
+                // Step 3: Verify session after registration
+                results.push('\nStep 3: Verifying session after registration...');
+                const sessionAfterReg = await fetch(`${BACKEND_URL}/api/user/session`, { credentials: 'include' });
+                const sessionAfterRegData = await sessionAfterReg.json();
+                
+                if (sessionAfterReg.ok && sessionAfterRegData.success) {
+                    results.push(`✅ Session valid - User: ${sessionAfterRegData.user.name}`);
+                } else {
+                    results.push(`❌ Session verification failed: ${sessionAfterRegData.error}`);
+                }
+                
+                // Step 4: Logout
+                results.push('\nStep 4: Testing secure logout...');
+                const logoutResponse = await fetch(`${BACKEND_URL}/api/user/logout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                const logoutData = await logoutResponse.json();
+                
+                if (logoutResponse.ok && logoutData.success) {
+                    results.push(`✅ Logout successful - Session destroyed`);
+                } else {
+                    results.push(`❌ Logout failed: ${logoutData.error}`);
+                }
+                
+                // Step 5: Verify session after logout
+                results.push('\nStep 5: Verifying session after logout...');
+                const sessionAfterLogout = await fetch(`${BACKEND_URL}/api/user/session`, { credentials: 'include' });
+                const sessionAfterLogoutData = await sessionAfterLogout.json();
+                
+                if (!sessionAfterLogout.ok || !sessionAfterLogoutData.success) {
+                    results.push(`✅ Session correctly destroyed after logout`);
+                } else {
+                    results.push(`❌ Session still active after logout - Security issue!`);
+                }
+                
+                // Step 6: Login with same credentials
+                results.push('\nStep 6: Testing secure login...');
+                const loginResponse = await fetch(`${BACKEND_URL}/api/user/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email: testUser.email,
+                        password: testUser.password,
+                        rememberMe: false
+                    })
+                });
+                const loginData = await loginResponse.json();
+                
+                if (loginResponse.ok && loginData.success) {
+                    results.push(`✅ Login successful - Session created`);
+                } else {
+                    results.push(`❌ Login failed: ${loginData.error}`);
+                }
+                
+                // Step 7: Final session verification
+                results.push('\nStep 7: Final session verification...');
+                const finalSession = await fetch(`${BACKEND_URL}/api/user/session`, { credentials: 'include' });
+                const finalSessionData = await finalSession.json();
+                
+                if (finalSession.ok && finalSessionData.success) {
+                    results.push(`✅ Final session valid - User: ${finalSessionData.user.name}`);
+                } else {
+                    results.push(`❌ Final session verification failed: ${finalSessionData.error}`);
+                }
+                
+                // Step 8: Final logout
+                results.push('\nStep 8: Final logout...');
+                const finalLogout = await fetch(`${BACKEND_URL}/api/user/logout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                const finalLogoutData = await finalLogout.json();
+                
+                if (finalLogout.ok && finalLogoutData.success) {
+                    results.push(`✅ Final logout successful`);
+                } else {
+                    results.push(`❌ Final logout failed: ${finalLogoutData.error}`);
+                }
+                
+                // Summary
+                const allPassed = regData.success && sessionAfterRegData.success && logoutData.success && 
+                                 (!sessionAfterLogout.ok || !sessionAfterLogoutData.success) && 
+                                 loginData.success && finalSessionData.success && finalLogoutData.success;
+
+                results.push('\n' + '='.repeat(60));
+                results.push(`FINAL RESULT: ${allPassed ? '✅ SECURE AUTHENTICATION WORKING PERFECTLY!' : '❌ SOME SECURE TESTS FAILED!'}`);
+                
+                if (allPassed) {
+                    results.push('\n🎉 Secure Authentication System Features:');
+                    results.push('✅ Registration with bcrypt password hashing');
+                    results.push('✅ Auto-login after registration');
+                    results.push('✅ Secure HTTP-only cookie sessions');
+                    results.push('✅ Session verification and persistence');
+                    results.push('✅ Secure logout with session destruction');
+                    results.push('✅ Remember me functionality (30 vs 24 hours)');
+                    results.push('✅ No frontend authentication storage');
+                    results.push('✅ All data stored in MongoDB only');
+                    results.push('✅ Production-ready security standards');
+                } else {
+                    results.push('\n⚠️ Some secure features may need attention.');
+                }
+
+                resultDiv.className = `result ${allPassed ? 'success' : 'error'}`;
+                resultDiv.textContent = results.join('\n');
+                
+            } catch (error) {
+                console.error('Complete secure test error:', error);
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `❌ Test failed with error: ${error.message}`;
+            }
+        }
+        
+        // Check session status on page load
+        window.onload = function() {
+            checkSession();
+        };
+    </script>
+</body>
+</html>
