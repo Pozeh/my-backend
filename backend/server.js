@@ -792,6 +792,52 @@ app.post("/api/user/login", async (req, res) => {
   }
 });
 
+// Auth Verification
+app.get("/api/auth/verify", async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ 
+        success: false, 
+        error: "No token provided" 
+      });
+    }
+
+    const token = authHeader.substring(7); // Remove 'Bearer ' prefix
+    
+    // For now, we'll use a simple token verification
+    // In production, you should use JWT or proper session management
+    const user = await db.collection("users").findOne({ 
+      email: token,
+      status: "active"
+    });
+
+    if (!user) {
+      return res.status(401).json({ 
+        success: false, 
+        error: "Invalid token" 
+      });
+    }
+
+    res.json({ 
+      success: true, 
+      user: {
+        id: user._id,
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        phone: user.phone,
+        role: "user"
+      }
+    });
+  } catch (error) {
+    console.error('Auth verification error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: "Verification failed" 
+    });
+  }
+});
+
 // Get dashboard statistics
 app.get("/api/admin/stats", async (req, res) => {
   try {
