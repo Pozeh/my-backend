@@ -172,6 +172,14 @@
     <script>
         const BACKEND_URL = 'https://my-backend-1-jk7w.onrender.com';
         
+        // Use existing endpoints until new ones are deployed
+        const ENDPOINTS = {
+            register: '/api/user/register',
+            login: '/api/user/login',
+            verify: '/api/auth/verify',
+            logout: '/api/auth/logout'
+        };
+        
         // Check authentication status on page load
         window.addEventListener('load', function() {
             checkAuthStatus();
@@ -179,7 +187,7 @@
 
         async function checkAuthStatus() {
             try {
-                const response = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                const response = await fetch(`${BACKEND_URL}${ENDPOINTS.verify}`, {
                     method: 'GET',
                     credentials: 'include' // Important for session cookies
                 });
@@ -218,7 +226,7 @@
                     password: document.getElementById('password').value
                 };
 
-                const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+                const response = await fetch(`${BACKEND_URL}${ENDPOINTS.register}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -252,7 +260,7 @@
                     password: document.getElementById('loginPassword').value
                 };
 
-                const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+                const response = await fetch(`${BACKEND_URL}${ENDPOINTS.login}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -280,7 +288,7 @@
             resultDiv.innerHTML = '<div class="result info">Logging out...</div>';
 
             try {
-                const response = await fetch(`${BACKEND_URL}/api/auth/logout`, {
+                const response = await fetch(`${BACKEND_URL}${ENDPOINTS.logout}`, {
                     method: 'POST',
                     credentials: 'include'
                 });
@@ -308,7 +316,7 @@
                 
                 // Step 1: Check initial auth status
                 results.push('🔍 Step 1: Checking initial auth status...');
-                const initialAuth = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                const initialAuth = await fetch(`${BACKEND_URL}${ENDPOINTS.verify}`, {
                     credentials: 'include'
                 });
                 const initialData = await initialAuth.json();
@@ -324,7 +332,7 @@
                     password: 'TestPassword123!'
                 };
                 
-                const regResponse = await fetch(`${BACKEND_URL}/api/auth/register`, {
+                const regResponse = await fetch(`${BACKEND_URL}${ENDPOINTS.register}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
@@ -335,7 +343,7 @@
 
                 // Step 3: Check auth status after registration
                 results.push('👤 Step 3: Checking auth status after registration...');
-                const authAfterReg = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                const authAfterReg = await fetch(`${BACKEND_URL}${ENDPOINTS.verify}`, {
                     credentials: 'include'
                 });
                 const authAfterRegData = await authAfterReg.json();
@@ -343,7 +351,7 @@
 
                 // Step 4: Logout
                 results.push('🚪 Step 4: Logging out...');
-                const logoutResponse = await fetch(`${BACKEND_URL}/api/auth/logout`, {
+                const logoutResponse = await fetch(`${BACKEND_URL}${ENDPOINTS.logout}`, {
                     method: 'POST',
                     credentials: 'include'
                 });
@@ -352,7 +360,7 @@
 
                 // Step 5: Check auth status after logout
                 results.push('👤 Step 5: Checking auth status after logout...');
-                const authAfterLogout = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                const authAfterLogout = await fetch(`${BACKEND_URL}${ENDPOINTS.verify}`, {
                     credentials: 'include'
                 });
                 const authAfterLogoutData = await authAfterLogout.json();
@@ -360,7 +368,7 @@
 
                 // Step 6: Login
                 results.push('🔐 Step 6: Logging in...');
-                const loginResponse = await fetch(`${BACKEND_URL}/api/auth/login`, {
+                const loginResponse = await fetch(`${BACKEND_URL}${ENDPOINTS.login}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
@@ -374,7 +382,7 @@
 
                 // Step 7: Final auth status check
                 results.push('👤 Step 7: Final auth status check...');
-                const finalAuth = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                const finalAuth = await fetch(`${BACKEND_URL}${ENDPOINTS.verify}`, {
                     credentials: 'include'
                 });
                 const finalAuthData = await finalAuth.json();
