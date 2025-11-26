@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoLoop Kenya - Sustainable Marketplace</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -28,6 +27,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
+            min-width: 1200px; /* Force desktop minimum width */
+            overflow-x: auto; /* Allow horizontal scrolling if needed */
         }
 
         /* Header Styles */
@@ -320,32 +321,6 @@
             to {
                 transform: translateX(0);
                 opacity: 1;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .search-bar {
-                width: 100%;
-                margin: 0;
-            }
-
-            .top-header .container {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .contact-info span {
-                margin-right: 10px;
             }
         }
     </style>
