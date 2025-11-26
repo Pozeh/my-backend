@@ -34,9 +34,270 @@
 
         /* Header Styles */
         .top-header {
-            background: var(--primary-color);
+            position: relative;
+            background: linear-gradient(135deg, #0a4f3a, #0d6b4f, #0a4f3a);
             color: var(--white);
             padding: 10px 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Futuristic Ocean Wave Background */
+        .top-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 200, 255, 0.2) 0%, transparent 70%);
+            animation: oceanGlow 8s ease-in-out infinite alternate;
+            z-index: -2;
+        }
+
+        /* Wave Layers */
+        .top-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,56 C150,100 350,0 600,56 C850,120 1050,0 1200,56 L1200,120 L0,120 Z' fill='rgba(0,255,255,0.1)'/%3E%3C/svg%3E") repeat-x;
+            animation: waveFlow 20s linear infinite;
+            z-index: -1;
+        }
+
+        /* Additional Wave Layer */
+        .ocean-waves {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C200,90 400,30 600,60 C800,90 1000,30 1200,60 L1200,120 L0,120 Z' fill='rgba(0,200,255,0.2)'/%3E%3C/svg%3E") repeat-x;
+            animation: waveFlow2 15s linear infinite reverse;
+        }
+
+        /* Bioluminescent Particles */
+        .bio-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bio-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.8) 0%, rgba(0, 255, 255, 0) 70%);
+            border-radius: 50%;
+            animation: floatParticle 8s infinite ease-in-out;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+        }
+
+        /* Current Effects */
+        .ocean-currents {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: 
+                linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.05) 50%, transparent 70%),
+                linear-gradient(-45deg, transparent 30%, rgba(255, 0, 255, 0.03) 50%, transparent 70%);
+            background-size: 200% 200%;
+            animation: currentFlow 12s ease-in-out infinite;
+        }
+
+        /* Reflection Effects */
+        .ocean-reflections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
+            background-size: 100% 100%;
+            animation: reflectionMove 6s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes oceanGlow {
+            0% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes waveFlow {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            50% {
+                transform: translateX(-25%) translateY(-10px);
+            }
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @keyframes waveFlow2 {
+            0% {
+                transform: translateX(0) translateY(0) scaleY(1);
+            }
+            25% {
+                transform: translateX(-15%) translateY(5px) scaleY(1.1);
+            }
+            50% {
+                transform: translateX(-30%) translateY(0) scaleY(1);
+            }
+            75% {
+                transform: translateX(-45%) translateY(-5px) scaleY(0.9);
+            }
+            100% {
+                transform: translateX(-60%) translateY(0) scaleY(1);
+            }
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(80vh) translateX(10px) scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(40vh) translateX(-10px) scale(1.2);
+            }
+            90% {
+                opacity: 0.3;
+                transform: translateY(10vh) translateX(5px) scale(0.8);
+            }
+            100% {
+                transform: translateY(-10vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes currentFlow {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 100%;
+            }
+        }
+
+        @keyframes reflectionMove {
+            0% {
+                transform: translateX(-100%) skewX(-10deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.3;
+                transform: translateX(0%) skewX(0deg);
+            }
+            100% {
+                transform: translateX(100%) skewX(10deg);
+                opacity: 0;
+            }
+        }
+
+        /* Interactive Wave Distortion */
+        .top-header .user-actions a:hover::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: rippleEffect 1s ease-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes rippleEffect {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 150px;
+                height: 150px;
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced button hover effects */
+        .top-header .user-actions {
+            position: relative;
+            z-index: 2;
+        }
+
+        .top-header .user-actions a {
+            position: relative;
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 15px;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .top-header .user-actions a:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .top-header .contact-info span {
+            position: relative;
+            margin-right: 20px;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 10px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .container {
@@ -908,20 +1169,142 @@
 
         /* Footer */
         .footer {
-            background: var(--text-dark);
+            position: relative;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             color: var(--white);
             padding: 50px 0 20px;
+            overflow: hidden;
+            z-index: 1;
         }
 
+        /* Futuristic Ocean Wave Background for Footer */
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(0, 255, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(255, 0, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 200, 255, 0.15) 0%, transparent 60%);
+            animation: oceanGlow 10s ease-in-out infinite alternate;
+            z-index: -2;
+        }
+
+        /* Wave Layers for Footer */
+        .footer::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,56 C150,100 350,0 600,56 C850,120 1050,0 1200,56 L1200,120 L0,120 Z' fill='rgba(0,255,255,0.08)'/%3E%3C/svg%3E") repeat-x;
+            animation: waveFlow 25s linear infinite;
+            z-index: -1;
+        }
+
+        /* Additional Wave Layer for Footer */
+        .footer-waves {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.25;
+            z-index: -1;
+            pointer-events: none;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C200,90 400,30 600,60 C800,90 1000,30 1200,60 L1200,120 L0,120 Z' fill='rgba(0,200,255,0.15)'/%3E%3C/svg%3E") repeat-x;
+            animation: waveFlow2 18s linear infinite reverse;
+        }
+
+        /* Bioluminescent Particles for Footer */
+        .footer-bio-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .footer-bio-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.7) 0%, rgba(0, 255, 255, 0) 70%);
+            border-radius: 50%;
+            animation: floatParticle 10s infinite ease-in-out;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Current Effects for Footer */
+        .footer-currents {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: 
+                linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.04) 50%, transparent 70%),
+                linear-gradient(-45deg, transparent 30%, rgba(255, 0, 255, 0.02) 50%, transparent 70%);
+            background-size: 200% 200%;
+            animation: currentFlow 15s ease-in-out infinite;
+        }
+
+        /* Reflection Effects for Footer */
+        .footer-reflections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.03) 50%, transparent 100%);
+            background-size: 100% 100%;
+            animation: reflectionMove 8s linear infinite;
+        }
+
+        /* Enhanced Footer Content Styling */
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
             margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
         }
 
         .footer-section h3 {
             margin-bottom: 20px;
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            font-weight: 600;
+            position: relative;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffff, transparent);
+            animation: glowLine 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowLine {
+            0% { opacity: 0.5; width: 30px; }
+            100% { opacity: 1; width: 50px; }
         }
 
         .footer-section ul {
@@ -936,16 +1319,71 @@
             color: var(--white);
             text-decoration: none;
             opacity: 0.8;
-            transition: opacity 0.3s;
+            transition: all 0.3s ease;
+            padding: 2px 0;
+            border-radius: 3px;
+            position: relative;
         }
 
         .footer-section a:hover {
             opacity: 1;
+            color: #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
+            transform: translateX(5px);
+        }
+
+        /* Social Links Enhancement */
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .social-links a:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: rgba(0, 255, 255, 0.5);
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+            color: #00ffff;
+        }
+
+        /* Interactive Wave Distortion for Footer Links */
+        .footer-section a:hover::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.2) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: rippleEffect 1.5s ease-out;
+            pointer-events: none;
+            z-index: -1;
         }
 
         .footer-bottom {
             text-align: center;
             padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
             border-top: 1px solid rgba(255,255,255,0.1);
             opacity: 0.8;
         }
@@ -2678,11 +3116,267 @@
             transform: translateY(-1px);
             box-shadow: 0 3px 10px rgba(220, 53, 69, 0.4);
         }
+
+        /* Role Selector Styles */
+        .role-selector {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .role-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-option:hover {
+            border-color: rgba(0, 255, 255, 0.5);
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+        }
+
+        .role-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .role-option input[type="radio"]:checked + .role-label {
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .role-option input[type="radio"]:checked ~ .role-option {
+            border-color: #00ffff;
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+        }
+
+        .role-option input[type="radio"]:checked + .role-label::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .role-label {
+            font-weight: 600;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+
+        .role-option input[type="radio"]:checked + .role-label {
+            color: #00ffff;
+        }
+
+        .role-option:has(input[type="radio"]:checked) {
+            border-color: #00ffff;
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(0, 255, 255, 0.4);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+            }
+        }
+
+        /* Form Help Text Styles */
+        .form-help-text {
+            display: block;
+            margin-top: 8px;
+            color: #b0b0b0;
+            font-size: 12px;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* Mobile Responsive Ocean Effects */
+        @media (max-width: 768px) {
+            .top-header {
+                padding: 8px 0;
+            }
+            
+            .bio-particle {
+                width: 2px !important;
+                height: 2px !important;
+            }
+            
+            .top-header .user-actions a {
+                padding: 3px 6px;
+                font-size: 12px;
+                margin-left: 8px;
+            }
+            
+            .top-header .contact-info span {
+                font-size: 11px;
+                padding: 3px 6px;
+                margin-right: 10px;
+            }
+            
+            /* Footer mobile optimizations */
+            .footer {
+                padding: 30px 0 15px;
+            }
+            
+            .footer-bio-particle {
+                width: 2px !important;
+                height: 2px !important;
+            }
+            
+            .footer-section h3 {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+            
+            .footer-section a {
+                font-size: 13px;
+            }
+            
+            .social-links a {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+            
+            /* Reduce animation intensity on mobile for performance */
+            .ocean-currents,
+            .footer-currents {
+                animation-duration: 20s !important;
+            }
+            
+            .ocean-reflections,
+            .footer-reflections {
+                animation-duration: 10s !important;
+            }
+            
+            @keyframes waveFlow {
+                0% {
+                    transform: translateX(0) translateY(0);
+                }
+                100% {
+                    transform: translateX(-50%) translateY(0);
+                }
+            }
+            
+            @keyframes waveFlow2 {
+                0% {
+                    transform: translateX(0) translateY(0);
+                }
+                100% {
+                    transform: translateX(-50%) translateY(0);
+                }
+            }
+        }
+
+        /* High Performance Mode for older devices */
+        @media (prefers-reduced-motion: reduce) {
+            .ocean-waves,
+            .ocean-currents,
+            .ocean-reflections,
+            .bio-particle,
+            .footer-waves,
+            .footer-currents,
+            .footer-reflections,
+            .footer-bio-particle {
+                animation: none !important;
+            }
+            
+            .top-header::before,
+            .footer::before {
+                animation: none !important;
+            }
+        }
+
+        /* User Info Styles */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ffff, #ff00ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            text-transform: uppercase;
+        }
+
+        .user-info span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .user-info span:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .user-info a {
+            color: #ff4444;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: rgba(255, 68, 68, 0.1);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .user-info a:hover {
+            background: rgba(255, 68, 68, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
+        }
     </style>
 </head>
 <body>
     <!-- Top Header -->
     <div class="top-header">
+        <!-- Ocean Wave Effects -->
+        <div class="ocean-waves"></div>
+        <div class="ocean-currents"></div>
+        <div class="ocean-reflections"></div>
+        <div class="bio-particles" id="bioParticles"></div>
+        
         <div class="container">
             <div class="contact-info">
                 <span><i class="fas fa-phone"></i> 0705424364</span>
@@ -2767,6 +3461,12 @@
 
     <!-- Footer -->
     <footer class="footer">
+        <!-- Ocean Wave Effects -->
+        <div class="footer-waves"></div>
+        <div class="footer-currents"></div>
+        <div class="footer-reflections"></div>
+        <div class="footer-bio-particles" id="footerBioParticles"></div>
+        
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -2816,6 +3516,22 @@
             </div>
             <div class="modal-body">
                 <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginRole">Login as</label>
+                        <div class="role-selector">
+                            <label class="role-option">
+                                <input type="radio" name="loginRole" value="user" checked>
+                                <span class="role-label">User</span>
+                            </label>
+                            <label class="role-option">
+                                <input type="radio" name="loginRole" value="seller">
+                                <span class="role-label">Seller</span>
+                            </label>
+                        </div>
+                        <small class="form-help-text">
+                            <span id="roleHelpText">Login as a regular user to browse and purchase products</span>
+                        </small>
+                    </div>
                     <div class="form-group">
                         <label for="loginEmail">Email</label>
                         <input type="email" id="loginEmail" required placeholder="Enter your email">
@@ -3934,39 +4650,321 @@
             }
 
             updateUI() {
-                const userActions = document.querySelector('.user-actions');
-                if (!userActions) return;
-
-                if (currentUser) {
-                // User is logged in - load cart and wishlist
-                loadCartItems();
-                loadWishlistItems();
+                // Call our comprehensive updateAuthUI function
+                updateAuthUI();
                 
-                const initials = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : currentUser.email.charAt(0).toUpperCase();
-                userActions.innerHTML = `
-                    <div class="user-info">
-                        <div class="user-avatar">${initials}</div>
-                        <span>${currentUser.name || currentUser.email}</span>
-                        </div>
-                        <a href="#" onclick="authManager.logout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                        <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
-                        <a href="admin/admin-login.html"><i class="fas fa-leaf"></i> Admin</a>
-                    `;
-                } else {
-                    // User is not logged in
-                    userActions.innerHTML = `
-                        <a href="#" onclick="showLoginModal(); return false;"><i class="fas fa-user"></i> Login</a>
-                        <a href="#" onclick="showRegisterModal(); return false;"><i class="fas fa-user-plus"></i> Register</a>
-                        <a href="#" onclick="showSellerRegisterModal(); return false;"><i class="fas fa-store"></i> Sell</a>
-                        <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
-                        <a href="admin/admin-login.html"><i class="fas fa-leaf"></i> Admin</a>
-                    `;
+                // Load cart and wishlist for logged-in users
+                if (currentUser) {
+                    loadCartItems();
+                    loadWishlistItems();
                 }
             }
         }
 
         // Initialize auth manager
         const authManager = new AuthManager();
+
+        // Futuristic Ocean Effects
+        function initializeOceanEffects() {
+            // Create bioluminescent particles for top header
+            const bioParticlesContainer = document.getElementById('bioParticles');
+            if (bioParticlesContainer) {
+                for (let i = 0; i < 15; i++) {
+                    createBioParticle(bioParticlesContainer, i);
+                }
+            }
+            
+            // Create bioluminescent particles for footer
+            const footerBioParticlesContainer = document.getElementById('footerBioParticles');
+            if (footerBioParticlesContainer) {
+                for (let i = 0; i < 12; i++) {
+                    createFooterBioParticle(footerBioParticlesContainer, i);
+                }
+            }
+        }
+
+        function createBioParticle(container, index) {
+            const particle = document.createElement('div');
+            particle.className = 'bio-particle';
+            
+            // Random positioning and animation delays
+            const startX = Math.random() * 100;
+            const delay = Math.random() * 8;
+            const duration = 8 + Math.random() * 4;
+            const size = 2 + Math.random() * 3;
+            
+            particle.style.left = startX + '%';
+            particle.style.animationDelay = delay + 's';
+            particle.style.animationDuration = duration + 's';
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            
+            // Random glow colors
+            const colors = [
+                'rgba(0, 255, 255, 0.8)',
+                'rgba(255, 0, 255, 0.6)',
+                'rgba(0, 200, 255, 0.7)',
+                'rgba(255, 255, 0, 0.5)'
+            ];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
+            particle.style.boxShadow = `0 0 ${size * 3}px ${color}`;
+            
+            container.appendChild(particle);
+            
+            // Recreate particle when animation ends
+            particle.addEventListener('animationend', () => {
+                container.removeChild(particle);
+                createBioParticle(container, index);
+            });
+        }
+
+        function createFooterBioParticle(container, index) {
+            const particle = document.createElement('div');
+            particle.className = 'footer-bio-particle';
+            
+            // Random positioning and animation delays for footer
+            const startX = Math.random() * 100;
+            const delay = Math.random() * 10;
+            const duration = 10 + Math.random() * 5;
+            const size = 2 + Math.random() * 2;
+            
+            particle.style.left = startX + '%';
+            particle.style.animationDelay = delay + 's';
+            particle.style.animationDuration = duration + 's';
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            
+            // Random glow colors for footer (more subtle)
+            const colors = [
+                'rgba(0, 255, 255, 0.7)',
+                'rgba(255, 0, 255, 0.5)',
+                'rgba(0, 200, 255, 0.6)',
+                'rgba(100, 255, 200, 0.4)'
+            ];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
+            particle.style.boxShadow = `0 0 ${size * 2.5}px ${color}`;
+            
+            container.appendChild(particle);
+            
+            // Recreate particle when animation ends
+            particle.addEventListener('animationend', () => {
+                container.removeChild(particle);
+                createFooterBioParticle(container, index);
+            });
+        }
+
+        // Interactive wave distortion on button hover
+        function initializeInteractiveWaves() {
+            // Top header interactions
+            const userActions = document.querySelectorAll('.top-header .user-actions a');
+            
+            userActions.forEach(link => {
+                link.addEventListener('mouseenter', function(e) {
+                    createRippleEffect(e.target);
+                });
+            });
+            
+            // Footer interactions
+            const footerLinks = document.querySelectorAll('.footer-section a, .social-links a');
+            
+            footerLinks.forEach(link => {
+                link.addEventListener('mouseenter', function(e) {
+                    createFooterRippleEffect(e.target);
+                });
+            });
+        }
+
+        function createRippleEffect(element) {
+            const ripple = document.createElement('div');
+            ripple.style.position = 'absolute';
+            ripple.style.top = '50%';
+            ripple.style.left = '50%';
+            ripple.style.width = '0px';
+            ripple.style.height = '0px';
+            ripple.style.background = 'radial-gradient(circle, rgba(0, 255, 255, 0.4) 0%, transparent 70%)';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.zIndex = '1';
+            ripple.style.transition = 'all 1s ease-out';
+            
+            element.style.position = 'relative';
+            element.appendChild(ripple);
+            
+            // Animate ripple
+            setTimeout(() => {
+                ripple.style.width = '150px';
+                ripple.style.height = '150px';
+                ripple.style.opacity = '0';
+            }, 10);
+            
+            // Remove ripple after animation
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 1000);
+        }
+
+        function createFooterRippleEffect(element) {
+            const ripple = document.createElement('div');
+            ripple.style.position = 'absolute';
+            ripple.style.top = '50%';
+            ripple.style.left = '50%';
+            ripple.style.width = '0px';
+            ripple.style.height = '0px';
+            ripple.style.background = 'radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, transparent 70%)';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.zIndex = '1';
+            ripple.style.transition = 'all 1.5s ease-out';
+            
+            element.style.position = 'relative';
+            element.appendChild(ripple);
+            
+            // Animate ripple
+            setTimeout(() => {
+                ripple.style.width = '120px';
+                ripple.style.height = '120px';
+                ripple.style.opacity = '0';
+            }, 10);
+            
+            // Remove ripple after animation
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 1500);
+        }
+
+        // Dynamic wave response to mouse movement
+        function initializeWaveResponse() {
+            const topHeader = document.querySelector('.top-header');
+            const footer = document.querySelector('.footer');
+            
+            if (!topHeader && !footer) return;
+            
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            
+            document.addEventListener('mousemove', (e) => {
+                // Check if mouse is over top header
+                if (topHeader) {
+                    const headerRect = topHeader.getBoundingClientRect();
+                    if (e.clientY >= headerRect.top && e.clientY <= headerRect.bottom) {
+                        mouseX = (e.clientX - headerRect.left) / headerRect.width;
+                        mouseY = (e.clientY - headerRect.top) / headerRect.height;
+                    }
+                }
+                
+                // Check if mouse is over footer
+                if (footer) {
+                    const footerRect = footer.getBoundingClientRect();
+                    if (e.clientY >= footerRect.top && e.clientY <= footerRect.bottom) {
+                        mouseX = (e.clientX - footerRect.left) / footerRect.width;
+                        mouseY = (e.clientY - footerRect.top) / footerRect.height;
+                    }
+                }
+            });
+            
+            function updateWaveDistortion() {
+                targetX += (mouseX - targetX) * 0.1;
+                targetY += (mouseY - targetY) * 0.1;
+                
+                // Update top header waves
+                if (topHeader) {
+                    const headerWaves = topHeader.querySelector('.ocean-waves');
+                    const headerCurrents = topHeader.querySelector('.ocean-currents');
+                    
+                    if (headerWaves) {
+                        headerWaves.style.transform = `translateX(${targetX * 10}px) translateY(${targetY * 5}px)`;
+                    }
+                    
+                    if (headerCurrents) {
+                        headerCurrents.style.backgroundPosition = `${targetX * 100}% ${targetY * 100}%`;
+                    }
+                }
+                
+                // Update footer waves
+                if (footer) {
+                    const footerWaves = footer.querySelector('.footer-waves');
+                    const footerCurrents = footer.querySelector('.footer-currents');
+                    
+                    if (footerWaves) {
+                        footerWaves.style.transform = `translateX(${targetX * 8}px) translateY(${targetY * 3}px)`;
+                    }
+                    
+                    if (footerCurrents) {
+                        footerCurrents.style.backgroundPosition = `${targetX * 80}% ${targetY * 80}%`;
+                    }
+                }
+                
+                requestAnimationFrame(updateWaveDistortion);
+            }
+            
+            updateWaveDistortion();
+        }
+
+        // Window resize handler for responsive waves
+        function handleResize() {
+            // Redistribute top header particles
+            const headerParticles = document.querySelectorAll('.bio-particle');
+            headerParticles.forEach(particle => {
+                const currentLeft = parseFloat(particle.style.left);
+                if (Math.random() > 0.7) {
+                    particle.style.left = Math.random() * 100 + '%';
+                }
+            });
+            
+            // Redistribute footer particles
+            const footerParticles = document.querySelectorAll('.footer-bio-particle');
+            footerParticles.forEach(particle => {
+                const currentLeft = parseFloat(particle.style.left);
+                if (Math.random() > 0.7) {
+                    particle.style.left = Math.random() * 100 + '%';
+                }
+            });
+        }
+
+        // Initialize all ocean effects when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeOceanEffects();
+            initializeInteractiveWaves();
+            initializeWaveResponse();
+            
+            // Handle resize events
+            window.addEventListener('resize', handleResize);
+        });
+
+        // Role selector helper text update
+        document.addEventListener('DOMContentLoaded', function() {
+            const roleRadios = document.querySelectorAll('input[name="loginRole"]');
+            const roleHelpText = document.getElementById('roleHelpText');
+            
+            if (roleRadios.length > 0 && roleHelpText) {
+                function updateRoleHelpText() {
+                    const selectedRole = document.querySelector('input[name="loginRole"]:checked').value;
+                    if (selectedRole === 'seller') {
+                        roleHelpText.textContent = 'Login with your seller account credentials (email and password used during registration). Only approved sellers can access the dashboard.';
+                    } else {
+                        roleHelpText.textContent = 'Login as a regular user to browse and purchase products';
+                    }
+                }
+                
+                // Add event listeners to role radios
+                roleRadios.forEach(radio => {
+                    radio.addEventListener('change', updateRoleHelpText);
+                });
+                
+                // Set initial help text
+                updateRoleHelpText();
+            }
+        });
 
         // Helper functions
         function clearFormErrors(modalId) {
@@ -3976,6 +4974,20 @@
                 errorElements.forEach(element => element.textContent = '');
             }
         }
+
+        // Test seller login credentials flow
+        function testSellerLoginFlow() {
+            console.log('Testing Seller Login Flow:');
+            console.log('1. User registers as seller → creates account with "pending" status');
+            console.log('2. Admin approves seller → status changes to "approved"');
+            console.log('3. Seller can login with same email/password used during registration');
+            console.log('4. Login system verifies role and status before granting dashboard access');
+            console.log('5. Approved sellers get access to Seller Dashboard');
+            console.log('6. Pending/rejected sellers get appropriate notifications');
+        }
+
+        // Call test function for debugging
+        testSellerLoginFlow();
 
         function setButtonLoading(buttonId, loading) {
             const button = document.getElementById(buttonId);
@@ -4036,6 +5048,7 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             const rememberMe = document.getElementById('rememberMe').checked;
+            const role = document.querySelector('input[name="loginRole"]:checked').value;
 
             let isValid = true;
 
@@ -4053,15 +5066,174 @@
 
             setButtonLoading('loginBtn', true);
 
-            const result = await authManager.login(email, password, rememberMe);
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/user/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email,
+                        password,
+                        role,
+                        rememberMe
+                    })
+                });
 
-            setButtonLoading('loginBtn', false);
+                const data = await response.json();
 
-            if (result.success) {
-                closeModal('loginModal');
-                document.getElementById('loginForm').reset();
+                setButtonLoading('loginBtn', false);
+
+                if (data.success) {
+                    // Store user data
+                    currentUser = data.user;
+                    
+                    // Cache user data in localStorage for persistence
+                    localStorage.setItem('ecoloopUser', JSON.stringify(currentUser));
+                    
+                    // Update UI based on role
+                    updateAuthUI();
+                    
+                    closeModal('loginModal');
+                    document.getElementById('loginForm').reset();
+                    
+                    // Show success message
+                    showToast(`Welcome back, ${currentUser.firstName || currentUser.name || currentUser.email}!`, 'success');
+                    
+                    // Handle role-specific behavior
+                    if (role === 'seller') {
+                        // Check seller status and show appropriate dashboard
+                        if (currentUser.sellerStatus === 'approved') {
+                            showToast('Access granted to Seller Dashboard', 'success');
+                            setTimeout(() => {
+                                showSellerDashboard();
+                            }, 500);
+                        } else if (currentUser.sellerStatus === 'pending') {
+                            showToast('Your seller account is awaiting admin approval. You will be notified once approved.', 'warning');
+                            // Don't show dashboard for pending sellers
+                        } else if (currentUser.sellerStatus === 'rejected') {
+                            showToast('Your seller account has been rejected. Please contact support for more information.', 'error');
+                            // Don't show dashboard for rejected sellers
+                        }
+                    } else if (role === 'admin') {
+                        setTimeout(() => {
+                            showAdminDashboard();
+                        }, 500);
+                    } else {
+                        // Regular user - continue to homepage
+                        showToast('Welcome to EcoLoop Kenya!', 'success');
+                    }
+                    
+                    // Trigger dashboard checks for seller and admin roles
+                    setTimeout(() => {
+                        checkAndShowSellerDashboard();
+                        checkAndShowAdminIcon();
+                    }, 1000);
+                    
+                } else {
+                    // Handle specific error messages for different scenarios
+                    if (data.message && data.message.includes('pending')) {
+                        document.getElementById('loginEmailError').textContent = 'Your seller account is awaiting admin approval.';
+                        showToast('Your seller account is awaiting admin approval.', 'warning');
+                    } else if (data.message && data.message.includes('rejected')) {
+                        document.getElementById('loginEmailError').textContent = 'Your seller account has been rejected.';
+                        showToast('Your seller account has been rejected. Please contact support.', 'error');
+                    } else if (data.message && data.message.includes('not found')) {
+                        if (role === 'seller') {
+                            document.getElementById('loginEmailError').textContent = 'No seller account found with this email. Please register as a seller first.';
+                        } else {
+                            document.getElementById('loginEmailError').textContent = 'No account found with this email. Please register first.';
+                        }
+                    } else if (data.message && data.message.includes('incorrect password')) {
+                        document.getElementById('loginPasswordError').textContent = 'Incorrect password. Please try again.';
+                    } else if (data.message && data.message.includes('wrong role')) {
+                        document.getElementById('loginEmailError').textContent = `This account exists but is not registered as a ${role}. Please select the correct role.`;
+                    } else {
+                        document.getElementById('loginEmailError').textContent = data.message || 'Invalid credentials. Please check your email and password.';
+                    }
+                }
+            } catch (error) {
+                setButtonLoading('loginBtn', false);
+                console.error('Login error:', error);
+                document.getElementById('loginEmailError').textContent = 'Network error. Please check your connection and try again.';
+                showToast('Network error. Please try again.', 'error');
+            }
+        }
+
+        // Update authentication UI based on user role
+        function updateAuthUI() {
+            const userActions = document.querySelector('.user-actions');
+            if (!userActions) return;
+            
+            if (currentUser) {
+                // User is logged in - update header
+                const initials = currentUser.firstName ? currentUser.firstName.charAt(0).toUpperCase() : 
+                                currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 
+                                currentUser.email.charAt(0).toUpperCase();
+                
+                userActions.innerHTML = `
+                    <div class="user-info">
+                        <div class="user-avatar">${initials}</div>
+                        <span><i class="fas fa-user"></i> ${currentUser.firstName || currentUser.name || currentUser.email}</span>
+                        <a href="#" onclick="handleLogout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                    <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
+                    <a href="admin/admin-login.html"><i class="fas fa-leaf"></i> Admin</a>
+                `;
+
+                // Show appropriate dashboard icon if user is seller or admin
+                if (currentUser.role === 'seller' && currentUser.sellerStatus === 'approved') {
+                    // Seller dashboard link will be shown by existing logic
+                } else if (currentUser.role === 'admin') {
+                    // Admin icon will be shown by existing logic
+                }
             } else {
-                document.getElementById('loginEmailError').textContent = result.error;
+                // User is logged out - restore original links
+                userActions.innerHTML = `
+                    <a href="#" onclick="showLoginModal(); return false;"><i class="fas fa-user"></i> Login</a>
+                    <a href="#" onclick="showRegisterModal(); return false;"><i class="fas fa-user-plus"></i> Register</a>
+                    <a href="#" onclick="showSellerRegisterModal(); return false;"><i class="fas fa-store"></i> Sell</a>
+                    <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
+                    <a href="admin/admin-login.html"><i class="fas fa-leaf"></i> Admin</a>
+                `;
+            }
+        }
+
+        // Handle logout
+        async function handleLogout() {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/user/logout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    currentUser = null;
+                    updateAuthUI();
+                    
+                    // Hide dashboards
+                    closeSellerDashboard();
+                    closeAdminDashboard();
+                    
+                    // Hide seller and admin icons
+                    document.getElementById('sellerIcon')?.classList.remove('show');
+                    document.getElementById('adminIcon')?.classList.remove('show');
+                    
+                    showToast('Logged out successfully', 'success');
+                } else {
+                    showToast('Logout failed. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+                // Fallback logout
+                currentUser = null;
+                updateAuthUI();
+                closeSellerDashboard();
+                closeAdminDashboard();
+                showToast('Logged out', 'success');
             }
         }
 
