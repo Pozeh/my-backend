@@ -18,9 +18,12 @@ async function comparePassword(password, hashedPassword) {
 
 // User Registration with bcrypt and session
 router.post('/register', async (req, res) => {
+    console.log('=== REGISTRATION ROUTE HIT ===');
+    console.log('Headers:', req.headers);
+    console.log('Body:', req.body);
+    console.log('Content-Type:', req.headers['content-type']);
+    
     try {
-        console.log('Registration request received:', req.body);
-        
         const {
             firstName,
             lastName,
@@ -38,11 +41,13 @@ router.post('/register', async (req, res) => {
             gender
         } = req.body;
         
+        console.log('Extracted fields:', { firstName, lastName, email, phone, password: password ? '***' : 'missing' });
+        
         const db = req.app.locals.db;
         
         // Validate required fields
         if (!firstName || !lastName || !email || !phone || !password) {
-            console.log('Missing required fields');
+            console.log('Missing required fields validation failed');
             return res.status(400).json({ 
                 success: false, 
                 error: "Required fields: firstName, lastName, email, phone, password" 
@@ -52,7 +57,7 @@ router.post('/register', async (req, res) => {
         // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            console.log('Invalid email format:', email);
+            console.log('Invalid email format validation failed:', email);
             return res.status(400).json({ 
                 success: false, 
                 error: "Invalid email format" 
@@ -62,7 +67,7 @@ router.post('/register', async (req, res) => {
         // Validate phone format (basic validation)
         const phoneRegex = /^[\d\s\-\+\(\)]+$/;
         if (!phoneRegex.test(phone) || phone.length < 10) {
-            console.log('Invalid phone format:', phone);
+            console.log('Invalid phone format validation failed:', phone);
             return res.status(400).json({ 
                 success: false, 
                 error: "Invalid phone number format" 
@@ -71,12 +76,14 @@ router.post('/register', async (req, res) => {
         
         // Validate password strength
         if (password.length < 6) {
-            console.log('Password too short');
+            console.log('Password too short validation failed');
             return res.status(400).json({ 
                 success: false, 
                 error: "Password must be at least 6 characters long" 
             });
         }
+        
+        console.log('Basic validation passed');
         
         // Check if user already exists
         const existingUser = await db.collection("users").findOne({ 
@@ -84,12 +91,14 @@ router.post('/register', async (req, res) => {
         });
         
         if (existingUser) {
-            console.log('User already exists:', email);
+            console.log('User already exists check failed:', email);
             return res.status(400).json({ 
                 success: false, 
                 error: "User with this email or phone already exists" 
             });
         }
+        
+        console.log('User existence check passed');
         
         // Hash the password with error handling
         let hashedPassword;
@@ -131,6 +140,8 @@ router.post('/register', async (req, res) => {
             lastLogin: null
         };
         
+        console.log('User object created, attempting database insert');
+        
         const result = await db.collection("users").insertOne(user);
         
         console.log('User registered successfully:', { 
@@ -159,7 +170,7 @@ router.post('/register', async (req, res) => {
                 });
             }
             
-            console.log('Session created successfully');
+            console.log('Session created successfully, sending response');
             res.json({ 
                 success: true, 
                 message: "Account created successfully",
@@ -175,6 +186,7 @@ router.post('/register', async (req, res) => {
         
     } catch (error) {
         console.error('User registration error:', error);
+        console.error('Error stack:', error.stack);
         res.status(500).json({ 
             success: false, 
             error: "Failed to register user: " + error.message 
