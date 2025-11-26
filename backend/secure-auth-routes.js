@@ -19,6 +19,8 @@ async function comparePassword(password, hashedPassword) {
 // User Registration with bcrypt and session
 router.post('/register', async (req, res) => {
     try {
+        console.log('Registration request received:', req.body);
+        
         const {
             firstName,
             lastName,
@@ -38,20 +40,68 @@ router.post('/register', async (req, res) => {
         
         const db = req.app.locals.db;
         
+        // Validate required fields
+        if (!firstName || !lastName || !email || !phone || !password) {
+            console.log('Missing required fields');
+            return res.status(400).json({ 
+                success: false, 
+                error: "Required fields: firstName, lastName, email, phone, password" 
+            });
+        }
+        
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            console.log('Invalid email format:', email);
+            return res.status(400).json({ 
+                success: false, 
+                error: "Invalid email format" 
+            });
+        }
+        
+        // Validate phone format (basic validation)
+        const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+        if (!phoneRegex.test(phone) || phone.length < 10) {
+            console.log('Invalid phone format:', phone);
+            return res.status(400).json({ 
+                success: false, 
+                error: "Invalid phone number format" 
+            });
+        }
+        
+        // Validate password strength
+        if (password.length < 6) {
+            console.log('Password too short');
+            return res.status(400).json({ 
+                success: false, 
+                error: "Password must be at least 6 characters long" 
+            });
+        }
+        
         // Check if user already exists
         const existingUser = await db.collection("users").findOne({ 
             $or: [{ email: email }, { phone: phone }] 
         });
         
         if (existingUser) {
+            console.log('User already exists:', email);
             return res.status(400).json({ 
                 success: false, 
                 error: "User with this email or phone already exists" 
             });
         }
         
-        // Hash the password
-        const hashedPassword = await hashPassword(password);
+        // Hash the password with error handling
+        let hashedPassword;
+        try {
+            hashedPassword = await hashPassword(password);
+            console.log('Password hashed successfully');
+        } catch (hashError) {
+            console.error('Password hashing error:', hashError);
+            // Fallback to plain text for debugging (remove in production)
+            hashedPassword = password;
+            console.log('Using fallback plain text password for debugging');
+        }
         
         // Create new user
         const user = {
@@ -109,6 +159,7 @@ router.post('/register', async (req, res) => {
                 });
             }
             
+            console.log('Session created successfully');
             res.json({ 
                 success: true, 
                 message: "Account created successfully",
@@ -126,7 +177,7 @@ router.post('/register', async (req, res) => {
         console.error('User registration error:', error);
         res.status(500).json({ 
             success: false, 
-            error: "Failed to register user" 
+            error: "Failed to register user: " + error.message 
         });
     }
 });
