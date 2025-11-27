@@ -30,6 +30,9 @@
             color: var(--text-dark);
             min-width: 1200px; /* Force desktop minimum width */
             overflow-x: auto; /* Allow horizontal scrolling if needed */
+            overflow-y: auto; /* Ensure vertical scrolling is always allowed */
+            height: auto; /* Allow body to grow naturally */
+            min-height: 100vh; /* Ensure minimum full viewport height */
         }
 
         /* Header Styles */
@@ -6702,10 +6705,16 @@
                 
                 // Ensure ALL homepage sections are visible for sellers
                 showAllHomepageSections();
+                
+                // Ensure proper scrolling behavior
+                ensureProperScrollingForSellers();
             } else {
                 console.log('👤 Regular user or no seller - keeping default website');
                 // Keep default website layout - all sections should be visible by default
                 showAllHomepageSections();
+                
+                // Ensure proper scrolling behavior for all users
+                ensureProperScrollingForSellers();
             }
         }
 
@@ -6961,6 +6970,11 @@
                 sellerDashboard.style.display = 'none';
             }
             
+            // Restore body scrolling
+            document.body.style.overflowY = 'auto';
+            document.body.style.overflowX = 'auto';
+            document.body.style.height = 'auto';
+            
             // Show ALL main website sections for sellers
             showAllHomepageSections();
             
@@ -6973,7 +6987,48 @@
             showToast('Welcome back to the main website!', 'success');
         }
 
-        // Function to show all homepage sections (for sellers)
+        // Function to ensure proper scrolling for sellers on main website
+        function ensureProperScrollingForSellers() {
+            console.log('📜 Ensuring proper scrolling for sellers on main website');
+            
+            // Ensure body allows scrolling
+            document.body.style.overflowY = 'auto';
+            document.body.style.overflowX = 'auto';
+            document.body.style.height = 'auto';
+            document.body.style.minHeight = '100vh';
+            
+            // Ensure html element allows scrolling
+            document.documentElement.style.overflowY = 'auto';
+            document.documentElement.style.overflowX = 'auto';
+            document.documentElement.style.height = 'auto';
+            
+            // Remove any fixed positioning that might block scrolling
+            const mainContent = document.querySelector('main') || document.querySelector('.main-content') || document.body;
+            if (mainContent) {
+                mainContent.style.position = 'relative';
+                mainContent.style.height = 'auto';
+                mainContent.style.overflowY = 'visible';
+            }
+            
+            // Ensure all homepage sections are visible and scrollable
+            const allSections = document.querySelectorAll('section, .hero, .featured-products, .categories, .footer');
+            allSections.forEach(section => {
+                section.style.position = 'relative';
+                section.style.height = 'auto';
+                section.style.overflow = 'visible';
+            });
+            
+            // Remove any scroll-blocking styles from containers
+            const containers = document.querySelectorAll('.container');
+            containers.forEach(container => {
+                container.style.overflow = 'visible';
+                container.style.height = 'auto';
+            });
+            
+            console.log('✅ Proper scrolling ensured for sellers');
+        }
+
+        // Update the showAllHomepageSections function to include scrolling fixes
         function showAllHomepageSections() {
             console.log('📱 Showing all homepage sections for seller');
             
@@ -6981,6 +7036,8 @@
             const heroSection = document.querySelector('.hero');
             if (heroSection) {
                 heroSection.style.display = 'block';
+                heroSection.style.position = 'relative';
+                heroSection.style.height = 'auto';
             }
             
             // Show main content areas
@@ -6992,6 +7049,9 @@
                      container.parentElement.classList.contains('categories') ||
                      container.parentElement.classList.contains('footer'))) {
                     container.parentElement.style.display = 'block';
+                    container.parentElement.style.position = 'relative';
+                    container.parentElement.style.height = 'auto';
+                    container.parentElement.style.overflow = 'visible';
                 }
             });
             
@@ -6999,27 +7059,42 @@
             const featuredProducts = document.querySelector('.featured-products');
             if (featuredProducts) {
                 featuredProducts.style.display = 'block';
+                featuredProducts.style.position = 'relative';
+                featuredProducts.style.height = 'auto';
+                featuredProducts.style.overflow = 'visible';
             }
             
             // Show categories section
             const categoriesSection = document.querySelector('.categories');
             if (categoriesSection) {
                 categoriesSection.style.display = 'block';
+                categoriesSection.style.position = 'relative';
+                categoriesSection.style.height = 'auto';
+                categoriesSection.style.overflow = 'visible';
             }
             
             // Show footer section
             const footerSection = document.querySelector('.footer');
             if (footerSection) {
                 footerSection.style.display = 'block';
+                footerSection.style.position = 'relative';
+                footerSection.style.height = 'auto';
+                footerSection.style.overflow = 'visible';
             }
             
             // Show any other main content sections
             const mainSections = document.querySelectorAll('section:not(.seller-dashboard):not(.unified-seller-homepage)');
             mainSections.forEach(section => {
                 section.style.display = 'block';
+                section.style.position = 'relative';
+                section.style.height = 'auto';
+                section.style.overflow = 'visible';
             });
             
-            console.log('✅ All homepage sections shown');
+            // Ensure proper scrolling
+            ensureProperScrollingForSellers();
+            
+            console.log('✅ All homepage sections shown with proper scrolling');
         }
 
         // Update the dashboard "Go to Website" button
@@ -7039,6 +7114,7 @@
         window.showSellerSettings = showSellerSettings;
         window.goToMainWebsite = goToMainWebsite;
         window.showAllHomepageSections = showAllHomepageSections;
+        window.ensureProperScrollingForSellers = ensureProperScrollingForSellers;
 
         // Enhanced Seller Homepage Function - Unified Entry Point
         async function goToSellerHomepage() {
@@ -7573,8 +7649,165 @@
             console.log('🎉 VISIBILITY TEST COMPLETE!');
         }
 
+        // Comprehensive Scrolling Test Function for Sellers
+        function testScrollingForSellers() {
+            console.log('📜 === SCROLLING TEST FOR SELLERS === 📜');
+            console.log('');
+            
+            // 1. Check Body Scrolling Properties
+            console.log('📋 BODY SCROLLING PROPERTIES:');
+            console.log('body.style.overflowY:', document.body.style.overflowY);
+            console.log('body.style.overflowX:', document.body.style.overflowX);
+            console.log('body.style.height:', document.body.style.height);
+            console.log('body.style.minHeight:', document.body.style.minHeight);
+            console.log('body.scrollHeight:', document.body.scrollHeight);
+            console.log('body.clientHeight:', document.body.clientHeight);
+            console.log('window.innerHeight:', window.innerHeight);
+            console.log('');
+            
+            // 2. Check HTML Element Properties
+            console.log('📋 HTML ELEMENT PROPERTIES:');
+            console.log('document.documentElement.style.overflowY:', document.documentElement.style.overflowY);
+            console.log('document.documentElement.style.overflowX:', document.documentElement.style.overflowX);
+            console.log('document.documentElement.style.height:', document.documentElement.style.height);
+            console.log('document.documentElement.scrollHeight:', document.documentElement.scrollHeight);
+            console.log('');
+            
+            // 3. Check Homepage Sections
+            console.log('📱 HOMEPAGE SECTIONS STATUS:');
+            const sections = [
+                { name: 'Hero Section', selector: '.hero' },
+                { name: 'Featured Products', selector: '.featured-products' },
+                { name: 'Categories', selector: '.categories' },
+                { name: 'Footer', selector: '.footer' }
+            ];
+            
+            sections.forEach(section => {
+                const element = document.querySelector(section.selector);
+                if (element) {
+                    console.log(`${section.name}:`);
+                    console.log(`  - Display: ${element.style.display || 'default'}`);
+                    console.log(`  - Position: ${element.style.position || 'default'}`);
+                    console.log(`  - Height: ${element.style.height || 'default'}`);
+                    console.log(`  - Overflow: ${element.style.overflow || 'default'}`);
+                    console.log(`  - OffsetTop: ${element.offsetTop}`);
+                    console.log(`  - ScrollHeight: ${element.scrollHeight}`);
+                } else {
+                    console.log(`${section.name}: NOT FOUND`);
+                }
+            });
+            console.log('');
+            
+            // 4. Test Scrolling Functions
+            console.log('🧪 TESTING SCROLLING FUNCTIONS:');
+            
+            // Test scrolling fixes
+            console.log('Testing ensureProperScrollingForSellers()...');
+            ensureProperScrollingForSellers();
+            console.log('✅ ensureProperScrollingForSellers() executed');
+            
+            // Test homepage sections
+            console.log('Testing showAllHomepageSections()...');
+            showAllHomepageSections();
+            console.log('✅ showAllHomepageSections() executed');
+            
+            // Test website personalization
+            console.log('Testing updateWebsiteForUserType()...');
+            updateWebsiteForUserType();
+            console.log('✅ updateWebsiteForUserType() executed');
+            console.log('');
+            
+            // 5. Test Actual Scrolling
+            console.log('🔄 TESTING ACTUAL SCROLLING:');
+            
+            // Get page dimensions
+            const pageHeight = document.documentElement.scrollHeight;
+            const viewportHeight = window.innerHeight;
+            const scrollableHeight = pageHeight - viewportHeight;
+            
+            console.log('Page Dimensions:');
+            console.log(`  - Total page height: ${pageHeight}px`);
+            console.log(`  - Viewport height: ${viewportHeight}px`);
+            console.log(`  - Scrollable height: ${scrollableHeight}px`);
+            console.log(`  - Can scroll: ${scrollableHeight > 0 ? 'YES' : 'NO'}`);
+            
+            if (scrollableHeight > 0) {
+                console.log('✅ Page is scrollable');
+                
+                // Test scrolling to different sections
+                console.log('Testing scroll to featured products...');
+                const featuredProducts = document.querySelector('.featured-products');
+                if (featuredProducts) {
+                    featuredProducts.scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(() => {
+                        console.log('✅ Scrolled to featured products');
+                        
+                        console.log('Testing scroll to footer...');
+                        const footer = document.querySelector('.footer');
+                        if (footer) {
+                            footer.scrollIntoView({ behavior: 'smooth' });
+                            setTimeout(() => {
+                                console.log('✅ Scrolled to footer');
+                                
+                                // Scroll back to top
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                                setTimeout(() => {
+                                    console.log('✅ Scrolled back to top');
+                                }, 1000);
+                            }, 1000);
+                        }
+                    }, 1000);
+                }
+            } else {
+                console.log('❌ Page is NOT scrollable - checking for issues...');
+                
+                // Check for scroll-blocking elements
+                const fixedElements = document.querySelectorAll('*');
+                let blockingElements = [];
+                
+                fixedElements.forEach(el => {
+                    const style = window.getComputedStyle(el);
+                    if (style.position === 'fixed' && style.height === '100vh') {
+                        blockingElements.push({
+                            element: el.tagName + (el.className ? '.' + el.className : ''),
+                            zIndex: style.zIndex
+                        });
+                    }
+                });
+                
+                if (blockingElements.length > 0) {
+                    console.log('Found potential scroll-blocking elements:');
+                    blockingElements.forEach(el => {
+                        console.log(`  - ${el.element} (z-index: ${el.zIndex})`);
+                    });
+                }
+            }
+            
+            console.log('');
+            console.log('🎯 EXPECTED BEHAVIOR:');
+            console.log('For sellers on main website:');
+            console.log('  - Body should have overflow-y: auto');
+            console.log('  - All sections should be visible and scrollable');
+            console.log('  - Page should scroll smoothly to featured products');
+            console.log('  - Page should scroll smoothly to footer');
+            console.log('  - All animations and interactions should work');
+            console.log('');
+            console.log('🔧 ISSUES & FIXES:');
+            console.log('If scrolling is not working:');
+            console.log('1. Run ensureProperScrollingForSellers() manually');
+            console.log('2. Check for elements with position: fixed and height: 100vh');
+            console.log('3. Verify body and html overflow properties');
+            console.log('4. Check if any JavaScript is setting overflow: hidden');
+            console.log('');
+            console.log('🎉 SCROLLING TEST COMPLETE!');
+        }
+
         // Add to global scope
         window.testHomepageVisibilityForSellers = testHomepageVisibilityForSellers;
+        window.testScrollingForSellers = testScrollingForSellers;
+        
+        console.log('📜 Scrolling Test function added:');
+        console.log('- testScrollingForSellers() - Complete scrolling diagnosis for sellers');
         
         console.log('🐛 Homepage Visibility Test function added:');
         console.log('- testHomepageVisibilityForSellers() - Complete homepage visibility diagnosis');
