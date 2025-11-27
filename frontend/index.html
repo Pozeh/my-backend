@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>EcoLoop Kenya - Sustainable Marketplace</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/productLayer.css">
     <style>
         :root {
             --primary-color: #2ecc71;
@@ -107,10 +108,353 @@
             border-color: var(--primary-color);
         }
 
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .commerce-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .icon-wrapper {
+            position: relative;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+        }
+
+        .icon-wrapper:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: rgba(0, 255, 255, 0.6);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+        }
+
+        .icon-wrapper i {
+            color: #00ffff;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .icon-wrapper:hover i {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            border: 2px solid var(--white);
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+            animation: badgePulse 2s infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .badge.wishlist-badge {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+        }
+
+        .badge.cart-badge {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            box-shadow: 0 2px 8px rgba(39, 174, 96, 0.4);
+        }
+
+        .badge.animate {
+            animation: badgeBounce 0.6s ease;
+        }
+
+        @keyframes badgeBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Cart and Wishlist Sidebar Styles */
+        .cart-sidebar, .wishlist-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-left: 2px solid rgba(0, 255, 255, 0.3);
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+            transition: right 0.3s ease;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open, .wishlist-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header, .wishlist-header {
+            background: rgba(0, 255, 255, 0.1);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3, .wishlist-header h3 {
+            color: #00ffff;
+            margin: 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-header h3 i, .wishlist-header h3 i {
+            color: #00ffff;
+        }
+
+        .close-cart, .close-wishlist {
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .close-cart:hover, .close-wishlist:hover {
+            background: rgba(255, 0, 0, 0.3);
+            transform: scale(1.1);
+        }
+
+        .cart-content, .wishlist-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .cart-items, .wishlist-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cart-item, .wishlist-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover, .wishlist-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 255, 255, 0.4);
+            transform: translateX(-5px);
+        }
+
+        .cart-item-image, .wishlist-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .cart-item-details, .wishlist-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title, .wishlist-item-title {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .cart-item-price, .wishlist-item-price {
+            color: #00ffff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        .quantity-btn {
+            background: none;
+            border: none;
+            color: #00ffff;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        .quantity-value {
+            color: #ffffff;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .cart-item-actions, .wishlist-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-remove, .btn-move-to-cart {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-remove:hover {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: rgba(255, 0, 0, 0.5);
+        }
+
+        .btn-move-to-cart:hover {
+            background: rgba(0, 255, 0, 0.3);
+            border-color: rgba(0, 255, 0, 0.5);
+        }
+
+        .cart-empty, .wishlist-empty {
+            text-align: center;
+            color: #ffffff;
+            padding: 40px 20px;
+        }
+
+        .cart-empty i, .wishlist-empty i {
+            font-size: 48px;
+            color: rgba(0, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .cart-summary {
+            border-top: 2px solid rgba(0, 255, 255, 0.3);
+            padding: 20px;
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 18px;
+            color: #00ffff;
+            border-top: 1px solid rgba(0, 255, 255, 0.3);
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Overlay for cart/wishlist */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .cart-sidebar, .wishlist-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+        }
+
         /* Futuristic Hero Section */
         .hero {
             position: relative;
-            min-height: 100vh;
+            min-height: 25vh;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -242,7 +586,7 @@
             position: relative;
             z-index: 10;
             text-align: center;
-            padding: 60px 40px;
+            padding: 45px 40px;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             border-radius: 30px;
@@ -410,7 +754,7 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .welcome-panel {
-                padding: 40px 20px;
+                padding: 30px 20px;
                 margin: 0 20px;
             }
 
@@ -435,7 +779,7 @@
 
         @media (max-width: 480px) {
             .welcome-panel {
-                padding: 30px 15px;
+                padding: 22px 15px;
                 margin: 0 10px;
             }
 
@@ -672,6 +1016,199 @@
             padding: 30px;
         }
 
+        /* Product Details Modal Styles */
+        .product-details-modal {
+            max-width: 900px;
+            width: 95%;
+        }
+
+        .product-details-body {
+            padding: 0;
+        }
+
+        .product-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .product-image-section {
+            text-align: center;
+        }
+
+        .product-detail-image {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-rating {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .product-rating #productRating {
+            color: #f39c12;
+            font-size: 18px;
+        }
+
+        .product-rating #ratingValue {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .product-price-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .product-price-section h3 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin: 0;
+        }
+
+        .stock-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #27ae60;
+            color: white;
+        }
+
+        .stock-badge.out-of-stock {
+            background: #e74c3c;
+        }
+
+        .product-description,
+        .product-features,
+        .product-specifications {
+            margin-bottom: 25px;
+        }
+
+        .product-description h4,
+        .product-features h4,
+        .product-specifications h4 {
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .product-description p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .product-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .product-features li {
+            padding: 8px 0;
+            color: var(--text-light);
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .product-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .specifications-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .spec-value {
+            color: var(--text-light);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .product-actions .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .product-actions .btn i {
+            margin-right: 8px;
+        }
+
+        .btn-wishlist {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .btn-wishlist:hover {
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-wishlist i {
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .product-details-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .product-detail-image {
+                height: 250px;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .product-price-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
@@ -846,6 +1383,16 @@
                     <input type="text" class="search-input" id="searchInput" placeholder="Search for products...">
                 </div>
                 <div class="header-actions">
+                    <div class="commerce-icons">
+                        <div class="icon-wrapper" onclick="toggleWishlist()">
+                            <i class="fas fa-heart"></i>
+                            <span class="badge wishlist-badge" id="wishlistBadge">0</span>
+                        </div>
+                        <div class="icon-wrapper" onclick="toggleCart()">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge cart-badge" id="cartBadge">0</span>
+                        </div>
+                    </div>
                     <a href="#" class="btn">Start Selling</a>
                 </div>
             </div>
@@ -862,6 +1409,7 @@
         </div>
         <div class="container">
             <div class="welcome-panel">
+                <canvas id="ecoloopProductLayer" aria-hidden="true"></canvas>
                 <div class="panel-glow"></div>
                 <h1 class="welcome-title">Welcome to EcoLoop Kenya</h1>
                 <p class="welcome-subtitle">Your sustainable marketplace for eco-friendly products and services</p>
@@ -1105,6 +1653,127 @@
         </div>
     </div>
 
+    <!-- Product Details Modal -->
+    <div id="productDetailsModal" class="modal">
+        <div class="modal-content product-details-modal">
+            <div class="modal-header">
+                <h2 id="productTitle">Product Details</h2>
+                <span class="close" onclick="closeProductDetailsModal()">&times;</span>
+            </div>
+            <div class="modal-body product-details-body">
+                <div class="product-details-grid">
+                    <div class="product-image-section">
+                        <img id="productImage" src="" alt="" class="product-detail-image">
+                        <div class="product-rating">
+                            <span id="productRating">★★★★★</span>
+                            <span id="ratingValue">(4.5)</span>
+                        </div>
+                    </div>
+                    <div class="product-info-section">
+                        <div class="product-price-section">
+                            <h3 id="productPrice">KES 0</h3>
+                            <span class="stock-badge" id="stockBadge">In Stock</span>
+                        </div>
+                        
+                        <div class="product-description">
+                            <h4>Description</h4>
+                            <p id="productDescription">Product description here</p>
+                        </div>
+
+                        <div class="product-features">
+                            <h4>Key Features</h4>
+                            <ul id="productFeatures">
+                                <li>Feature 1</li>
+                                <li>Feature 2</li>
+                            </ul>
+                        </div>
+
+                        <div class="product-specifications">
+                            <h4>Specifications</h4>
+                            <div class="specifications-grid" id="productSpecifications">
+                                <div class="spec-item">
+                                    <span class="spec-label">Brand:</span>
+                                    <span class="spec-value">Brand Name</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="addToCart()">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </button>
+                            <button class="btn btn-success" onclick="buyNow()">
+                                <i class="fas fa-bolt"></i> Buy Now
+                            </button>
+                            <button class="btn btn-wishlist" onclick="addToWishlist()" title="Add to Wishlist">
+                                <i class="fas fa-heart"></i> Wishlist
+                            </button>
+                            <button class="btn btn-secondary" onclick="closeProductDetailsModal()">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Shopping Cart</h3>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+        </div>
+        <div class="cart-content">
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+            <div class="cart-empty" id="cartEmpty" style="display: none;">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+                <button class="btn" onclick="closeCart()">Continue Shopping</button>
+            </div>
+            <div class="cart-summary" id="cartSummary" style="display: none;">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotal">KES 0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span id="cartShipping">KES 0</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="cartTotal">KES 0</span>
+                </div>
+                <button class="btn btn-primary checkout-btn" onclick="proceedToCheckout()">
+                    <i class="fas fa-lock"></i> Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Sidebar -->
+    <div id="wishlistSidebar" class="wishlist-sidebar">
+        <div class="wishlist-header">
+            <h3><i class="fas fa-heart"></i> My Wishlist</h3>
+            <span class="close-wishlist" onclick="toggleWishlist()">&times;</span>
+        </div>
+        <div class="wishlist-content">
+            <div class="wishlist-items" id="wishlistItems">
+                <!-- Wishlist items will be dynamically added here -->
+            </div>
+            <div class="wishlist-empty" id="wishlistEmpty" style="display: none;">
+                <i class="fas fa-heart"></i>
+                <p>Your wishlist is empty</p>
+                <button class="btn" onclick="closeWishlist()">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeCart(); closeWishlist();"></div>
+
     <script>
         // Backend API URL
         const BACKEND_URL = 'https://my-backend-1-jk7w.onrender.com';
@@ -1169,6 +1838,14 @@
 
             async checkAuthStatus() {
                 try {
+                    // First check localStorage for cached user data
+                    const cachedUser = localStorage.getItem('ecoloopUser');
+                    if (cachedUser) {
+                        currentUser = JSON.parse(cachedUser);
+                        this.updateUI();
+                    }
+
+                    // Then try to verify with backend
                     const response = await fetch(`${BACKEND_URL}/api/user/session`, {
                         method: 'GET',
                         credentials: 'include' // Important for HTTP-only cookies
@@ -1176,17 +1853,42 @@
 
                     if (response.ok) {
                         const data = await response.json();
-                        if (data.success) {
+                        if (data.success && data.user) {
                             currentUser = data.user;
+                            // Cache user data in localStorage
+                            localStorage.setItem('ecoloopUser', JSON.stringify(currentUser));
+                            this.updateUI();
                         } else {
-                            currentUser = null;
+                            // Backend says no user, but we have cached data
+                            if (cachedUser) {
+                                // Keep using cached data until explicit logout
+                                console.log('Using cached user session');
+                            } else {
+                                currentUser = null;
+                                this.updateUI();
+                            }
                         }
                     } else {
-                        currentUser = null;
+                        // Backend failed, but we have cached data
+                        if (cachedUser) {
+                            console.log('Backend unavailable, using cached user session');
+                        } else {
+                            currentUser = null;
+                            this.updateUI();
+                        }
                     }
                 } catch (error) {
                     console.error('Auth check failed:', error);
-                    currentUser = null;
+                    // Network error, but we have cached data
+                    const cachedUser = localStorage.getItem('ecoloopUser');
+                    if (cachedUser) {
+                        currentUser = JSON.parse(cachedUser);
+                        this.updateUI();
+                        console.log('Network error, using cached user session');
+                    } else {
+                        currentUser = null;
+                        this.updateUI();
+                    }
                 }
             }
 
@@ -1205,6 +1907,8 @@
 
                     if (data.success) {
                         currentUser = data.user;
+                        // Cache user data in localStorage
+                        localStorage.setItem('ecoloopUser', JSON.stringify(currentUser));
                         this.updateUI();
                         showToast('Login successful!', 'success');
                         return { success: true };
@@ -1275,20 +1979,20 @@
                         credentials: 'include' // Important for HTTP-only cookies
                     });
                     
-                    if (response.ok) {
-                        currentUser = null;
-                        this.updateUI();
-                        showToast('Logged out successfully!', 'success');
-                    } else {
-                        // Still clear user on error
-                        currentUser = null;
-                        this.updateUI();
-                        showToast('Logged out successfully!', 'success');
+                    // Clear user data regardless of backend response
+                    currentUser = null;
+                    localStorage.removeItem('ecoloopUser');
+                    this.updateUI();
+                    showToast('Logged out successfully!', 'success');
+                    
+                    if (!response.ok) {
+                        console.log('Backend logout failed, but cleared local session');
                     }
                 } catch (error) {
                     console.error('Logout error:', error);
-                    // Clear user on error
+                    // Clear user data on error
                     currentUser = null;
+                    localStorage.removeItem('ecoloopUser');
                     this.updateUI();
                     showToast('Logged out successfully!', 'success');
                 }
@@ -1299,12 +2003,15 @@
                 if (!userActions) return;
 
                 if (currentUser) {
-                    // User is logged in
-                    const initials = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : currentUser.email.charAt(0).toUpperCase();
-                    userActions.innerHTML = `
-                        <div class="user-info">
-                            <div class="user-avatar">${initials}</div>
-                            <span>${currentUser.name || currentUser.email}</span>
+                // User is logged in - load cart and wishlist
+                loadCartItems();
+                loadWishlistItems();
+                
+                const initials = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : currentUser.email.charAt(0).toUpperCase();
+                userActions.innerHTML = `
+                    <div class="user-info">
+                        <div class="user-avatar">${initials}</div>
+                        <span>${currentUser.name || currentUser.email}</span>
                         </div>
                         <a href="#" onclick="authManager.logout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
                         <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
@@ -1617,7 +2324,7 @@
             { name: "Books", icon: "fa-book-open", count: 0 }
         ];
 
-        // Sample products data
+        // Enhanced products data with full details
         const sampleProducts = [
             {
                 id: 1,
@@ -1625,7 +2332,18 @@
                 price: "KES 2,500",
                 description: "High-quality wireless headphones with noise cancellation",
                 category: "Electronics",
-                image: "https://via.placeholder.com/300x200/2ecc71/ffffff?text=Headphones"
+                image: "https://via.placeholder.com/300x200/2ecc71/ffffff?text=Headphones",
+                specifications: {
+                    "Brand": "EcoSound",
+                    "Connectivity": "Bluetooth 5.0",
+                    "Battery Life": "30 hours",
+                    "Noise Cancellation": "Active ANC",
+                    "Weight": "250g",
+                    "Color": "Midnight Black"
+                },
+                rating: 4.5,
+                stock: 15,
+                features: ["Active Noise Cancellation", "30-hour battery life", "Premium sound quality", "Comfortable fit"]
             },
             {
                 id: 2,
@@ -1633,7 +2351,18 @@
                 price: "KES 5,000",
                 description: "Feature-rich smartwatch with health tracking",
                 category: "Electronics",
-                image: "https://via.placeholder.com/300x200/3498db/ffffff?text=Smart+Watch"
+                image: "https://via.placeholder.com/300x200/3498db/ffffff?text=Smart+Watch",
+                specifications: {
+                    "Brand": "EcoTime",
+                    "Display": "1.4\" AMOLED",
+                    "Battery Life": "7 days",
+                    "Water Resistance": "IP68",
+                    "Compatibility": "iOS & Android",
+                    "Sensors": "Heart rate, GPS, Accelerometer"
+                },
+                rating: 4.3,
+                stock: 8,
+                features: ["Heart rate monitoring", "GPS tracking", "Water resistant", "7-day battery"]
             },
             {
                 id: 3,
@@ -1641,7 +2370,18 @@
                 price: "KES 3,500",
                 description: "Comfortable running shoes for all terrains",
                 category: "Sports",
-                image: "https://via.placeholder.com/300x200/e74c3c/ffffff?text=Shoes"
+                image: "https://via.placeholder.com/300x200/e74c3c/ffffff?text=Shoes",
+                specifications: {
+                    "Brand": "EcoRun",
+                    "Material": "Recycled polyester",
+                    "Weight": "280g",
+                    "Sole": "Eco-friendly rubber",
+                    "Sizes": "US 6-12",
+                    "Gender": "Unisex"
+                },
+                rating: 4.7,
+                stock: 25,
+                features: ["Eco-friendly materials", "All-terrain grip", "Breathable design", "Arch support"]
             },
             {
                 id: 4,
@@ -1649,7 +2389,18 @@
                 price: "KES 4,200",
                 description: "Automatic coffee maker with timer",
                 category: "Home & Kitchen",
-                image: "https://via.placeholder.com/300x200/f39c12/ffffff?text=Coffee+Maker"
+                image: "https://via.placeholder.com/300x200/f39c12/ffffff?text=Coffee+Maker",
+                specifications: {
+                    "Brand": "EcoBrew",
+                    "Capacity": "12 cups",
+                    "Programmable": "Yes, 24-hour timer",
+                    "Auto Shut-off": "2 hours",
+                    "Power": "900W",
+                    "Material": "Stainless steel"
+                },
+                rating: 4.4,
+                stock: 12,
+                features: ["Programmable timer", "Auto shut-off", "12-cup capacity", "Easy cleaning"]
             },
             {
                 id: 5,
@@ -1657,7 +2408,18 @@
                 price: "KES 1,800",
                 description: "Durable backpack with laptop compartment",
                 category: "Fashion",
-                image: "https://via.placeholder.com/300x200/9b59b6/ffffff?text=Backpack"
+                image: "https://via.placeholder.com/300x200/9b59b6/ffffff?text=Backpack",
+                specifications: {
+                    "Brand": "EcoCarry",
+                    "Material": "Recycled fabric",
+                    "Laptop Compartment": "Up to 15.6\"",
+                    "Capacity": "25L",
+                    "Water Resistant": "Yes",
+                    "Weight": "600g"
+                },
+                rating: 4.6,
+                stock: 20,
+                features: ["Laptop protection", "Water resistant", "Multiple pockets", "Eco-friendly materials"]
             },
             {
                 id: 6,
@@ -1665,7 +2427,18 @@
                 price: "KES 1,200",
                 description: "Learn programming with this comprehensive guide",
                 category: "Books",
-                image: "https://via.placeholder.com/300x200/1abc9c/ffffff?text=Book"
+                image: "https://via.placeholder.com/300x200/1abc9c/ffffff?text=Book",
+                specifications: {
+                    "Title": "Modern Web Development",
+                    "Author": "EcoTech Press",
+                    "Pages": "450",
+                    "Language": "English",
+                    "Format": "Paperback",
+                    "ISBN": "978-123-456-789"
+                },
+                rating: 4.8,
+                stock: 30,
+                features: ["Comprehensive guide", "Practical examples", "Latest technologies", "Beginner friendly"]
             }
         ];
 
@@ -1729,7 +2502,12 @@
                         <h3 class="product-title">${product.title}</h3>
                         <div class="product-price">${product.price}</div>
                         <p class="product-description">${product.description}</p>
-                        <button class="btn" onclick="showToast('Product details coming soon!', 'info')">View Details</button>
+                        <div class="product-actions">
+                            <button class="btn" onclick="showProductDetails(${product.id})">View Details</button>
+                            <button class="btn btn-wishlist" onclick="addToWishlist(${product.id})" title="Add to Wishlist">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -1780,48 +2558,757 @@
             document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Debug functions - Test modal functionality
-        function testModals() {
-            console.log('Testing modals...');
-            console.log('Login modal exists:', !!document.getElementById('loginModal'));
-            console.log('Register modal exists:', !!document.getElementById('registerModal'));
-            console.log('Seller modal exists:', !!document.getElementById('sellerRegisterModal'));
-            
-            // Test show functions
-            console.log('showLoginModal function exists:', typeof showLoginModal);
-            console.log('showRegisterModal function exists:', typeof showRegisterModal);
-        }
-
-        // Add test buttons when DOM is loaded
+        // Initialize website
         document.addEventListener('DOMContentLoaded', function() {
-            // Add debug test buttons
-            const testDiv = document.createElement('div');
-            testDiv.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: white; padding: 10px; border: 2px solid #2ecc71; border-radius: 10px;';
-            testDiv.innerHTML = `
-                <div style="margin-bottom: 10px; font-weight: bold;">🔧 Modal Test:</div>
-                <button onclick="showLoginModal()" style="margin: 2px; padding: 5px 10px; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer;">Test Login</button>
-                <button onclick="showRegisterModal()" style="margin: 2px; padding: 5px 10px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">Test Register</button>
-                <button onclick="testModals()" style="margin: 2px; padding: 5px 10px; background: #f39c12; color: white; border: none; border-radius: 5px; cursor: pointer;">Debug</button>
-                <button onclick="testScrolling()" style="margin: 2px; padding: 5px 10px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Test Scroll</button>
-            `;
-            document.body.appendChild(testDiv);
+            console.log('🌐 EcoLoop Kenya - Website initialized');
+            loadCategories();
+            loadProducts();
+            setupSearch();
         });
 
-        // Test scrolling functionality
-        function testScrolling() {
-            console.log('Testing scrolling functionality...');
-            console.log('Body overflow style:', window.getComputedStyle(document.body).overflow);
-            console.log('Body scroll height:', document.body.scrollHeight);
-            console.log('Window height:', window.innerHeight);
-            console.log('Can scroll:', document.body.scrollHeight > window.innerHeight);
+        // Product Details Functions
+        let currentProduct = null;
+
+        // Show product details modal
+        function showProductDetails(productId) {
+            const product = sampleProducts.find(p => p.id === productId);
+            if (!product) {
+                showToast('Product not found', 'error');
+                return;
+            }
+
+            currentProduct = product;
             
-            // Show register modal and test scrolling
-            showRegisterModal();
-            setTimeout(() => {
-                console.log('After modal open - Body overflow:', window.getComputedStyle(document.body).overflow);
-                console.log('Modal should be visible and website should be scrollable');
-            }, 100);
+            // Populate modal with product data
+            document.getElementById('productTitle').textContent = product.title;
+            document.getElementById('productImage').src = product.image;
+            document.getElementById('productImage').alt = product.title;
+            document.getElementById('productPrice').textContent = product.price;
+            document.getElementById('productDescription').textContent = product.description;
+            
+            // Set rating
+            const ratingStars = generateStars(product.rating || 4);
+            document.getElementById('productRating').innerHTML = ratingStars;
+            document.getElementById('ratingValue').textContent = `(${product.rating || 4.0})`;
+            
+            // Set stock badge
+            const stockBadge = document.getElementById('stockBadge');
+            if (product.stock > 0) {
+                stockBadge.textContent = `In Stock (${product.stock})`;
+                stockBadge.className = 'stock-badge';
+            } else {
+                stockBadge.textContent = 'Out of Stock';
+                stockBadge.className = 'stock-badge out-of-stock';
+            }
+            
+            // Set features
+            const featuresList = document.getElementById('productFeatures');
+            if (product.features && product.features.length > 0) {
+                featuresList.innerHTML = product.features.map(feature => `<li>${feature}</li>`).join('');
+            } else {
+                featuresList.innerHTML = '<li>No specific features listed</li>';
+            }
+            
+            // Set specifications
+            const specificationsGrid = document.getElementById('productSpecifications');
+            if (product.specifications) {
+                specificationsGrid.innerHTML = Object.entries(product.specifications)
+                    .map(([key, value]) => `
+                        <div class="spec-item">
+                            <span class="spec-label">${key}:</span>
+                            <span class="spec-value">${value}</span>
+                        </div>
+                    `).join('');
+            } else {
+                specificationsGrid.innerHTML = '<div class="spec-item"><span class="spec-label">No specifications available</span></div>';
+            }
+            
+            // Show modal
+            document.getElementById('productDetailsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            console.log(`📦 Showing details for product: ${product.title}`);
         }
-    </script>
+
+        // Close product details modal
+        function closeProductDetailsModal() {
+            document.getElementById('productDetailsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            currentProduct = null;
+        }
+
+        // Generate star rating HTML
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+            const emptyStars = 5 - fullStars - halfStar;
+            
+            let stars = '';
+            for (let i = 0; i < fullStars; i++) {
+                stars += '★';
+            }
+            if (halfStar) {
+                stars += '☆';
+            }
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '☆';
+            }
+            
+            return stars;
+        }
+
+        // Add to cart functionality
+        function addToCart(productId = null) {
+            const product = productId ? sampleProducts.find(p => p.id === productId) : currentProduct;
+            if (!product) {
+                showToast('No product selected', 'error');
+                return;
+            }
+            
+            if (product.stock <= 0) {
+                showToast('Product is out of stock', 'error');
+                return;
+            }
+
+            // Check if user is logged in
+            if (!currentUser) {
+                showToast('Please login to add items to cart', 'info');
+                showLoginModal();
+                return;
+            }
+
+            // Add to cart with animation
+            animateItemToCart(productId || product.id);
+            
+            // Call backend API
+            addToCartBackend(product.id, 1);
+        }
+
+        // Backend cart functions
+        async function addToCartBackend(productId, quantity) {
+            try {
+                // Try backend API first
+                const response = await fetch(`${BACKEND_URL}/api/cart/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ productId, quantity })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Product added to cart', 'success');
+                    updateCartBadge();
+                    loadCartItems();
+                } else {
+                    throw new Error(data.message || 'Backend failed');
+                }
+            } catch (error) {
+                console.log('Backend cart add failed, using localStorage fallback:', error);
+                // Fallback to localStorage
+                addToCartLocalStorage(productId, quantity);
+            }
+        }
+
+        // LocalStorage fallback functions
+        function addToCartLocalStorage(productId, quantity) {
+            const product = sampleProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            let cart = JSON.parse(localStorage.getItem('ecoloopCart') || '[]');
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+                showToast('Cart quantity updated', 'success');
+            } else {
+                cart.push({
+                    id: productId,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity
+                });
+                showToast('Product added to cart', 'success');
+            }
+            
+            localStorage.setItem('ecoloopCart', JSON.stringify(cart));
+            updateCartBadge();
+            renderCartItems(cart);
+        }
+
+        async function removeFromCart(productId) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/cart/remove`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Item removed from cart', 'success');
+                    updateCartBadge();
+                    loadCartItems();
+                } else {
+                    showToast(data.message || 'Failed to remove item', 'error');
+                }
+            } catch (error) {
+                console.error('Cart remove error:', error);
+                showToast('Failed to remove item', 'error');
+            }
+        }
+
+        async function updateCartQuantity(productId, quantity) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/cart/update`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ productId, quantity })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateCartBadge();
+                    loadCartItems();
+                } else {
+                    showToast(data.message || 'Failed to update quantity', 'error');
+                }
+            } catch (error) {
+                console.error('Cart update error:', error);
+                showToast('Failed to update quantity', 'error');
+            }
+        }
+
+        async function loadCartItems() {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/cart`, {
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderCartItems(data.cart);
+                    updateCartBadge();
+                }
+            } catch (error) {
+                console.error('Load cart error:', error);
+            }
+        }
+
+        function renderCartItems(cartItems) {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartEmpty = document.getElementById('cartEmpty');
+            const cartSummary = document.getElementById('cartSummary');
+            
+            if (!cartItems || cartItems.length === 0) {
+                cartItemsContainer.innerHTML = '';
+                cartEmpty.style.display = 'block';
+                cartSummary.style.display = 'none';
+                return;
+            }
+
+            cartEmpty.style.display = 'none';
+            cartSummary.style.display = 'block';
+
+            let subtotal = 0;
+            const itemsHTML = cartItems.map(item => {
+                const product = sampleProducts.find(p => p.id === item.productId);
+                if (!product) return '';
+                
+                const itemTotal = parseFloat(product.price.replace(/[^\d.]/g, '')) * item.quantity;
+                subtotal += itemTotal;
+                
+                return `
+                    <div class="cart-item">
+                        <img src="${product.image}" alt="${product.title}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${product.title}</div>
+                            <div class="cart-item-price">${product.price}</div>
+                            <div class="cart-item-quantity">
+                                <span>Qty:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn" onclick="updateCartQuantity(${item.productId}, ${item.quantity - 1})">-</button>
+                                    <span class="quantity-value">${item.quantity}</span>
+                                    <button class="quantity-btn" onclick="updateCartQuantity(${item.productId}, ${item.quantity + 1})">+</button>
+                                </div>
+                            </div>
+                            <div class="cart-item-actions">
+                                <button class="btn-remove" onclick="removeFromCart(${item.productId})">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            cartItemsContainer.innerHTML = itemsHTML;
+
+            // Update summary
+            const shipping = subtotal > 0 ? 200 : 0; // KES 200 shipping
+            const total = subtotal + shipping;
+            
+            document.getElementById('cartSubtotal').textContent = `KES ${subtotal.toFixed(2)}`;
+            document.getElementById('cartShipping').textContent = `KES ${shipping.toFixed(2)}`;
+            document.getElementById('cartTotal').textContent = `KES ${total.toFixed(2)}`;
+        }
+
+        // Wishlist functions
+        function addToWishlist(productId = null) {
+            const product = productId ? sampleProducts.find(p => p.id === productId) : currentProduct;
+            if (!product) {
+                showToast('No product selected', 'error');
+                return;
+            }
+
+            // Check if user is logged in
+            if (!currentUser) {
+                showToast('Please login to add items to wishlist', 'info');
+                showLoginModal();
+                return;
+            }
+
+            // Add to wishlist with animation
+            animateItemToWishlist(productId || product.id);
+            
+            // Call backend API
+            addToWishlistBackend(product.id);
+        }
+
+        async function addToWishlistBackend(productId) {
+            try {
+                // Try backend API first
+                const response = await fetch(`${BACKEND_URL}/api/wishlist/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Product added to wishlist', 'success');
+                    updateWishlistBadge();
+                    loadWishlistItems();
+                } else {
+                    throw new Error(data.message || 'Backend failed');
+                }
+            } catch (error) {
+                console.log('Backend wishlist add failed, using localStorage fallback:', error);
+                // Fallback to localStorage
+                addToWishlistLocalStorage(productId);
+            }
+        }
+
+        function addToWishlistLocalStorage(productId) {
+            const product = sampleProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            let wishlist = JSON.parse(localStorage.getItem('ecoloopWishlist') || '[]');
+            const existingItem = wishlist.find(item => item.id === productId);
+            
+            if (existingItem) {
+                showToast('Product already in wishlist', 'info');
+            } else {
+                wishlist.push({
+                    id: productId,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image
+                });
+                showToast('Product added to wishlist', 'success');
+            }
+            
+            localStorage.setItem('ecoloopWishlist', JSON.stringify(wishlist));
+            updateWishlistBadge();
+            renderWishlistItems(wishlist);
+        }
+
+        async function removeFromWishlist(productId) {
+            try {
+                // Try backend API first
+                const response = await fetch(`${BACKEND_URL}/api/wishlist/remove`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Item removed from wishlist', 'success');
+                    updateWishlistBadge();
+                    loadWishlistItems();
+                } else {
+                    throw new Error(data.message || 'Backend failed');
+                }
+            } catch (error) {
+                console.log('Backend wishlist remove failed, using localStorage fallback:', error);
+                // Fallback to localStorage
+                removeFromWishlistLocalStorage(productId);
+            }
+        }
+
+        function removeFromWishlistLocalStorage(productId) {
+            let wishlist = JSON.parse(localStorage.getItem('ecoloopWishlist') || '[]');
+            wishlist = wishlist.filter(item => item.id !== productId);
+            localStorage.setItem('ecoloopWishlist', JSON.stringify(wishlist));
+            showToast('Item removed from wishlist', 'success');
+            updateWishlistBadge();
+            renderWishlistItems(wishlist);
+        }
+
+        async function moveToCartFromWishlist(productId) {
+            try {
+                // Try backend API first
+                const response = await fetch(`${BACKEND_URL}/api/wishlist/move-to-cart`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Item moved to cart', 'success');
+                    updateWishlistBadge();
+                    updateCartBadge();
+                    loadWishlistItems();
+                    loadCartItems();
+                } else {
+                    throw new Error(data.message || 'Backend failed');
+                }
+            } catch (error) {
+                console.log('Backend move to cart failed, using localStorage fallback:', error);
+                // Fallback to localStorage
+                moveToCartFromWishlistLocalStorage(productId);
+            }
+        }
+
+        function moveToCartFromWishlistLocalStorage(productId) {
+            // Remove from wishlist
+            let wishlist = JSON.parse(localStorage.getItem('ecoloopWishlist') || '[]');
+            wishlist = wishlist.filter(item => item.id !== productId);
+            localStorage.setItem('ecoloopWishlist', JSON.stringify(wishlist));
+            
+            // Add to cart
+            addToCartLocalStorage(productId, 1);
+            
+            showToast('Item moved to cart', 'success');
+            updateWishlistBadge();
+            renderWishlistItems(wishlist);
+        }
+
+        async function loadWishlistItems() {
+            try {
+                // Try backend API first
+                const response = await fetch(`${BACKEND_URL}/api/wishlist`, {
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderWishlistItems(data.wishlist);
+                    updateWishlistBadge();
+                } else {
+                    throw new Error(data.message || 'Backend failed');
+                }
+            } catch (error) {
+                console.log('Backend wishlist load failed, using localStorage fallback:', error);
+                // Fallback to localStorage
+                const wishlist = JSON.parse(localStorage.getItem('ecoloopWishlist') || '[]');
+                renderWishlistItems(wishlist);
+                updateWishlistBadge();
+            }
+        }
+
+        function renderWishlistItems(wishlistItems) {
+            const wishlistItemsContainer = document.getElementById('wishlistItems');
+            const wishlistEmpty = document.getElementById('wishlistEmpty');
+            
+            if (!wishlistItems || wishlistItems.length === 0) {
+                wishlistItemsContainer.innerHTML = '';
+                wishlistEmpty.style.display = 'block';
+                return;
+            }
+
+            wishlistEmpty.style.display = 'none';
+
+            const itemsHTML = wishlistItems.map(item => {
+                // Handle both backend format (item.productId) and localStorage format (item.id)
+                const productId = item.productId || item.id;
+                const product = sampleProducts.find(p => p.id === productId);
+                if (!product) return '';
+                
+                return `
+                    <div class="wishlist-item">
+                        <img src="${product.image}" alt="${product.title}" class="wishlist-item-image">
+                        <div class="wishlist-item-details">
+                            <div class="wishlist-item-title">${product.title}</div>
+                            <div class="wishlist-item-price">${product.price}</div>
+                            <div class="wishlist-item-actions">
+                                <button class="btn-move-to-cart" onclick="moveToCartFromWishlist(${productId})">
+                                    <i class="fas fa-shopping-cart"></i> Move to Cart
+                                </button>
+                                <button class="btn-remove" onclick="removeFromWishlist(${productId})">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            wishlistItemsContainer.innerHTML = itemsHTML;
+        }
+
+        // UI Functions
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('overlay');
+            
+            if (cartSidebar.classList.contains('open')) {
+                closeCart();
+            } else {
+                openCart();
+            }
+        }
+
+        function openCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('overlay');
+            
+            cartSidebar.classList.add('open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            loadCartItems();
+        }
+
+        function closeCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('overlay');
+            
+            cartSidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function toggleWishlist() {
+            const wishlistSidebar = document.getElementById('wishlistSidebar');
+            const overlay = document.getElementById('overlay');
+            
+            if (wishlistSidebar.classList.contains('open')) {
+                closeWishlist();
+            } else {
+                openWishlist();
+            }
+        }
+
+        function openWishlist() {
+            const wishlistSidebar = document.getElementById('wishlistSidebar');
+            const overlay = document.getElementById('overlay');
+            
+            wishlistSidebar.classList.add('open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            loadWishlistItems();
+        }
+
+        function closeWishlist() {
+            const wishlistSidebar = document.getElementById('wishlistSidebar');
+            const overlay = document.getElementById('overlay');
+            
+            wishlistSidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            if (!badge) return;
+            
+            // Get cart count from backend or localStorage as fallback
+            const cartItems = JSON.parse(localStorage.getItem('ecoloopCart') || '[]');
+            const count = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            
+            badge.textContent = count;
+            badge.classList.add('animate');
+            setTimeout(() => badge.classList.remove('animate'), 600);
+        }
+
+        function updateWishlistBadge() {
+            const badge = document.getElementById('wishlistBadge');
+            if (!badge) return;
+            
+            // Get wishlist count from backend or localStorage as fallback
+            const wishlistItems = JSON.parse(localStorage.getItem('ecoloopWishlist') || '[]');
+            const count = wishlistItems.length;
+            
+            badge.textContent = count;
+            badge.classList.add('animate');
+            setTimeout(() => badge.classList.remove('animate'), 600);
+        }
+
+        function proceedToCheckout() {
+            if (!currentUser) {
+                showToast('Please login to proceed to checkout', 'info');
+                showLoginModal();
+                return;
+            }
+            
+            showToast('Proceeding to checkout...', 'info');
+            // In a real app, this would redirect to checkout page
+            setTimeout(() => {
+                closeCart();
+                showToast('Checkout functionality coming soon!', 'info');
+            }, 1000);
+        }
+
+        // Animation functions
+        function animateItemToCart(productId) {
+            const productCard = document.querySelector(`[onclick*="${productId}"]`);
+            const cartIcon = document.querySelector('.icon-wrapper[onclick*="toggleCart"]');
+            
+            if (productCard && cartIcon) {
+                const cartRect = cartIcon.getBoundingClientRect();
+                const productRect = productCard.getBoundingClientRect();
+                
+                // Create flying item animation
+                const flyingItem = document.createElement('div');
+                flyingItem.innerHTML = '<i class="fas fa-shopping-cart" style="color: #00ffff; font-size: 20px;"></i>';
+                flyingItem.style.cssText = `
+                    position: fixed;
+                    top: ${productRect.top}px;
+                    left: ${productRect.left}px;
+                    z-index: 10002;
+                    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                `;
+                
+                document.body.appendChild(flyingItem);
+                
+                setTimeout(() => {
+                    flyingItem.style.top = cartRect.top + 'px';
+                    flyingItem.style.left = cartRect.left + 'px';
+                    flyingItem.style.transform = 'scale(0)';
+                    flyingItem.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    document.body.removeChild(flyingItem);
+                }, 800);
+            }
+        }
+
+        function animateItemToWishlist(productId) {
+            const productCard = document.querySelector(`[onclick*="${productId}"]`);
+            const wishlistIcon = document.querySelector('.icon-wrapper[onclick*="toggleWishlist"]');
+            
+            if (productCard && wishlistIcon) {
+                const wishlistRect = wishlistIcon.getBoundingClientRect();
+                const productRect = productCard.getBoundingClientRect();
+                
+                // Create flying item animation
+                const flyingItem = document.createElement('div');
+                flyingItem.innerHTML = '<i class="fas fa-heart" style="color: #e74c3c; font-size: 20px;"></i>';
+                flyingItem.style.cssText = `
+                    position: fixed;
+                    top: ${productRect.top}px;
+                    left: ${productRect.left}px;
+                    z-index: 10002;
+                    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                `;
+                
+                document.body.appendChild(flyingItem);
+                
+                setTimeout(() => {
+                    flyingItem.style.top = wishlistRect.top + 'px';
+                    flyingItem.style.left = wishlistRect.left + 'px';
+                    flyingItem.style.transform = 'scale(0)';
+                    flyingItem.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    document.body.removeChild(flyingItem);
+                }, 800);
+            }
+        }
+
+        // Buy now functionality
+        function buyNow() {
+            if (!currentProduct) {
+                showToast('No product selected', 'error');
+                return;
+            }
+            
+            if (currentProduct.stock <= 0) {
+                showToast('Product is out of stock', 'error');
+                return;
+            }
+            
+            // Add to cart and redirect to checkout (or show checkout modal)
+            addToCart();
+            
+            // In a real app, this would redirect to checkout
+            showToast('Proceeding to checkout...', 'info');
+            
+            // For now, just close the modal
+            setTimeout(() => {
+                closeProductDetailsModal();
+            }, 1000);
+        }
+
+        // Update cart count display
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('ecoloopCart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            // Update cart count if cart icon exists
+            const cartCountElements = document.querySelectorAll('.cart-count');
+            cartCountElements.forEach(element => {
+                element.textContent = totalItems;
+            });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const productModal = document.getElementById('productDetailsModal');
+            if (event.target === productModal) {
+                closeProductDetailsModal();
+            }
+        }
+
+        // Initialize cart count on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartBadge();
+            updateWishlistBadge();
+        });
+
+        </script>
+        <script src="assets/js/productLayer.js"></script>
 </body>
 </html>

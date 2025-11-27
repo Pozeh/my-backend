@@ -225,8 +225,27 @@ router.post('/login', async (req, res) => {
             });
         }
         
-        // Compare hashed password
-        const isPasswordValid = await comparePassword(password, user.password);
+        // Compare password with backward compatibility
+        let isPasswordValid = false;
+        
+        // Check if password is hashed (starts with $2a$, $2b$, etc.)
+        if (user.password && user.password.startsWith('$2')) {
+            // Hashed password - use bcrypt comparison
+            isPasswordValid = await comparePassword(password, user.password);
+        } else {
+            // Plaintext password - direct comparison (for backward compatibility)
+            isPasswordValid = (password === user.password);
+            
+            // If plaintext password matches, hash it for future security
+            if (isPasswordValid) {
+                const hashedPassword = await hashPassword(password);
+                await db.collection("users").updateOne(
+                    { _id: user._id },
+                    { $set: { password: hashedPassword } }
+                );
+                console.log('Password hashed for user:', email);
+            }
+        }
         
         if (!isPasswordValid) {
             return res.status(401).json({ 
