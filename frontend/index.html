@@ -5749,6 +5749,213 @@
             color: white;
             padding: 20px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Futuristic Header Background Animations */
+        .nyumbasure-header-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .header-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: particleFloat 15s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100px) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(80px) translateX(10px) scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-20px) translateX(30px) scale(1.2);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(-80px) translateX(20px) scale(1);
+            }
+            100% {
+                transform: translateY(-100px) translateX(0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .header-light-trail {
+            position: absolute;
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            animation: lightTrailMove 8s infinite linear;
+        }
+
+        @keyframes lightTrailMove {
+            0% {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(calc(100% + 100px));
+                opacity: 0;
+            }
+        }
+
+        .header-floating-node {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: nodeFloat 20s infinite ease-in-out;
+        }
+
+        @keyframes nodeFloat {
+            0%, 100% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0.4;
+            }
+            25% {
+                transform: translateY(-15px) translateX(10px) scale(1.2);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-25px) translateX(-5px) scale(1);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(-10px) translateX(15px) scale(1.1);
+                opacity: 0.5;
+            }
+        }
+
+        .header-glow-orb {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: orbGlow 12s infinite ease-in-out;
+        }
+
+        @keyframes orbGlow {
+            0%, 100% {
+                transform: translateX(0) translateY(0) scale(1);
+                opacity: 0.3;
+            }
+            33% {
+                transform: translateX(50px) translateY(-10px) scale(1.5);
+                opacity: 0.5;
+            }
+            66% {
+                transform: translateX(-30px) translateY(-20px) scale(1.2);
+                opacity: 0.4;
+            }
+        }
+
+        .header-grid-line {
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: gridLineMove 10s infinite linear;
+        }
+
+        @keyframes gridLineMove {
+            0% {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateX(calc(100% + 50px));
+                opacity: 0;
+            }
+        }
+
+        /* Ensure navigation elements stay above animations */
+        .nyumbasure-dashboard-nav {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Responsive adjustments for header animations */
+        @media (max-width: 768px) {
+            .header-particle {
+                width: 1.5px;
+                height: 1.5px;
+            }
+            
+            .header-light-trail {
+                width: 60px;
+            }
+            
+            .header-floating-node {
+                width: 3px;
+                height: 3px;
+            }
+            
+            .header-glow-orb {
+                width: 20px;
+                height: 20px;
+            }
+            
+            /* Reduce animation intensity on mobile for better performance */
+            .header-particle,
+            .header-light-trail,
+            .header-floating-node,
+            .header-glow-orb,
+            .header-grid-line {
+                animation-duration: 20s !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-particle {
+                width: 1px;
+                height: 1px;
+            }
+            
+            .header-light-trail {
+                width: 40px;
+            }
+            
+            .header-floating-node {
+                width: 2px;
+                height: 2px;
+            }
+            
+            .header-glow-orb {
+                width: 15px;
+                height: 15px;
+            }
         }
 
         .nyumbasure-dashboard-nav {
@@ -14462,6 +14669,227 @@
         window.showNyumbaSureNotification = showNyumbaSureNotification;
 
         // ============================================
+        // NYUMBASURE DASHBOARD HEADER ANIMATIONS
+        // ============================================
+        
+        let nyumbasureHeaderAnimation = null;
+        let animationElements = [];
+        
+        // Initialize header animations when NyumbaSure dashboard is shown
+        function initializeNyumbasureHeaderAnimations() {
+            const animationContainer = document.getElementById('nyumbasureHeaderAnimation');
+            if (!animationContainer) return;
+            
+            // Clear existing animations
+            clearHeaderAnimations();
+            
+            // Create particles
+            createHeaderParticles(animationContainer, 15);
+            
+            // Create light trails
+            createHeaderLightTrails(animationContainer, 3);
+            
+            // Create floating nodes
+            createHeaderFloatingNodes(animationContainer, 8);
+            
+            // Create glow orbs
+            createHeaderGlowOrbs(animationContainer, 2);
+            
+            // Create grid lines
+            createHeaderGridLines(animationContainer, 4);
+            
+            console.log('🌟 NyumbaSure header animations initialized');
+        }
+        
+        // Create floating particles
+        function createHeaderParticles(container, count) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'header-particle';
+                
+                // Random positioning and animation delay
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (12 + Math.random() * 8) + 's';
+                
+                container.appendChild(particle);
+                animationElements.push(particle);
+            }
+        }
+        
+        // Create moving light trails
+        function createHeaderLightTrails(container, count) {
+            for (let i = 0; i < count; i++) {
+                const trail = document.createElement('div');
+                trail.className = 'header-light-trail';
+                
+                // Random positioning and animation delay
+                trail.style.top = Math.random() * 100 + '%';
+                trail.style.animationDelay = Math.random() * 8 + 's';
+                trail.style.animationDuration = (6 + Math.random() * 4) + 's';
+                
+                container.appendChild(trail);
+                animationElements.push(trail);
+            }
+        }
+        
+        // Create floating nodes
+        function createHeaderFloatingNodes(container, count) {
+            for (let i = 0; i < count; i++) {
+                const node = document.createElement('div');
+                node.className = 'header-floating-node';
+                
+                // Random positioning and animation delay
+                node.style.left = Math.random() * 100 + '%';
+                node.style.top = Math.random() * 100 + '%';
+                node.style.animationDelay = Math.random() * 20 + 's';
+                node.style.animationDuration = (15 + Math.random() * 10) + 's';
+                
+                container.appendChild(node);
+                animationElements.push(node);
+            }
+        }
+        
+        // Create glow orbs
+        function createHeaderGlowOrbs(container, count) {
+            for (let i = 0; i < count; i++) {
+                const orb = document.createElement('div');
+                orb.className = 'header-glow-orb';
+                
+                // Random positioning and animation delay
+                orb.style.left = Math.random() * 100 + '%';
+                orb.style.top = Math.random() * 100 + '%';
+                orb.style.animationDelay = Math.random() * 12 + 's';
+                orb.style.animationDuration = (10 + Math.random() * 6) + 's';
+                
+                container.appendChild(orb);
+                animationElements.push(orb);
+            }
+        }
+        
+        // Create moving grid lines
+        function createHeaderGridLines(container, count) {
+            for (let i = 0; i < count; i++) {
+                const line = document.createElement('div');
+                line.className = 'header-grid-line';
+                
+                // Random positioning and animation delay
+                line.style.left = Math.random() * 100 + '%';
+                line.style.animationDelay = Math.random() * 10 + 's';
+                line.style.animationDuration = (8 + Math.random() * 4) + 's';
+                
+                container.appendChild(line);
+                animationElements.push(line);
+            }
+        }
+        
+        // Clear header animations
+        function clearHeaderAnimations() {
+            const container = document.getElementById('nyumbasureHeaderAnimation');
+            if (container) {
+                container.innerHTML = '';
+            }
+            animationElements = [];
+        }
+        
+        // Responsive animation density adjustment
+        function adjustAnimationDensity() {
+            const container = document.getElementById('nyumbasureHeaderAnimation');
+            if (!container) return;
+            
+            const headerWidth = container.offsetWidth;
+            const headerHeight = container.offsetHeight;
+            
+            // Adjust particle count based on header size
+            let particleCount = 15;
+            let trailCount = 3;
+            let nodeCount = 8;
+            let orbCount = 2;
+            let lineCount = 4;
+            
+            if (headerWidth < 768) {
+                // Mobile: reduce animation density
+                particleCount = 8;
+                trailCount = 2;
+                nodeCount = 4;
+                orbCount = 1;
+                lineCount = 2;
+            } else if (headerWidth < 1200) {
+                // Tablet: moderate animation density
+                particleCount = 12;
+                trailCount = 2;
+                nodeCount = 6;
+                orbCount = 2;
+                lineCount = 3;
+            }
+            
+            // Recreate animations with adjusted density
+            if (animationElements.length > 0) {
+                clearHeaderAnimations();
+                createHeaderParticles(container, particleCount);
+                createHeaderLightTrails(container, trailCount);
+                createHeaderFloatingNodes(container, nodeCount);
+                createHeaderGlowOrbs(container, orbCount);
+                createHeaderGridLines(container, lineCount);
+            }
+        }
+        
+        // Enhanced showNyumbaSureDashboard function with animations
+        const originalShowNyumbaSureDashboard = showNyumbaSureDashboard;
+        showNyumbaSureDashboard = function() {
+            // Call original function
+            originalShowNyumbaSureDashboard();
+            
+            // Initialize header animations after dashboard is shown
+            setTimeout(() => {
+                initializeNyumbasureHeaderAnimations();
+            }, 100);
+        };
+        
+        // Enhanced showNyumbaSure function with animations
+        const originalShowNyumbaSure = showNyumbaSure;
+        showNyumbaSure = function() {
+            // Call original function
+            originalShowNyumbaSure();
+            
+            // Clear animations when going to homepage (dashboard is hidden)
+            setTimeout(() => {
+                clearHeaderAnimations();
+            }, 100);
+        };
+        
+        // Enhanced hideNyumbaSure function with animations
+        const originalHideNyumbaSure = hideNyumbaSure;
+        hideNyumbaSure = function() {
+            // Clear animations before hiding
+            clearHeaderAnimations();
+            
+            // Call original function
+            originalHideNyumbaSure();
+        };
+        
+        // Handle window resize for responsive animations
+        window.addEventListener('resize', function() {
+            adjustAnimationDensity();
+        });
+        
+        // Initialize animations when page loads if dashboard is active
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if dashboard is already active on page load
+            setTimeout(() => {
+                const dashboard = document.getElementById('nyumbasure-dashboard');
+                if (dashboard && dashboard.classList.contains('active')) {
+                    initializeNyumbasureHeaderAnimations();
+                }
+            }, 500);
+        });
+        
+        // Make animation functions globally available
+        window.initializeNyumbasureHeaderAnimations = initializeNyumbasureHeaderAnimations;
+        window.clearHeaderAnimations = clearHeaderAnimations;
+        window.adjustAnimationDensity = adjustAnimationDensity;
+
+        // ============================================
         // FUTURISTIC FOOTER MODALS - JAVASCRIPT FUNCTIONS
         // ============================================
         
@@ -14947,6 +15375,9 @@
         <div id="nyumbasure-dashboard" class="nyumbasure-dashboard">
             <!-- Dashboard Header -->
             <header class="nyumbasure-dashboard-header">
+                <!-- Futuristic Background Animation Container -->
+                <div class="nyumbasure-header-animation" id="nyumbasureHeaderAnimation"></div>
+                
                 <nav class="nyumbasure-dashboard-nav">
                     <div class="nyumbasure-dashboard-logo">
                         <span>🏠</span>
