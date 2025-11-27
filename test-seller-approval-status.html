@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Approval Status Debug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 300px;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 2px;
+        }
+        .status-approved {
+            background: #28a745;
+            color: white;
+        }
+        .status-pending {
+            background: #ffc107;
+            color: black;
+        }
+        .status-rejected {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Seller Approval Status Debug Tool</h1>
+    
+    <div class="test-section">
+        <h2>📊 Check Seller Status</h2>
+        <p>Enter a seller's email to check their current approval status in the database.</p>
+        <input type="email" id="sellerEmail" placeholder="seller@example.com" />
+        <button onclick="checkSellerStatus()">Check Status</button>
+        <div id="statusResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 Backend Status Check</h2>
+        <p>First, let's check if the backend is running and accessible.</p>
+        <button onclick="testBackendStatus()">Test Backend Status</button>
+        <div id="backendStatusResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 Fix Seller Approval Status</h2>
+        <p>If a seller is approved but still can't login, use this to fix their status fields.</p>
+        <input type="email" id="fixSellerEmail" placeholder="seller@example.com" />
+        <button onclick="fixSellerApproval()">Fix Approval Status</button>
+        <div id="fixResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 All Sellers Status</h2>
+        <p>View all sellers and their current approval status.</p>
+        <button onclick="getAllSellersStatus()">Load All Sellers</button>
+        <div id="allSellersResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Test Seller Login</h2>
+        <p>Test if a seller can login with their credentials.</p>
+        <input type="email" id="loginEmail" placeholder="seller@example.com" />
+        <input type="password" id="loginPassword" placeholder="password" />
+        <button onclick="testSellerLogin()">Test Login</button>
+        <div id="loginResult"></div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'https://my-backend-1-jk7w.onrender.com';
+
+        // Test backend status
+        async function testBackendStatus() {
+            const resultDiv = document.getElementById('backendStatusResult');
+            resultDiv.innerHTML = '<div class="info">Checking backend status...</div>';
+
+            try {
+                // Test basic debug endpoint
+                const response = await fetch(`${BACKEND_URL}/api/debug/test`);
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ Backend is ONLINE and working
+                            <br><br>
+                            <strong>Status:</strong> ${result.message}<br>
+                            <strong>Timestamp:</strong> ${result.timestamp}<br>
+                            <strong>Version:</strong> ${result.version || 'N/A'}
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            ❌ Backend returned error: ${response.status} ${response.statusText}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Backend status error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        ❌ Backend OFFLINE or not accessible: ${error.message}
+                        <br><br>
+                        <strong>Possible causes:</strong>
+                        <br>• Backend server is not running
+                        <br>• Backend URL is incorrect (${BACKEND_URL})
+                        <br>• CORS issues
+                        <br>• Network connectivity problems
+                    </div>
+                `;
+            }
+        }
+
+        // Check seller status
+        async function checkSellerStatus() {
+            const email = document.getElementById('sellerEmail').value;
+            const resultDiv = document.getElementById('statusResult');
+            
+            if (!email) {
+                resultDiv.innerHTML = '<div class="error">Please enter a seller email</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="info">Checking seller status...</div>';
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/debug/seller/${email}`);
+                const result = await response.json();
+
+                if (result.success && result.seller) {
+                    const seller = result.seller;
+                    const approvalStatus = seller.approvalStatus || 'not_set';
+                    const status = seller.status || 'not_set';
+                    
+                    let statusHtml = `
+                        <div class="success">
+                            <h3>Seller Found: ${seller.firstName || 'N/A'} ${seller.lastName || 'N/A'}</h3>
+                            <p><strong>Email:</strong> ${seller.email}</p>
+                            <p><strong>Business:</strong> ${seller.businessName || 'N/A'}</p>
+                            <p><strong>Approval Status:</strong> <span class="status-badge status-${approvalStatus}">${approvalStatus}</span></p>
+                            <p><strong>Status:</strong> <span class="status-badge status-${status}">${status}</span></p>
+                            <p><strong>Created:</strong> ${seller.createdAt ? new Date(seller.createdAt).toLocaleString() : 'N/A'}</p>
+                            <p><strong>Approved At:</strong> ${seller.approvedAt ? new Date(seller.approvedAt).toLocaleString() : 'N/A'}</p>
+                            <p><strong>Approved By:</strong> ${seller.approvedBy || 'N/A'}</p>
+                        </div>
+                    `;
+
+                    // Check if there's a mismatch
+                    if (approvalStatus !== status) {
+                        statusHtml += `
+                            <div class="warning">
+                                ⚠️ <strong>Status Mismatch Detected!</strong><br>
+                                approvalStatus: "${approvalStatus}"<br>
+                                status: "${status}"<br>
+                                This can cause login issues. Use the "Fix Approval Status" tool below.
+                            </div>
+                        `;
+                    }
+
+                    // Check if seller should be able to login
+                    const canLogin = (approvalStatus === 'approved' || status === 'approved') &&
+                                    (approvalStatus !== 'rejected' && status !== 'rejected') &&
+                                    (approvalStatus !== 'pending' && status !== 'pending');
+
+                    if (canLogin) {
+                        statusHtml += `
+                            <div class="success">
+                                ✅ <strong>Login Should Work:</strong> Seller should be able to login based on status.
+                            </div>
+                        `;
+                    } else {
+                        statusHtml += `
+                            <div class="error">
+                                ❌ <strong>Login Will Fail:</strong> Seller cannot login due to approval status.
+                            </div>
+                        `;
+                    }
+
+                    statusHtml += `<pre>${JSON.stringify(seller, null, 2)}</pre>`;
+                    resultDiv.innerHTML = statusHtml;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">Seller not found: ${result.message || 'Unknown error'}</div>`;
+                }
+            } catch (error) {
+                console.error('Error checking seller status:', error);
+                resultDiv.innerHTML = `<div class="error">Network error: ${error.message}</div>`;
+            }
+        }
+
+        // Fix seller approval status
+        async function fixSellerApproval() {
+            const email = document.getElementById('fixSellerEmail').value;
+            const resultDiv = document.getElementById('fixResult');
+            
+            if (!email) {
+                resultDiv.innerHTML = '<div class="error">Please enter a seller email</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="info">Fixing seller approval status...</div>';
+
+            try {
+                // First get the seller to find their ID
+                const statusResponse = await fetch(`${BACKEND_URL}/api/debug/seller/${email}`);
+                const statusResult = await statusResponse.json();
+
+                if (!statusResult.success || !statusResult.seller) {
+                    resultDiv.innerHTML = `<div class="error">Seller not found: ${statusResult.message || 'Unknown error'}</div>`;
+                    return;
+                }
+
+                const sellerId = statusResult.seller._id;
+
+                // Fix both status fields
+                const fixResponse = await fetch(`${BACKEND_URL}/api/debug/fix-seller-status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        sellerId: sellerId,
+                        email: email,
+                        approvalStatus: 'approved',
+                        status: 'approved'
+                    })
+                });
+
+                const fixResult = await fixResponse.json();
+
+                if (fixResult.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ <strong>Approval Status Fixed!</strong><br>
+                            Both approvalStatus and status fields have been set to "approved".<br>
+                            The seller should now be able to login.
+                        </div>
+                        <pre>${JSON.stringify(fixResult, null, 2)}</pre>
+                    `;
+                    
+                    // Re-check status to confirm
+                    setTimeout(() => {
+                        document.getElementById('sellerEmail').value = email;
+                        checkSellerStatus();
+                    }, 1000);
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            ❌ <strong>Fix Failed:</strong> ${fixResult.error || 'Unknown error'}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error fixing seller status:', error);
+                resultDiv.innerHTML = `<div class="error">Network error: ${error.message}</div>`;
+            }
+        }
+
+        // Get all sellers status
+        async function getAllSellersStatus() {
+            const resultDiv = document.getElementById('allSellersResult');
+            resultDiv.innerHTML = '<div class="info">Loading all sellers...</div>';
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/admin/sellers?limit=50`);
+                const result = await response.json();
+
+                if (result.success && result.sellers) {
+                    let html = `
+                        <h3>All Sellers (${result.sellers.length} found)</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Email</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Business</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Approval Status</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Status</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Created</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Issues</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
+                    result.sellers.forEach(seller => {
+                        const approvalStatus = seller.approvalStatus || 'not_set';
+                        const status = seller.status || 'not_set';
+                        const hasIssue = approvalStatus !== status || (approvalStatus === 'pending' && status === 'pending');
+                        
+                        html += `
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${seller.email}</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${seller.businessName || 'N/A'}</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <span class="status-badge status-${approvalStatus}">${approvalStatus}</span>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <span class="status-badge status-${status}">${status}</span>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    ${seller.createdAt ? new Date(seller.createdAt).toLocaleDateString() : 'N/A'}
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    ${hasIssue ? '<span style="color: red;">⚠️ Issue</span>' : '<span style="color: green;">✅ OK</span>'}
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    html += '</tbody></table>';
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">Failed to load sellers: ${result.error || 'Unknown error'}</div>`;
+                }
+            } catch (error) {
+                console.error('Error loading sellers:', error);
+                resultDiv.innerHTML = `<div class="error">Network error: ${error.message}</div>`;
+            }
+        }
+
+        // Test seller login
+        async function testSellerLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const resultDiv = document.getElementById('loginResult');
+            
+            if (!email || !password) {
+                resultDiv.innerHTML = '<div class="error">Please enter email and password</div>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="info">Testing seller login...</div>';
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/user/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password,
+                        role: 'seller'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ <strong>Login Successful!</strong><br>
+                            Welcome back, ${result.user?.firstName || 'Seller'}!<br>
+                            Role: ${result.user?.role}<br>
+                            Login Time: ${new Date().toLocaleString()}
+                        </div>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            ❌ <strong>Login Failed:</strong> ${result.message || 'Unknown error'}<br>
+                            Status: ${response.status} ${response.statusText}
+                        </div>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error testing login:', error);
+                resultDiv.innerHTML = `<div class="error">Network error: ${error.message}</div>`;
+            }
+        }
+
+        // Run backend status test on page load
+        window.onload = function() {
+            testBackendStatus();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login Password Fix Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+        .test-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: bold;
+            color: #00ff88;
+        }
+        input, select {
+            padding: 10px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success {
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+        }
+        .error {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff0000;
+        }
+        .info {
+            background: rgba(0, 150, 255, 0.2);
+            border: 1px solid #0096ff;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-success { background: #00ff00; }
+        .status-error { background: #ff0000; }
+        .status-pending { background: #ffaa00; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 User Login Password Fix Test</h1>
+        
+        <div class="test-section">
+            <h2>🧪 Test User Login</h2>
+            <p>Test the fixed user login with proper password validation.</p>
+            
+            <form class="test-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter user email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <select id="role" name="role" required>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        Remember Me
+                    </label>
+                </div>
+                
+                <button type="submit">Test Login</button>
+            </form>
+            
+            <div id="loginResult"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📊 Backend Status Check</h2>
+            <p>Check backend authentication status and password storage.</p>
+            
+            <button onclick="checkBackendStatus()">Check Backend Status</button>
+            <div id="statusResult"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔍 Debug User Password</h2>
+            <p>Check how user passwords are stored in the database.</p>
+            
+            <form class="test-form" id="debugForm">
+                <div class="form-group">
+                    <label for="debugEmail">User Email:</label>
+                    <input type="email" id="debugEmail" name="debugEmail" placeholder="Enter user email to debug">
+                </div>
+                
+                <button type="submit">Debug Password Storage</button>
+            </form>
+            
+            <div id="debugResult"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📋 Test Results Summary</h2>
+            <div id="summaryResult">
+                <p>Click the test buttons above to see results.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'http://localhost:3000';
+        let testResults = [];
+
+        // Test login functionality
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const loginData = {
+                email: formData.get('email'),
+                password: formData.get('password'),
+                role: formData.get('role'),
+                rememberMe: formData.has('rememberMe')
+            };
+            
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.innerHTML = '<div class="result info"><span class="status-indicator status-pending"></span>Testing login...</div>';
+            
+            try {
+                console.log('🧪 Testing login:', loginData);
+                
+                const response = await fetch(`${BACKEND_URL}/api/user/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginData)
+                });
+                
+                const data = await response.json();
+                
+                console.log('📋 Login response:', data);
+                
+                const testResult = {
+                    timestamp: new Date().toISOString(),
+                    test: 'User Login',
+                    email: loginData.email,
+                    role: loginData.role,
+                    success: data.success,
+                    message: data.message || data.error,
+                    response: data
+                };
+                
+                testResults.push(testResult);
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+                            <span class="status-indicator status-success"></span>
+                            <strong>✅ Login Successful!</strong><br>
+                            Email: ${loginData.email}<br>
+                            Role: ${loginData.role}<br>
+                            Message: ${data.message}<br>
+                            User: ${JSON.stringify(data.user, null, 2)}
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <span class="status-indicator status-error"></span>
+                            <strong>❌ Login Failed!</strong><br>
+                            Email: ${loginData.email}<br>
+                            Role: ${loginData.role}<br>
+                            Error: ${data.message || data.error}<br>
+                            Response: ${JSON.stringify(data, null, 2)}
+                        </div>
+                    `;
+                }
+                
+                updateSummary();
+                
+            } catch (error) {
+                console.error('🔥 Login test error:', error);
+                
+                const testResult = {
+                    timestamp: new Date().toISOString(),
+                    test: 'User Login',
+                    email: loginData.email,
+                    role: loginData.role,
+                    success: false,
+                    error: error.message
+                };
+                
+                testResults.push(testResult);
+                
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <span class="status-indicator status-error"></span>
+                        <strong>🔥 Network Error!</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+                
+                updateSummary();
+            }
+        });
+
+        // Check backend status
+        async function checkBackendStatus() {
+            const resultDiv = document.getElementById('statusResult');
+            resultDiv.innerHTML = '<div class="result info"><span class="status-indicator status-pending"></span>Checking backend status...</div>';
+            
+            try {
+                // Test basic connectivity
+                const response = await fetch(`${BACKEND_URL}/api/simple-test`);
+                const data = await response.json();
+                
+                console.log('📋 Backend status:', data);
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <span class="status-indicator status-success"></span>
+                        <strong>✅ Backend Status: Online</strong><br>
+                        Message: ${data.message}<br>
+                        Timestamp: ${data.timestamp}<br>
+                        Version: Node.js ${process.version || 'Unknown'}
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('🔥 Backend status check error:', error);
+                
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <span class="status-indicator status-error"></span>
+                        <strong>🔥 Backend Status: Offline</strong><br>
+                        Error: ${error.message}<br>
+                        Please ensure the backend server is running on ${BACKEND_URL}
+                    </div>
+                `;
+            }
+        }
+
+        // Debug user password storage
+        document.getElementById('debugForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const email = formData.get('debugEmail');
+            
+            const resultDiv = document.getElementById('debugResult');
+            resultDiv.innerHTML = '<div class="result info"><span class="status-indicator status-pending"></span>Debugging password storage...</div>';
+            
+            try {
+                console.log('🔍 Debugging password for:', email);
+                
+                // This would need to be implemented as a backend endpoint
+                // For now, we'll show what information we can gather
+                const response = await fetch(`${BACKEND_URL}/api/user/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: 'dummy-password-for-debug',
+                        role: 'user'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="result info">
+                        <span class="status-indicator status-pending"></span>
+                        <strong>🔍 Password Debug Results:</strong><br>
+                        Email: ${email}<br>
+                        User Found: ${data.success ? 'No' : 'Yes (login failed as expected)'}<br>
+                        Message: ${data.message || data.error}<br>
+                        <br>
+                        <strong>Note:</strong> This test shows whether the user exists in the database.
+                        The actual password storage format would need a dedicated debug endpoint.
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('🔥 Debug error:', error);
+                
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <span class="status-indicator status-error"></span>
+                        <strong>🔥 Debug Error:</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+            }
+        });
+
+        // Update test summary
+        function updateSummary() {
+            const summaryDiv = document.getElementById('summaryResult');
+            
+            if (testResults.length === 0) {
+                summaryDiv.innerHTML = '<p>No tests run yet.</p>';
+                return;
+            }
+            
+            const successCount = testResults.filter(r => r.success).length;
+            const failureCount = testResults.filter(r => !r.success).length;
+            
+            const summaryHTML = `
+                <div class="result ${successCount > 0 ? 'success' : 'error'}">
+                    <strong>📊 Test Summary:</strong><br>
+                    Total Tests: ${testResults.length}<br>
+                    ✅ Successful: ${successCount}<br>
+                    ❌ Failed: ${failureCount}<br>
+                    <br>
+                    <strong>Test History:</strong><br>
+                    ${testResults.map(r => `
+                        ${r.success ? '✅' : '❌'} ${r.test} - ${r.email} (${r.role})<br>
+                        &nbsp;&nbsp;&nbsp;${r.message || r.error}<br>
+                    `).join('')}
+                </div>
+            `;
+            
+            summaryDiv.innerHTML = summaryHTML;
+        }
+
+        // Auto-check backend status on page load
+        window.addEventListener('load', () => {
+            checkBackendStatus();
+        });
+    </script>
+</body>
+</html>

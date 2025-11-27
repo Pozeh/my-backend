@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Registration Fix Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Seller Registration Fix Test</h1>
+    
+    <div class="test-section">
+        <h2>📋 Test Complete Seller Registration</h2>
+        <p>This test will register a new seller with all required fields to verify the fix works.</p>
+        <button onclick="testCompleteSellerRegistration()">Test Complete Seller Registration</button>
+        <div id="registrationResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔍 Test Backend Status</h2>
+        <p>Check if the backend is online and working properly.</p>
+        <button onclick="testBackendStatus()">Test Backend Status</button>
+        <div id="backendStatus"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Test Results Summary</h2>
+        <div id="testSummary"></div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'https://my-backend-1-jk7w.onrender.com';
+
+        // Test complete seller registration with all required fields
+        async function testCompleteSellerRegistration() {
+            const resultDiv = document.getElementById('registrationResult');
+            resultDiv.innerHTML = '<div class="info">Testing seller registration...</div>';
+
+            const timestamp = Date.now();
+            const sellerData = {
+                // Personal Information
+                firstName: 'Test',
+                lastName: 'Seller',
+                email: `test.seller.${timestamp}@example.com`,
+                phone: '254712345678',
+                password: 'seller123456',
+                
+                // Business Information
+                businessName: 'Test Business Store',
+                businessType: 'retail',
+                businessDescription: 'This is a test business for registration testing purposes. We sell eco-friendly products and sustainable goods.',
+                businessAddress: '123 Test Street',
+                businessCity: 'Nairobi',
+                businessCountry: 'Kenya',
+                
+                // Store Information
+                storeName: 'Test Business Store',
+                storeDescription: 'This is a test business for registration testing purposes. We sell eco-friendly products and sustainable goods.',
+                storeCategory: 'retail',
+                
+                // Legal Documents (defaults)
+                businessLicense: 'pending',
+                taxIdentification: 'pending',
+                
+                // Banking Details (defaults)
+                bankName: 'pending',
+                bankAccount: 'pending',
+                bankAccountName: 'Test Seller',
+                
+                // Social Media & Operations (defaults)
+                socialMedia: 'pending',
+                operatingHours: '9-5',
+                
+                // Personal Address (using business address)
+                streetAddress: '123 Test Street',
+                city: 'Nairobi',
+                state: 'Nairobi',
+                postalCode: '00100',
+                country: 'Kenya'
+            };
+
+            try {
+                console.log('🔍 Sending complete seller registration data:', sellerData);
+                
+                const response = await fetch(`${BACKEND_URL}/api/seller/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(sellerData)
+                });
+
+                const result = await response.json();
+                console.log('🔍 Registration response:', result);
+
+                if (response.ok && result.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ SUCCESS: Seller registration completed successfully!
+                            <br><br>
+                            <strong>Seller Details:</strong><br>
+                            Email: ${sellerData.email}<br>
+                            Business: ${sellerData.businessName}<br>
+                            Status: ${result.approvalStatus || 'pending'}<br>
+                            Seller ID: ${result.sellerId || 'N/A'}<br><br>
+                            <strong>Message:</strong> ${result.message || 'Registration successful'}
+                        </div>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    `;
+                    updateTestSummary('sellerRegistration', true);
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            ❌ FAILED: Seller registration failed
+                            <br><br>
+                            <strong>Error:</strong> ${result.error || result.message || 'Unknown error'}<br>
+                            <strong>Status:</strong> ${response.status} ${response.statusText}
+                        </div>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    `;
+                    updateTestSummary('sellerRegistration', false);
+                }
+            } catch (error) {
+                console.error('❌ Registration error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        ❌ NETWORK ERROR: ${error.message}
+                    </div>
+                `;
+                updateTestSummary('sellerRegistration', false);
+            }
+        }
+
+        // Test backend status
+        async function testBackendStatus() {
+            const statusDiv = document.getElementById('backendStatus');
+            statusDiv.innerHTML = '<div class="info">Checking backend status...</div>';
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/debug/test`);
+                const result = await response.json();
+
+                if (response.ok) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            ✅ BACKEND ONLINE
+                            <br><br>
+                            <strong>Status:</strong> ${result.message}<br>
+                            <strong>Timestamp:</strong> ${result.timestamp}<br>
+                            <strong>Version:</strong> ${result.version || 'N/A'}
+                        </div>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    `;
+                    updateTestSummary('backendStatus', true);
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            ❌ BACKEND ERROR: ${response.status} ${response.statusText}
+                        </div>
+                    `;
+                    updateTestSummary('backendStatus', false);
+                }
+            } catch (error) {
+                console.error('❌ Backend status error:', error);
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        ❌ BACKEND OFFLINE: ${error.message}
+                    </div>
+                `;
+                updateTestSummary('backendStatus', false);
+            }
+        }
+
+        // Update test summary
+        function updateTestSummary(testName, success) {
+            const summaryDiv = document.getElementById('testSummary');
+            const currentSummary = summaryDiv.innerHTML;
+            
+            const testResult = success ? 
+                `<div class="success">✅ ${testName}: PASSED</div>` : 
+                `<div class="error">❌ ${testName}: FAILED</div>`;
+            
+            // Check if test already exists
+            if (currentSummary.includes(testName)) {
+                summaryDiv.innerHTML = currentSummary.replace(
+                    new RegExp(`(✅|❌) ${testName}: (PASSED|FAILED)`),
+                    success ? `✅ ${testName}: PASSED` : `❌ ${testName}: FAILED`
+                );
+            } else {
+                summaryDiv.innerHTML += testResult;
+            }
+        }
+
+        // Run backend status test on page load
+        window.onload = function() {
+            testBackendStatus();
+        };
+    </script>
+</body>
+</html>
