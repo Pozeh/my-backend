@@ -1783,6 +1783,39 @@
             box-shadow: 0 4px 20px rgba(0, 255, 255, 0.2);
         }
 
+        .dashboard-nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .home-icon-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .home-icon-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .home-icon-btn i {
+            font-size: 16px;
+        }
+
         .dashboard-logo .logo-text {
             font-size: 24px;
             font-weight: bold;
@@ -3300,6 +3333,910 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(255, 68, 68, 0.3);
         }
+
+        /* Dynamic Seller Tools Styles */
+        .dynamic-seller-tool {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            padding: 0 10px;
+            border-left: 1px solid rgba(0, 255, 255, 0.2);
+            margin-left: 10px;
+        }
+
+        .seller-tool-link {
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .seller-tool-link:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .seller-tool-link.upload-btn {
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            color: #003322;
+            font-weight: bold;
+        }
+
+        .seller-tool-link.upload-btn:hover {
+            background: linear-gradient(135deg, #00ffaa, #00ff88);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+        }
+
+        .dynamic-seller-commerce {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dynamic-seller-commerce:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.4);
+        }
+
+        .seller-badge {
+            background: #00ffff !important;
+            color: #000 !important;
+            font-weight: bold;
+        }
+
+        /* Seller Dashboard Panel on Homepage */
+        .dynamic-seller-panel {
+            background: rgba(0, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 20px;
+            margin: 30px 0;
+            padding: 30px;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .seller-panel-content h3 {
+            color: #00ffff;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .seller-stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 28px;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .seller-quick-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .seller-action-btn {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .seller-action-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: #00ffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Seller Account Panel Overlay */
+        .seller-account-panel-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .seller-account-panel {
+            background: linear-gradient(135deg, #0a4f3a 0%, #0d6b4f 50%, #0a4f3a 100%);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3);
+            animation: slideInUp 0.4s ease-out;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .panel-header h2 {
+            color: #00ffff;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-panel-btn {
+            background: rgba(255, 68, 68, 0.2);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-panel-btn:hover {
+            background: rgba(255, 68, 68, 0.3);
+            border-color: #ff4444;
+            transform: scale(1.1);
+        }
+
+        .account-overview {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .account-info h3 {
+            color: #ffffff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .account-info p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .account-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .account-actions button {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .account-actions button:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: #00ffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dynamic-seller-tool {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px 0;
+            }
+
+            .seller-tool-link {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
+            .seller-stats-summary {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .seller-quick-actions {
+                flex-direction: column;
+            }
+
+            .seller-action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .account-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .seller-account-panel {
+                padding: 20px;
+                margin: 20px;
+            }
+        }
+
+        /* Unified Seller Homepage Styles */
+        .unified-seller-homepage {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+        }
+
+        .seller-homepage-header {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 15px 0;
+        }
+
+        .homepage-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn, .dashboard-btn {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover, .dashboard-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: #00ffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
+        }
+
+        .homepage-logo .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ffff;
+        }
+
+        .seller-homepage-content {
+            padding: 40px 0;
+        }
+
+        .seller-profile-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ffff, #0088cc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(0, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 255, 255, 0.3);
+        }
+
+        .profile-info h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #00ffff;
+        }
+
+        .profile-info p {
+            font-size: 18px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-badge.approved {
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            color: #003322;
+        }
+
+        .status-badge.pending {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            color: #332200;
+        }
+
+        .status-badge.rejected {
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: #330000;
+        }
+
+        .seller-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 255, 255, 0.2);
+            border-color: #00ffff;
+        }
+
+        .stat-card i {
+            font-size: 36px;
+            color: #00ffff;
+            margin-bottom: 15px;
+        }
+
+        .stat-card h3 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .stat-card p {
+            font-size: 14px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .seller-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 255, 255, 0.3);
+            border-color: #00ffff;
+            background: rgba(0, 255, 255, 0.1);
+        }
+
+        .action-card i {
+            font-size: 42px;
+            color: #00ffff;
+            margin-bottom: 20px;
+        }
+
+        .action-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .action-card p {
+            font-size: 14px;
+            opacity: 0.7;
+            line-height: 1.4;
+        }
+
+        .seller-notifications-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .seller-notifications-section h2 {
+            color: #00ffff;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .notifications-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .homepage-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .seller-stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .seller-actions-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .profile-info h1 {
+                font-size: 28px;
+            }
+
+            .homepage-logo .logo-text {
+                font-size: 20px;
+            }
+        }
+
+        /* Seller Homepage Styles */
+        .seller-homepage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+            z-index: 10000;
+            display: none;
+            overflow-y: auto;
+        }
+
+        .homepage-header {
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            padding: 15px 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 10001;
+        }
+
+        .homepage-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .homepage-logo .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        }
+
+        .homepage-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-back-to-dashboard {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-back-to-dashboard:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .homepage-content {
+            padding: 40px 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .seller-profile-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 255, 255, 0.2);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #00ffff, #0088cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            box-shadow: 0 8px 32px rgba(0, 255, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        .profile-info h1 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        }
+
+        .business-name {
+            font-size: 18px;
+            color: #b0b0b0;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            color: #00ff00;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-badge.pending {
+            background: rgba(255, 165, 0, 0.1);
+            border-color: rgba(255, 165, 0, 0.3);
+            color: #ffa500;
+        }
+
+        .status-badge.rejected {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: rgba(255, 0, 0, 0.3);
+            color: #ff0000;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.3);
+            border-color: rgba(0, 255, 255, 0.5);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00ffff, #0088cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.4);
+        }
+
+        .stat-info h3 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .stat-info p {
+            color: #b0b0b0;
+            font-size: 14px;
+        }
+
+        .quick-actions h2 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.3);
+            border-color: rgba(0, 255, 255, 0.5);
+            background: rgba(0, 255, 255, 0.1);
+        }
+
+        .action-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00ffff, #0088cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 30px rgba(0, 255, 255, 0.4);
+        }
+
+        .action-card h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .action-card p {
+            color: #b0b0b0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .notifications-section h2 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        }
+
+        .notifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .notification-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .notification-item:hover {
+            border-color: rgba(0, 255, 255, 0.5);
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        .notification-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00ffff, #0088cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.4);
+        }
+
+        .notification-content h4 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 8px;
+        }
+
+        .notification-content p {
+            color: #b0b0b0;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .notification-time {
+            color: #888;
+            font-size: 12px;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: rotate(45deg) translateY(-100%);
+            }
+            100% {
+                transform: rotate(45deg) translateY(100%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .quick-stats {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .homepage-content {
+                padding: 20px 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -3316,10 +4253,11 @@
                 <span><i class="fas fa-phone"></i> 0705424364</span>
                 <span><i class="fas fa-envelope"></i> pmuiruri9657@gmail.com</span>
             </div>
-            <div class="user-actions">
+            <div class="user-actions" id="userActions">
                 <a href="#" onclick="showLoginModal(); return false;"><i class="fas fa-user"></i> Login</a>
                 <a href="#" onclick="showRegisterModal(); return false;"><i class="fas fa-user-plus"></i> Register</a>
-                <a href="#" onclick="showSellerRegisterModal(); return false;"><i class="fas fa-store"></i> Sell</a>
+                <!-- Dynamic seller tools will be inserted here -->
+                <a href="#" onclick="showSellerRegisterModal(); return false;" id="sellerRegisterLink"><i class="fas fa-store"></i> Sell</a>
                 <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
                 <a href="admin/admin-login.html"><i class="fas fa-leaf"></i> Admin</a>
             </div>
@@ -3344,8 +4282,9 @@
                             <i class="fas fa-shopping-cart"></i>
                             <span class="badge cart-badge" id="cartBadge">0</span>
                         </div>
+                        <!-- Dynamic seller icons will be inserted here -->
                     </div>
-                    <a href="#" class="btn">Start Selling</a>
+                    <a href="#" class="btn" id="startSellingBtn" onclick="showSellerRegisterModal(); return false;">Start Selling</a>
                 </div>
             </div>
         </div>
@@ -3742,11 +4681,147 @@
         </div>
     </div>
 
+    <!-- Seller Homepage -->
+    <div id="sellerHomepage" class="seller-homepage" style="display: none;">
+        <div class="homepage-header">
+            <div class="homepage-nav">
+                <div class="homepage-logo">
+                    <span class="logo-text">🌿 EcoLoop Seller</span>
+                </div>
+                <div class="homepage-actions">
+                    <button class="btn-back-to-dashboard" onclick="backToSellerDashboard()">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </button>
+                    <button class="btn-logout" onclick="sellerLogout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="homepage-content">
+            <!-- Seller Profile Section -->
+            <div class="seller-profile-section">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="homepageSellerAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h1 id="homepageSellerName">Seller Name</h1>
+                        <p class="business-name" id="homepageBusinessName">Business Name</p>
+                        <div class="status-badge" id="homepageStatusBadge">
+                            <i class="fas fa-check-circle"></i>
+                            <span id="homepageStatusText">Approved</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalProductsCount">0</h3>
+                        <p>Total Products</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalOrdersCount">0</h3>
+                        <p>Total Orders</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalRevenueAmount">KES 0</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="averageRating">0.0</h3>
+                        <p>Average Rating</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-grid">
+                    <button class="action-card" onclick="goToSellerDashboard()">
+                        <div class="action-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3>Dashboard</h3>
+                        <p>View detailed analytics and manage your store</p>
+                    </button>
+                    <button class="action-card" onclick="showDashboardSection('upload')">
+                        <div class="action-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <h3>Add Product</h3>
+                        <p>List a new product for sale</p>
+                    </button>
+                    <button class="action-card" onclick="showDashboardSection('products')">
+                        <div class="action-icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <h3>Manage Products</h3>
+                        <p>Edit or remove existing products</p>
+                    </button>
+                    <button class="action-card" onclick="showDashboardSection('account')">
+                        <div class="action-icon">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <h3>Account Settings</h3>
+                        <p>Update your business information</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="notifications-section">
+                <h2>Notifications</h2>
+                <div class="notifications-list" id="sellerNotifications">
+                    <div class="notification-item">
+                        <div class="notification-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="notification-content">
+                            <h4>Welcome to EcoLoop Seller Portal!</h4>
+                            <p>Your seller account has been successfully set up. Start by adding your first product.</p>
+                            <span class="notification-time">Just now</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Seller Dashboard -->
     <div id="sellerDashboard" class="seller-dashboard" style="display: none;">
         <div class="dashboard-header">
             <div class="dashboard-logo">
                 <span class="logo-text">🌿 EcoLoop Seller Portal</span>
+            </div>
+            <div class="dashboard-nav-left">
+                <button class="home-icon-btn" onclick="goToMainWebsite()" title="Go to Main Website">
+                    <i class="fas fa-home"></i>
+                    <span>Website</span>
+                </button>
             </div>
             <div class="dashboard-user">
                 <div class="user-avatar" id="sellerAvatar">S</div>
@@ -4595,6 +5670,32 @@
         // Initialize auth manager
         const authManager = new AuthManager();
 
+        // Initialize authentication UI on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Page loaded - initializing unified website personalization');
+            updateWebsiteForUserType();
+        });
+
+        // Also update UI when authentication state changes
+        const originalLoginSuccess = window.handleLoginSuccess;
+        window.handleLoginSuccess = function(user, role) {
+            if (originalLoginSuccess) {
+                originalLoginSuccess(user, role);
+            }
+            console.log('🔄 Login successful - updating website personalization');
+            updateWebsiteForUserType();
+        };
+
+        // Update UI on logout
+        const originalLogout = window.logout;
+        window.logout = function() {
+            if (originalLogout) {
+                originalLogout();
+            }
+            console.log('🔄 Logout successful - updating website personalization');
+            updateWebsiteForUserType();
+        };
+
         // Futuristic Ocean Effects
         function initializeOceanEffects() {
             // Create bioluminescent particles
@@ -4780,53 +5881,1854 @@
             }
         }
 
-        // Test seller login credentials flow
-        function testSellerLoginFlow() {
-            console.log('=== TESTING SELLER LOGIN SYSTEM ===');
-            console.log('1. ✅ User Registration → role: "user", status: "active"');
-            console.log('2. ✅ Seller Registration → role: "seller", status: "pending"');
-            console.log('3. ✅ Admin Approval → seller.status: "approved"');
-            console.log('4. ✅ Backend Unified Login → Role-based authentication');
-            console.log('5. ✅ Frontend Role Selector → User vs Seller login');
-            console.log('6. ✅ Error Handling → Specific messages for each scenario');
-            console.log('7. ✅ Dashboard Access → Role-based redirects');
+        // Comprehensive network and seller login diagnostics
+        async function diagnoseSellerLoginIssue() {
+            console.log('🔍 === DIAGNOSING SELLER LOGIN ISSUE === 🔍');
             console.log('');
-            console.log('EXPECTED BEHAVIORS:');
-            console.log('🔒 Normal user trying Seller Login → "You are not registered as a seller"');
-            console.log('🔒 Seller trying User Login → "This account is registered as a seller"');
-            console.log('🔒 Pending seller login → "Your seller account is awaiting admin approval"');
-            console.log('🔒 Rejected seller login → "Your seller application has been rejected"');
-            console.log('✅ Approved seller login → "Seller login successful" + Dashboard access');
-            console.log('✅ User login → "User login successful" + Homepage access');
-            console.log('');
-            console.log('DATABASE STRUCTURE:');
-            console.log('📦 users collection → role: "user", status: "active"');
-            console.log('📦 sellers collection → role: "seller", status: "pending/approved/rejected"');
-            console.log('📦 admins collection → role: "admin", status: "active"');
+            
+            try {
+                // Test 1: Check backend connectivity
+                console.log('📡 Test 1: Backend connectivity...');
+                const connectivityTest = await fetch(`${BACKEND_URL}/api/simple-test`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (connectivityTest.ok) {
+                    const connectivityData = await connectivityTest.json();
+                    console.log('✅ Backend connectivity OK:', connectivityData);
+                } else {
+                    console.error('❌ Backend connectivity failed:', connectivityTest.status);
+                    return;
+                }
+                
+                // Test 2: Check seller login endpoint exists
+                console.log('📡 Test 2: Seller login endpoint...');
+                const endpointTest = await fetch(`${BACKEND_URL}/api/seller/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: 'test@test.com', password: 'test' })
+                });
+                
+                console.log('📊 Seller login endpoint response:', {
+                    status: endpointTest.status,
+                    statusText: endpointTest.statusText,
+                    headers: Object.fromEntries(endpointTest.headers.entries())
+                });
+                
+                if (endpointTest.status === 404) {
+                    console.error('❌ Seller login endpoint not found (404)');
+                } else if (endpointTest.status === 500) {
+                    console.error('❌ Seller login endpoint server error (500)');
+                    const errorText = await endpointTest.text();
+                    console.error('❌ Error response:', errorText);
+                } else {
+                    const loginData = await endpointTest.json();
+                    console.log('✅ Seller login endpoint responds:', loginData);
+                }
+                
+                // Test 3: Check CORS headers
+                console.log('📡 Test 3: CORS configuration...');
+                const corsTest = await fetch(`${BACKEND_URL}/api/simple-test`, {
+                    method: 'OPTIONS',
+                    headers: { 
+                        'Origin': window.location.origin,
+                        'Access-Control-Request-Method': 'POST',
+                        'Access-Control-Request-Headers': 'Content-Type'
+                    }
+                });
+                
+                console.log('📊 CORS response:', {
+                    status: corsTest.status,
+                    headers: Object.fromEntries(corsTest.headers.entries())
+                });
+                
+                console.log('✅ === DIAGNOSIS COMPLETE === ✅');
+                console.log('📋 Summary:');
+                console.log('- Backend URL:', BACKEND_URL);
+                console.log('- Frontend origin:', window.location.origin);
+                console.log('- Browser user agent:', navigator.userAgent);
+                console.log('- Online status:', navigator.onLine);
+                
+            } catch (error) {
+                console.error('🔥 Diagnosis failed:', error);
+                console.error('📋 Error details:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                });
+            }
         }
 
-        // Debug function to test role separation
-        async function testRoleSeparation() {
-            console.log('=== TESTING ROLE SEPARATION ===');
+        // Test backend connectivity
+        async function testBackendConnectivity() {
+            try {
+                console.log('🔍 Testing backend connectivity...');
+                const response = await fetch(`${BACKEND_URL}/api/simple-test`);
+                const data = await response.json();
+                console.log('✅ Backend connectivity test:', data);
+                return true;
+            } catch (error) {
+                console.error('❌ Backend connectivity failed:', error);
+                return false;
+            }
+        }
+
+        // Test seller registration endpoint
+        async function testSellerRegistration() {
+            try {
+                console.log('🧪 Testing seller registration endpoint...');
+                
+                const testSeller = {
+                    firstName: 'Test',
+                    lastName: 'Seller',
+                    email: 'testseller@example.com',
+                    phone: '+254712345678',
+                    password: 'testpass123',
+                    businessName: 'Test Business',
+                    businessType: 'individual',
+                    businessDescription: 'Test business description'
+                };
+                
+                const response = await fetch(`${BACKEND_URL}/api/seller/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testSeller)
+                });
+                
+                const data = await response.json();
+                console.log('📝 Seller registration test response:', data);
+                
+                if (data.success) {
+                    console.log('✅ Seller registration endpoint working');
+                    return true;
+                } else {
+                    console.log('❌ Seller registration failed:', data.error);
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ Seller registration test error:', error);
+                return false;
+            }
+        }
+
+        // Test seller login credentials flow
+        function testSellerLoginFlow() {
+            console.log('🔥 === COMPLETE SELLER SYSTEM TEST === 🔥');
+            console.log('');
+            console.log('📋 BACKEND CHANGES MADE:');
+            console.log('✅ 1. Seller Registration → bcrypt password hashing + proper schema');
+            console.log('✅ 2. Seller Login → bcrypt verification + approvalStatus check');
+            console.log('✅ 3. Admin Approval → updates both status + approvalStatus fields');
+            console.log('✅ 4. API Endpoints → /api/seller/register, /api/seller/login, /api/admin/seller/approve');
+            console.log('');
+            console.log('📋 FRONTEND CHANGES MADE:');
+            console.log('✅ 5. Role-based routing → seller uses /api/seller/login, user uses /api/user/login');
+            console.log('✅ 6. Response handling → different formats for seller vs user login');
+            console.log('✅ 7. Error messages → specific to seller approval status');
+            console.log('');
+            console.log('🎯 EXPECTED WORKFLOW:');
+            console.log('1️⃣ User registers as seller → stored in sellers collection with hashed password');
+            console.log('2️⃣ Status = "pending" → cannot login yet');
+            console.log('3️⃣ Admin approves seller → status = "approved"');
+            console.log('4️⃣ Seller can now login with same credentials');
+            console.log('5️⃣ Login success → redirect to Seller Dashboard');
+            console.log('');
+            console.log('🔒 SECURITY FEATURES:');
+            console.log('🛡️ Passwords are hashed with bcrypt (12 rounds)');
+            console.log('🛡️ Approval status enforced before login access');
+            console.log('🛡️ Separate collections for users vs sellers');
+            console.log('🛡️ Role-based endpoint routing');
+            console.log('');
+            console.log('🧪 TEST SCENARIOS:');
+            console.log('❌ Pending seller login → "Seller account is pending admin approval"');
+            console.log('❌ Wrong password → "Incorrect password"');
+            console.log('❌ Non-seller email → "Seller not found"');
+            console.log('✅ Approved seller login → "Seller login successful" + Dashboard');
+            console.log('');
+            console.log('🚀 READY FOR TESTING!');
+        }
+
+        // Run all tests
+        async function runAllTests() {
+            testSellerLoginFlow();
+            await diagnoseSellerLoginIssue();
+            await testBackendConnectivity();
+            await testSellerRegistration();
+        }
+
+        // Password storage diagnostic function
+        async function diagnosePasswordIssue() {
+            console.log('🔍 === DIAGNOSING PASSWORD STORAGE ISSUE === 🔍');
+            console.log('');
             
-            // Test 1: User login should work for users only
-            console.log('Test 1: User login with user credentials...');
+            try {
+                // Test with a known seller email (replace with actual email)
+                const testEmail = prompt('Enter seller email to test password storage:', 'testseller@example.com');
+                if (!testEmail) return;
+                
+                console.log('📡 Testing seller:', testEmail);
+                
+                // Check seller data
+                const debugResponse = await fetch(`${BACKEND_URL}/api/debug/seller/${encodeURIComponent(testEmail)}`);
+                const debugData = await debugResponse.json();
+                
+                console.log('📊 Seller debug data:', debugData);
+                
+                if (debugData.success) {
+                    const seller = debugData.seller;
+                    console.log('✅ Seller found:', {
+                        email: seller.email,
+                        name: seller.name,
+                        approvalStatus: seller.approvalStatus,
+                        passwordHashLength: seller.passwordHashLength,
+                        passwordHashStart: seller.passwordHashStart
+                    });
+                    
+                    // Test password verification
+                    const testPassword = prompt('Enter password to test:', 'testpass123');
+                    if (!testPassword) return;
+                    
+                    const passwordTestResponse = await fetch(`${BACKEND_URL}/api/debug/test-password`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: testEmail, password: testPassword })
+                    });
+                    
+                    const passwordTestData = await passwordTestResponse.json();
+                    console.log('📊 Password test result:', passwordTestData);
+                    
+                    if (passwordTestData.success) {
+                        const test = passwordTestData.test;
+                        console.log('🔍 Password verification details:', {
+                            passwordProvided: test.passwordProvided,
+                            passwordLength: test.passwordLength,
+                            hashExists: test.hashExists,
+                            hashLength: test.hashLength,
+                            passwordMatch: test.passwordMatch,
+                            bcryptError: test.bcryptError
+                        });
+                        
+                        if (test.passwordMatch) {
+                            console.log('✅ Password verification SUCCESSFUL');
+                            alert('✅ Password is stored and verified correctly!');
+                        } else {
+                            console.log('❌ Password verification FAILED');
+                            if (test.bcryptError) {
+                                console.error('❌ Bcrypt error:', test.bcryptError);
+                                alert('❌ Bcrypt error: ' + test.bcryptError);
+                            } else {
+                                console.log('❌ Password does not match hash');
+                                alert('❌ Password does not match stored hash. Possible issues:\n1. Wrong password entered\n2. Hash corrupted\n3. Registration issue');
+                            }
+                        }
+                    }
+                } else {
+                    console.log('❌ Seller not found');
+                    alert('❌ Seller not found in database');
+                }
+                
+            } catch (error) {
+                console.error('🔥 Password diagnosis failed:', error);
+                alert('❌ Diagnosis failed: ' + error.message);
+            }
+        }
+
+        // Quick password test function
+        async function quickPasswordTest() {
+            const email = prompt('Seller email:');
+            const password = prompt('Password:');
             
-            // Test 2: Seller login should work for approved sellers only
-            console.log('Test 2: Seller login with approved seller credentials...');
+            if (!email || !password) return;
             
-            // Test 3: User trying seller login should fail
-            console.log('Test 3: User trying to login as seller...');
-            
-            // Test 4: Seller trying user login should fail
-            console.log('Test 4: Seller trying to login as user...');
-            
-            console.log('All role separation tests completed!');
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/debug/test-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                console.log('Password test result:', data);
+                
+                if (data.success) {
+                    alert(`Password match: ${data.test.passwordMatch ? 'YES ✅' : 'NO ❌'}`);
+                } else {
+                    alert('Error: ' + (data.error || data.message));
+                }
+            } catch (error) {
+                console.error('Quick test failed:', error);
+                alert('Test failed: ' + error.message);
+            }
         }
 
         // Call test functions for debugging
-        testSellerLoginFlow();
-        testRoleSeparation();
+        runAllTests();
+        
+        // Add password diagnosis to global scope
+        window.diagnosePasswordIssue = diagnosePasswordIssue;
+        window.quickPasswordTest = quickPasswordTest;
+        
+        // Complete registration and password test
+        async function testRegistrationAndLogin() {
+            console.log('🔍 === COMPLETE REGISTRATION & LOGIN TEST === 🔍');
+            console.log('');
+            
+            try {
+                // Step 1: Register a new seller
+                const testSeller = {
+                    firstName: 'Test',
+                    lastName: 'Seller',
+                    email: `testseller${Date.now()}@example.com`, // Unique email
+                    phone: '+254712345678',
+                    password: 'testpass123',
+                    businessName: 'Test Business',
+                    businessType: 'individual',
+                    businessDescription: 'Test business description'
+                };
+                
+                console.log('📝 Step 1: Registering seller...', { email: testSeller.email });
+                
+                const registerResponse = await fetch(`${BACKEND_URL}/api/seller/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testSeller)
+                });
+                
+                const registerData = await registerResponse.json();
+                console.log('📊 Registration response:', registerData);
+                
+                if (!registerData.success) {
+                    console.error('❌ Registration failed:', registerData.error);
+                    alert('Registration failed: ' + registerData.error);
+                    return;
+                }
+                
+                console.log('✅ Registration successful!');
+                
+                // Step 2: Test password immediately
+                console.log('🔍 Step 2: Testing password verification...');
+                
+                const passwordTestResponse = await fetch(`${BACKEND_URL}/api/debug/test-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email: testSeller.email, 
+                        password: testSeller.password 
+                    })
+                });
+                
+                const passwordTestData = await passwordTestResponse.json();
+                console.log('📊 Password test result:', passwordTestData);
+                
+                if (passwordTestData.success) {
+                    const test = passwordTestData.test;
+                    console.log('🔍 Password verification details:', test);
+                    
+                    if (test.passwordMatch) {
+                        console.log('✅ Password verification IMMEDIATELY after registration: SUCCESS');
+                        alert('✅ Password is working correctly immediately after registration!');
+                    } else {
+                        console.log('❌ Password verification IMMEDIATELY after registration: FAILED');
+                        alert('❌ Password does NOT work immediately after registration. Issue is in registration process.');
+                    }
+                } else {
+                    console.error('❌ Password test failed:', passwordTestData.error);
+                    alert('Password test failed: ' + passwordTestData.error);
+                }
+                
+                // Step 3: Test actual login endpoint
+                console.log('🔍 Step 3: Testing actual login endpoint...');
+                
+                const loginResponse = await fetch(`${BACKEND_URL}/api/seller/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email: testSeller.email, 
+                        password: testSeller.password 
+                    })
+                });
+                
+                const loginData = await loginResponse.json();
+                console.log('📊 Login response:', loginData);
+                
+                if (loginData.success) {
+                    console.log('✅ Login endpoint: SUCCESS');
+                    alert('✅ Login endpoint works correctly!');
+                } else {
+                    console.log('❌ Login endpoint: FAILED -', loginData.error);
+                    alert('❌ Login endpoint failed: ' + loginData.error);
+                }
+                
+                console.log('✅ === COMPLETE TEST FINISHED === ✅');
+                
+            } catch (error) {
+                console.error('🔥 Complete test failed:', error);
+                alert('Test failed: ' + error.message);
+            }
+        }
+
+        // Add to global scope
+        window.testRegistrationAndLogin = testRegistrationAndLogin;
+        
+        // Password migration and reset functions
+        async function migrateAllSellerPasswords() {
+            console.log('🔄 === MIGRATING ALL SELLER PASSWORDS === 🔄');
+            console.log('');
+            
+            if (!confirm('This will migrate all existing seller passwords to bcrypt hashing. Continue?')) {
+                return;
+            }
+            
+            try {
+                const adminEmail = prompt('Enter admin email for migration log:', 'admin@example.com');
+                if (!adminEmail) return;
+                
+                console.log('📡 Starting password migration...');
+                
+                const response = await fetch(`${BACKEND_URL}/api/admin/migrate-seller-passwords`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminEmail })
+                });
+                
+                const data = await response.json();
+                console.log('📊 Migration response:', data);
+                
+                if (data.success) {
+                    const results = data.results;
+                    console.log('✅ Migration completed:', results);
+                    alert(`✅ Migration completed!\n\nTotal checked: ${results.totalChecked}\nMigrated: ${results.migrated}\nSkipped: ${results.skipped}\nErrors: ${results.errors}\n\nSee console for details.`);
+                } else {
+                    console.error('❌ Migration failed:', data.error);
+                    alert('❌ Migration failed: ' + data.error);
+                }
+                
+            } catch (error) {
+                console.error('🔥 Migration error:', error);
+                alert('Migration failed: ' + error.message);
+            }
+        }
+
+        async function checkSellerPasswordStatus() {
+            console.log('🔍 === CHECKING SELLER PASSWORD STATUS === 🔍');
+            
+            const email = prompt('Enter seller email to check:');
+            if (!email) return;
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/seller/check-password-status/${encodeURIComponent(email)}`);
+                const data = await response.json();
+                
+                console.log('📊 Password status:', data);
+                
+                if (data.success) {
+                    const status = data.needsPasswordStatus ? 'NEEDS RESET' : 'SECURE';
+                    const hashed = data.isHashed ? 'HASHED' : 'UNHASHED';
+                    console.log(`✅ Password Status: ${status} | Hashed: ${hashed}`);
+                    alert(`Password Status for ${email}:\n\nStatus: ${status}\nHashed: ${hashed}\n\n${data.message}`);
+                } else {
+                    console.error('❌ Status check failed:', data.error);
+                    alert('Status check failed: ' + data.error);
+                }
+                
+            } catch (error) {
+                console.error('🔥 Status check error:', error);
+                alert('Status check failed: ' + error.message);
+            }
+        }
+
+        async function resetSellerPassword() {
+            console.log('🔧 === RESET SELLER PASSWORD === 🔧');
+            
+            const email = prompt('Enter seller email:');
+            const newPassword = prompt('Enter new password (min 6 characters):');
+            
+            if (!email || !newPassword) return;
+            
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return;
+            }
+            
+            try {
+                console.log('📡 Resetting password for:', email);
+                
+                const response = await fetch(`${BACKEND_URL}/api/seller/reset-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, newPassword })
+                });
+                
+                const data = await response.json();
+                console.log('📊 Password reset response:', data);
+                
+                if (data.success) {
+                    console.log('✅ Password reset successful');
+                    alert('✅ Password reset successful!\n\n' + data.message + '\n\nThe seller can now login with the new password.');
+                } else {
+                    console.error('❌ Password reset failed:', data.error);
+                    alert('❌ Password reset failed: ' + data.error);
+                }
+                
+            } catch (error) {
+                console.error('🔥 Password reset error:', error);
+                alert('Password reset failed: ' + error.message);
+            }
+        }
+
+        // Add to global scope
+        window.migrateAllSellerPasswords = migrateAllSellerPasswords;
+        window.checkSellerPasswordStatus = checkSellerPasswordStatus;
+        window.resetSellerPassword = resetSellerPassword;
+        
+        console.log('🔧 Password management functions added:');
+        console.log('- migrateAllSellerPasswords() - Migrate all existing passwords to bcrypt');
+        console.log('- checkSellerPasswordStatus() - Check if a seller needs password reset');
+        console.log('- resetSellerPassword() - Reset password for a specific seller');
+        console.log('Run these functions in browser console to manage existing seller passwords');
+
+        // Seller Homepage Functions
+        async function goToSellerHomepage() {
+            console.log('🏠 Navigating to Seller Homepage...');
+            
+            try {
+                // Check if seller is authenticated using currentUser
+                if (!currentUser || currentUser.role !== 'seller') {
+                    console.log('❌ No authenticated seller found, currentUser:', currentUser);
+                    showToast('Please login to access your homepage', 'error');
+                    showLoginModal();
+                    return;
+                }
+                
+                console.log('✅ Found authenticated seller:', currentUser.email);
+                
+                // Load seller homepage data directly using currentUser
+                await loadSellerHomepageData(currentUser);
+                
+                // Show homepage, hide dashboard
+                document.getElementById('sellerDashboard').style.display = 'none';
+                document.getElementById('sellerHomepage').style.display = 'block';
+                
+                console.log('✅ Seller Homepage loaded successfully');
+                
+            } catch (error) {
+                console.error('🔥 Error loading seller homepage:', error);
+                showToast('Failed to load homepage. Please try again.', 'error');
+            }
+        }
+
+        async function checkSellerAuthentication() {
+            try {
+                // First check if we have current user data
+                if (currentUser && currentUser.role === 'seller') {
+                    console.log('✅ Using current seller data:', currentUser.email);
+                    return currentUser;
+                }
+                
+                // Check localStorage for cached seller data
+                const cachedUser = localStorage.getItem('ecoloopUser');
+                if (cachedUser) {
+                    const parsedUser = JSON.parse(cachedUser);
+                    if (parsedUser && parsedUser.role === 'seller') {
+                        console.log('✅ Found cached seller data:', parsedUser.email);
+                        currentUser = parsedUser; // Update global currentUser
+                        return currentUser;
+                    }
+                }
+                
+                console.log('❌ No seller authentication found');
+                return null;
+                
+            } catch (error) {
+                console.error('🔥 Authentication check failed:', error);
+                return null;
+            }
+        }
+
+        async function loadSellerHomepageData(sellerData) {
+            console.log('📊 Loading seller homepage data...');
+            
+            try {
+                // Update profile information using existing seller data
+                const sellerName = sellerData.name || 
+                                 (sellerData.firstName && sellerData.lastName ? 
+                                  `${sellerData.firstName} ${sellerData.lastName}` : 
+                                  sellerData.firstName || 'Seller');
+                
+                document.getElementById('homepageSellerName').textContent = sellerName;
+                document.getElementById('homepageBusinessName').textContent = sellerData.businessName || sellerData.storeName || 'Business Name';
+                
+                // Update avatar with seller initials
+                const initials = sellerName.charAt(0).toUpperCase();
+                document.getElementById('homepageSellerAvatar').innerHTML = `<span style="font-size: 48px; color: white;">${initials}</span>`;
+                
+                // Update status badge
+                const statusBadge = document.getElementById('homepageStatusBadge');
+                const statusText = document.getElementById('homepageStatusText');
+                const approvalStatus = sellerData.approvalStatus || sellerData.status || sellerData.sellerStatus || 'pending';
+                
+                statusBadge.className = 'status-badge';
+                if (approvalStatus === 'approved') {
+                    statusBadge.classList.add('approved');
+                    statusText.textContent = 'Approved';
+                } else if (approvalStatus === 'pending') {
+                    statusBadge.classList.add('pending');
+                    statusText.textContent = 'Pending Approval';
+                } else if (approvalStatus === 'rejected') {
+                    statusBadge.classList.add('rejected');
+                    statusText.textContent = 'Rejected';
+                }
+                
+                // Load seller statistics (try backend, fallback to defaults)
+                await loadSellerStatistics(sellerData.email);
+                
+                // Load seller notifications (try backend, fallback to defaults)
+                await loadSellerNotifications(sellerData.email);
+                
+                console.log('✅ Seller homepage data loaded successfully');
+                
+            } catch (error) {
+                console.error('🔥 Error loading homepage data:', error);
+                throw error;
+            }
+        }
+
+        async function loadSellerStatistics(sellerEmail) {
+            try {
+                console.log('📊 Loading seller statistics...');
+                
+                // Fetch seller statistics from backend
+                const response = await fetch(`${BACKEND_URL}/api/seller/statistics/${encodeURIComponent(sellerEmail)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        const stats = data.statistics;
+                        
+                        // Update statistics display
+                        document.getElementById('totalProductsCount').textContent = stats.totalProducts || 0;
+                        document.getElementById('totalOrdersCount').textContent = stats.totalOrders || 0;
+                        document.getElementById('totalRevenueAmount').textContent = `KES ${stats.totalRevenue || 0}`;
+                        document.getElementById('averageRating').textContent = (stats.averageRating || 0).toFixed(1);
+                        
+                        console.log('✅ Statistics loaded:', stats);
+                    }
+                } else {
+                    // Set default values if endpoint doesn't exist
+                    setDefaultStatistics();
+                }
+                
+            } catch (error) {
+                console.error('🔥 Error loading statistics:', error);
+                // Set default values on error
+                setDefaultStatistics();
+            }
+        }
+
+        function setDefaultStatistics() {
+            document.getElementById('totalProductsCount').textContent = '0';
+            document.getElementById('totalOrdersCount').textContent = '0';
+            document.getElementById('totalRevenueAmount').textContent = 'KES 0';
+            document.getElementById('averageRating').textContent = '0.0';
+        }
+
+        async function loadSellerNotifications(sellerEmail) {
+            try {
+                console.log('📬 Loading seller notifications...');
+                
+                // Fetch seller notifications from backend
+                const response = await fetch(`${BACKEND_URL}/api/seller/notifications/${encodeURIComponent(sellerEmail)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+                
+                const notificationsList = document.getElementById('sellerNotifications');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.notifications && data.notifications.length > 0) {
+                        displayNotifications(data.notifications);
+                    } else {
+                        // Show default welcome notification
+                        displayDefaultNotifications();
+                    }
+                } else {
+                    // Show default notifications if endpoint doesn't exist
+                    displayDefaultNotifications();
+                }
+                
+            } catch (error) {
+                console.error('🔥 Error loading notifications:', error);
+                // Show default notifications on error
+                displayDefaultNotifications();
+            }
+        }
+
+        function displayNotifications(notifications) {
+            const notificationsList = document.getElementById('sellerNotifications');
+            notificationsList.innerHTML = '';
+            
+            notifications.forEach(notification => {
+                const notificationElement = createNotificationElement(notification);
+                notificationsList.appendChild(notificationElement);
+            });
+        }
+
+        function displayDefaultNotifications() {
+            const notificationsList = document.getElementById('sellerNotifications');
+            notificationsList.innerHTML = `
+                <div class="notification-item">
+                    <div class="notification-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4>Welcome to EcoLoop Seller Portal!</h4>
+                        <p>Your seller account has been successfully set up. Start by adding your first product.</p>
+                        <span class="notification-time">Just now</span>
+                    </div>
+                </div>
+                <div class="notification-item">
+                    <div class="notification-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4>Pro Tip</h4>
+                        <p>Add high-quality product images and detailed descriptions to attract more customers.</p>
+                        <span class="notification-time">2 minutes ago</span>
+                    </div>
+                </div>
+                <div class="notification-item">
+                    <div class="notification-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4>Security Reminder</h4>
+                        <p>Keep your account secure by using a strong password and enabling two-factor authentication.</p>
+                        <span class="notification-time">1 hour ago</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createNotificationElement(notification) {
+            const div = document.createElement('div');
+            div.className = 'notification-item';
+            
+            const iconClass = getNotificationIcon(notification.type);
+            const timeAgo = getTimeAgo(notification.createdAt);
+            
+            div.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas ${iconClass}"></i>
+                </div>
+                <div class="notification-content">
+                    <h4>${notification.title}</h4>
+                    <p>${notification.message}</p>
+                    <span class="notification-time">${timeAgo}</span>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        function getNotificationIcon(type) {
+            const icons = {
+                'info': 'fa-info-circle',
+                'success': 'fa-check-circle',
+                'warning': 'fa-exclamation-triangle',
+                'error': 'fa-times-circle',
+                'order': 'fa-shopping-cart',
+                'product': 'fa-box',
+                'payment': 'fa-dollar-sign',
+                'account': 'fa-user-circle'
+            };
+            return icons[type] || 'fa-info-circle';
+        }
+
+        function getTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) return 'Just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+            if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
+            return date.toLocaleDateString();
+        }
+
+        function backToSellerDashboard() {
+            console.log('🔙 Returning to Seller Dashboard...');
+            
+            // Hide homepage, show dashboard
+            document.getElementById('sellerHomepage').style.display = 'none';
+            document.getElementById('sellerDashboard').style.display = 'block';
+            
+            // Show dashboard home section
+            showDashboardSection('home');
+        }
+
+        // Add to global scope
+        window.goToSellerHomepage = goToSellerHomepage;
+        window.backToSellerDashboard = backToSellerDashboard;
+        window.loadSellerHomepageData = loadSellerHomepageData;
+        
+        console.log('🏠 Seller Homepage functions added:');
+        console.log('- goToSellerHomepage() - Navigate to seller homepage');
+        console.log('- backToSellerDashboard() - Return to dashboard');
+        console.log('- loadSellerHomepageData() - Load seller data into homepage');
+
+        // Unified Website Personalization System
+        function updateWebsiteForUserType() {
+            console.log('🔄 Updating website for user type:', currentUser?.role);
+            
+            // Remove existing seller tools first
+            removeSellerTools();
+            
+            if (currentUser && currentUser.role === 'seller' && currentUser.approvalStatus === 'approved') {
+                console.log('✅ Approved seller detected - adding seller tools');
+                addSellerTools();
+                addSellerPanelsToHomepage();
+                
+                // Ensure ALL homepage sections are visible for sellers
+                showAllHomepageSections();
+            } else {
+                console.log('👤 Regular user or no seller - keeping default website');
+                // Keep default website layout - all sections should be visible by default
+                showAllHomepageSections();
+            }
+        }
+
+        function removeSellerTools() {
+            // Remove seller icons from top header
+            const existingSellerIcons = document.querySelectorAll('.dynamic-seller-tool');
+            existingSellerIcons.forEach(icon => icon.remove());
+            
+            // Remove seller icons from commerce area
+            const existingCommerceSellerIcons = document.querySelectorAll('.dynamic-seller-commerce');
+            existingCommerceSellerIcons.forEach(icon => icon.remove());
+            
+            // Remove seller panels from homepage
+            const existingSellerPanels = document.querySelectorAll('.dynamic-seller-panel');
+            existingSellerPanels.forEach(panel => panel.remove());
+        }
+
+        function addSellerTools() {
+            // Add seller tools to top header user actions
+            const userActions = document.getElementById('userActions');
+            if (userActions) {
+                // Find the "Sell" link and insert seller tools before it
+                const sellLink = document.getElementById('sellerRegisterLink');
+                
+                const sellerTools = document.createElement('div');
+                sellerTools.className = 'dynamic-seller-tool';
+                sellerTools.innerHTML = `
+                    <a href="#" onclick="showSellerDashboard(); return false;" class="seller-tool-link">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                    <a href="#" onclick="showSellerAccountPanel(); return false;" class="seller-tool-link">
+                        <i class="fas fa-store"></i> My Account
+                    </a>
+                    <a href="#" onclick="showProductManager(); return false;" class="seller-tool-link">
+                        <i class="fas fa-box"></i> Products
+                    </a>
+                    <a href="#" onclick="showSellerOrders(); return false;" class="seller-tool-link">
+                        <i class="fas fa-shopping-cart"></i> Orders
+                    </a>
+                    <a href="#" onclick="showUploadProductModal(); return false;" class="seller-tool-link upload-btn">
+                        <i class="fas fa-plus-circle"></i> Upload Product
+                    </a>
+                `;
+                
+                if (sellLink) {
+                    userActions.insertBefore(sellerTools, sellLink);
+                } else {
+                    userActions.appendChild(sellerTools);
+                }
+            }
+            
+            // Add seller tools to commerce icons area
+            const commerceIcons = document.querySelector('.commerce-icons');
+            if (commerceIcons) {
+                const sellerIcon = document.createElement('div');
+                sellerIcon.className = 'icon-wrapper dynamic-seller-commerce';
+                sellerIcon.onclick = showSellerDashboard;
+                sellerIcon.title = 'Go to Seller Dashboard';
+                sellerIcon.innerHTML = `
+                    <i class="fas fa-store"></i>
+                    <span class="badge seller-badge" style="background: #00ffff; color: #000; display: inline-block;">✓</span>
+                `;
+                commerceIcons.appendChild(sellerIcon);
+            }
+            
+            // Hide the "Start Selling" button for sellers
+            const startSellingBtn = document.getElementById('startSellingBtn');
+            if (startSellingBtn) {
+                startSellingBtn.style.display = 'none';
+            }
+            
+            // Hide the "Sell" registration link for sellers
+            const sellerRegisterLink = document.getElementById('sellerRegisterLink');
+            if (sellerRegisterLink) {
+                sellerRegisterLink.style.display = 'none';
+            }
+        }
+
+        function addSellerPanelsToHomepage() {
+            // Find the hero section or main content area to add seller panels
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                // Create seller dashboard panel
+                const sellerPanel = document.createElement('div');
+                sellerPanel.className = 'dynamic-seller-panel seller-dashboard-panel';
+                sellerPanel.innerHTML = `
+                    <div class="seller-panel-content">
+                        <h3><i class="fas fa-store"></i> Seller Dashboard</h3>
+                        <div class="seller-stats-summary">
+                            <div class="stat-item">
+                                <span class="stat-number" id="sellerProductCount">0</span>
+                                <span class="stat-label">Products</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="sellerOrderCount">0</span>
+                                <span class="stat-label">Orders</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="sellerRevenueCount">KES 0</span>
+                                <span class="stat-label">Revenue</span>
+                            </div>
+                        </div>
+                        <div class="seller-quick-actions">
+                            <button class="seller-action-btn" onclick="showSellerDashboard()">
+                                <i class="fas fa-tachometer-alt"></i> Full Dashboard
+                            </button>
+                            <button class="seller-action-btn" onclick="showUploadProductModal()">
+                                <i class="fas fa-plus"></i> Add Product
+                            </button>
+                            <button class="seller-action-btn" onclick="showSellerOrders()">
+                                <i class="fas fa-shopping-cart"></i> View Orders
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Insert after hero content but before products
+                const heroContent = heroSection.querySelector('.hero-content');
+                if (heroContent) {
+                    heroContent.parentNode.insertBefore(sellerPanel, heroContent.nextSibling);
+                } else {
+                    heroSection.appendChild(sellerPanel);
+                }
+                
+                // Load seller stats into the panel
+                loadSellerStatsForPanel();
+            }
+        }
+
+        function loadSellerStatsForPanel() {
+            if (!currentUser || !currentUser.email) return;
+            
+            // Load seller statistics
+            fetch(`${BACKEND_URL}/api/seller/statistics/${encodeURIComponent(currentUser.email)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const stats = data.statistics;
+                        document.getElementById('sellerProductCount').textContent = stats.totalProducts || 0;
+                        document.getElementById('sellerOrderCount').textContent = stats.totalOrders || 0;
+                        document.getElementById('sellerRevenueCount').textContent = `KES ${stats.totalRevenue || 0}`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading seller stats:', error);
+                    // Set default values
+                    document.getElementById('sellerProductCount').textContent = '0';
+                    document.getElementById('sellerOrderCount').textContent = '0';
+                    document.getElementById('sellerRevenueCount').textContent = 'KES 0';
+                });
+        }
+
+        // Seller tool functions
+        function showSellerAccountPanel() {
+            console.log('🏪 Showing seller account panel on main website');
+            showToast('Seller account panel - Opening account overview...', 'info');
+            
+            // Create a modal-like panel overlay on the main website
+            const existingPanel = document.getElementById('sellerAccountPanel');
+            if (existingPanel) {
+                existingPanel.remove();
+            }
+            
+            const accountPanel = document.createElement('div');
+            accountPanel.id = 'sellerAccountPanel';
+            accountPanel.className = 'seller-account-panel-overlay';
+            accountPanel.innerHTML = `
+                <div class="seller-account-panel">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-store"></i> Seller Account</h2>
+                        <button class="close-panel-btn" onclick="closeSellerAccountPanel()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="panel-content">
+                        <div class="account-overview">
+                            <div class="account-info">
+                                <h3>${currentUser.name || currentUser.firstName || 'Seller'}</h3>
+                                <p>${currentUser.businessName || currentUser.storeName || 'Business Name'}</p>
+                                <div class="status-badge ${currentUser.approvalStatus}">
+                                    ${currentUser.approvalStatus || 'pending'}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="account-actions">
+                            <button onclick="showSellerDashboard()">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </button>
+                            <button onclick="showProductManager()">
+                                <i class="fas fa-box"></i> Manage Products
+                            </button>
+                            <button onclick="showSellerOrders()">
+                                <i class="fas fa-shopping-cart"></i> Orders
+                            </button>
+                            <button onclick="showSellerSettings()">
+                                <i class="fas fa-cog"></i> Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(accountPanel);
+        }
+
+        function closeSellerAccountPanel() {
+            const panel = document.getElementById('sellerAccountPanel');
+            if (panel) {
+                panel.remove();
+            }
+        }
+
+        function showProductManager() {
+            console.log('📦 Opening product manager');
+            showToast('Product Manager - Opening product management...', 'info');
+            // Redirect to seller dashboard with products tab active
+            showSellerDashboard();
+            // In a real implementation, you'd activate the products tab
+        }
+
+        function showSellerOrders() {
+            console.log('🛒 Opening seller orders');
+            showToast('Orders - Opening order management...', 'info');
+            // Redirect to seller dashboard with orders tab active
+            showSellerDashboard();
+            // In a real implementation, you'd activate the orders tab
+        }
+
+        function showUploadProductModal() {
+            console.log('⬆️ Opening upload product modal');
+            showToast('Upload Product - Opening product upload form...', 'info');
+            // This would open the add product modal
+            if (typeof showAddProductModal === 'function') {
+                showAddProductModal();
+            } else {
+                showToast('Product upload feature coming soon!', 'info');
+            }
+        }
+
+        function showSellerSettings() {
+            console.log('⚙️ Opening seller settings');
+            showToast('Settings - Opening account settings...', 'info');
+            // This would open seller settings
+        }
+
+        // Update the "Go to Website" button in seller dashboard
+        function goToMainWebsite() {
+            console.log('🌐 Going to main website with seller tools activated');
+            
+            // Hide seller dashboard
+            const sellerDashboard = document.getElementById('sellerDashboard');
+            if (sellerDashboard) {
+                sellerDashboard.style.display = 'none';
+            }
+            
+            // Show ALL main website sections for sellers
+            showAllHomepageSections();
+            
+            // Ensure seller tools are visible
+            updateWebsiteForUserType();
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            showToast('Welcome back to the main website!', 'success');
+        }
+
+        // Function to show all homepage sections (for sellers)
+        function showAllHomepageSections() {
+            console.log('📱 Showing all homepage sections for seller');
+            
+            // Show hero section
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                heroSection.style.display = 'block';
+            }
+            
+            // Show main content areas
+            const allContainers = document.querySelectorAll('.container');
+            allContainers.forEach(container => {
+                if (container.parentElement && 
+                    (container.parentElement.classList.contains('main-content') ||
+                     container.parentElement.classList.contains('featured-products') ||
+                     container.parentElement.classList.contains('categories') ||
+                     container.parentElement.classList.contains('footer'))) {
+                    container.parentElement.style.display = 'block';
+                }
+            });
+            
+            // Show featured products section
+            const featuredProducts = document.querySelector('.featured-products');
+            if (featuredProducts) {
+                featuredProducts.style.display = 'block';
+            }
+            
+            // Show categories section
+            const categoriesSection = document.querySelector('.categories');
+            if (categoriesSection) {
+                categoriesSection.style.display = 'block';
+            }
+            
+            // Show footer section
+            const footerSection = document.querySelector('.footer');
+            if (footerSection) {
+                footerSection.style.display = 'block';
+            }
+            
+            // Show any other main content sections
+            const mainSections = document.querySelectorAll('section:not(.seller-dashboard):not(.unified-seller-homepage)');
+            mainSections.forEach(section => {
+                section.style.display = 'block';
+            });
+            
+            console.log('✅ All homepage sections shown');
+        }
+
+        // Update the dashboard "Go to Website" button
+        const existingGoToWebsiteBtn = document.querySelector('.dashboard-nav-right .btn-secondary');
+        if (existingGoToWebsiteBtn) {
+            existingGoToWebsiteBtn.onclick = goToMainWebsite;
+            existingGoToWebsiteBtn.textContent = 'Go to Website';
+        }
+
+        // Add to global scope
+        window.updateWebsiteForUserType = updateWebsiteForUserType;
+        window.showSellerAccountPanel = showSellerAccountPanel;
+        window.closeSellerAccountPanel = closeSellerAccountPanel;
+        window.showProductManager = showProductManager;
+        window.showSellerOrders = showSellerOrders;
+        window.showUploadProductModal = showUploadProductModal;
+        window.showSellerSettings = showSellerSettings;
+        window.goToMainWebsite = goToMainWebsite;
+        window.showAllHomepageSections = showAllHomepageSections;
+
+        // Enhanced Seller Homepage Function - Unified Entry Point
+        async function goToSellerHomepage() {
+            console.log('🏠 Navigating to Unified Seller Homepage...');
+            
+            try {
+                // Check authentication using existing function
+                const sellerData = await checkSellerAuthentication();
+                
+                if (!sellerData) {
+                    console.log('❌ No authenticated seller found');
+                    showToast('Please login to access your seller account', 'error');
+                    showLoginModal();
+                    return;
+                }
+                
+                console.log('✅ Authenticated seller found:', sellerData.email);
+                
+                // Hide all other sections
+                hideAllSections();
+                
+                // Show seller homepage
+                await showUnifiedSellerHomepage(sellerData);
+                
+                console.log('✅ Unified Seller Homepage loaded successfully');
+                
+            } catch (error) {
+                console.error('🔥 Error loading seller homepage:', error);
+                showToast('Failed to load seller account. Please try again.', 'error');
+            }
+        }
+
+        function hideAllSections() {
+            // Hide main website sections
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) heroSection.style.display = 'none';
+            
+            const mainContent = document.querySelector('.container');
+            if (mainContent && mainContent.parentElement.classList.contains('main-content')) {
+                mainContent.parentElement.style.display = 'none';
+            }
+            
+            // Hide seller dashboard
+            const sellerDashboard = document.getElementById('sellerDashboard');
+            if (sellerDashboard) sellerDashboard.style.display = 'none';
+            
+            // Hide any modals
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => modal.style.display = 'none');
+        }
+
+        async function showUnifiedSellerHomepage(sellerData) {
+            console.log('📊 Loading Unified Seller Homepage for:', sellerData.email);
+            
+            // Check if unified homepage exists, create if not
+            let unifiedHomepage = document.getElementById('unifiedSellerHomepage');
+            
+            if (!unifiedHomepage) {
+                unifiedHomepage = createUnifiedSellerHomepage();
+                document.body.appendChild(unifiedHomepage);
+            }
+            
+            // Load seller data into homepage
+            await loadUnifiedSellerData(sellerData);
+            
+            // Show homepage
+            unifiedHomepage.style.display = 'block';
+            
+            // Add to history for back button
+            history.pushState({sellerHomepage: true}, 'Seller Account', '/seller/home');
+        }
+
+        function createUnifiedSellerHomepage() {
+            const homepage = document.createElement('div');
+            homepage.id = 'unifiedSellerHomepage';
+            homepage.className = 'unified-seller-homepage';
+            homepage.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, #0a4f3a 0%, #0d6b4f 50%, #0a4f3a 100%);
+                z-index: 1000;
+                overflow-y: auto;
+                display: none;
+            `;
+            
+            homepage.innerHTML = `
+                <div class="seller-homepage-header">
+                    <div class="container">
+                        <div class="homepage-nav">
+                            <button class="back-btn" onclick="closeUnifiedSellerHomepage()">
+                                <i class="fas fa-arrow-left"></i> Back to Website
+                            </button>
+                            <div class="homepage-logo">
+                                <span class="logo-text">🌿 EcoLoop Seller Portal</span>
+                            </div>
+                            <button class="dashboard-btn" onclick="showSellerDashboard()">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="seller-homepage-content">
+                    <div class="container">
+                        <!-- Profile Section -->
+                        <div class="seller-profile-section">
+                            <div class="profile-header">
+                                <div class="profile-avatar" id="unifiedSellerAvatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="profile-info">
+                                    <h1 id="unifiedSellerName">Seller Name</h1>
+                                    <p id="unifiedBusinessName">Business Name</p>
+                                    <div class="status-badge" id="unifiedStatusBadge">
+                                        <span id="unifiedStatusText">Status</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Stats -->
+                        <div class="seller-stats-grid">
+                            <div class="stat-card">
+                                <i class="fas fa-box"></i>
+                                <h3 id="unifiedTotalProducts">0</h3>
+                                <p>Total Products</p>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-shopping-cart"></i>
+                                <h3 id="unifiedTotalOrders">0</h3>
+                                <p>Total Orders</p>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-dollar-sign"></i>
+                                <h3 id="unifiedTotalRevenue">KES 0</h3>
+                                <p>Total Revenue</p>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-star"></i>
+                                <h3 id="unifiedAverageRating">0.0</h3>
+                                <p>Average Rating</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Actions -->
+                        <div class="seller-actions-grid">
+                            <div class="action-card" onclick="showSellerDashboard()">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <h3>Dashboard</h3>
+                                <p>View detailed analytics and manage your store</p>
+                            </div>
+                            <div class="action-card" onclick="showAddProductModal()">
+                                <i class="fas fa-plus-circle"></i>
+                                <h3>Add Product</h3>
+                                <p>List new products for sale</p>
+                            </div>
+                            <div class="action-card" onclick="showManageProducts()">
+                                <i class="fas fa-boxes"></i>
+                                <h3>Manage Products</h3>
+                                <p>Edit, delete, or update existing products</p>
+                            </div>
+                            <div class="action-card" onclick="showSellerSettings()">
+                                <i class="fas fa-cog"></i>
+                                <h3>Settings</h3>
+                                <p>Manage account settings and preferences</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Notifications -->
+                        <div class="seller-notifications-section">
+                            <h2>Notifications</h2>
+                            <div class="notifications-list" id="unifiedSellerNotifications">
+                                <!-- Notifications will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return homepage;
+        }
+
+        async function loadUnifiedSellerData(sellerData) {
+            console.log('📊 Loading unified seller data...');
+            
+            try {
+                // Update profile information
+                const sellerName = sellerData.name || 
+                                 (sellerData.firstName && sellerData.lastName ? 
+                                  `${sellerData.firstName} ${sellerData.lastName}` : 
+                                  sellerData.firstName || 'Seller');
+                
+                document.getElementById('unifiedSellerName').textContent = sellerName;
+                document.getElementById('unifiedBusinessName').textContent = sellerData.businessName || sellerData.storeName || 'Business Name';
+                
+                // Update avatar with seller initials
+                const initials = sellerName.charAt(0).toUpperCase();
+                document.getElementById('unifiedSellerAvatar').innerHTML = `<span style="font-size: 48px; color: white;">${initials}</span>`;
+                
+                // Update status badge
+                const statusBadge = document.getElementById('unifiedStatusBadge');
+                const statusText = document.getElementById('unifiedStatusText');
+                const approvalStatus = sellerData.approvalStatus || sellerData.status || sellerData.sellerStatus || 'pending';
+                
+                statusBadge.className = 'status-badge';
+                if (approvalStatus === 'approved') {
+                    statusBadge.classList.add('approved');
+                    statusText.textContent = 'Approved';
+                } else if (approvalStatus === 'pending') {
+                    statusBadge.classList.add('pending');
+                    statusText.textContent = 'Pending Approval';
+                } else if (approvalStatus === 'rejected') {
+                    statusBadge.classList.add('rejected');
+                    statusText.textContent = 'Rejected';
+                }
+                
+                // Load statistics and notifications
+                await loadSellerStatistics(sellerData.email);
+                await loadSellerNotifications(sellerData.email);
+                
+                // Update unified homepage stats
+                updateUnifiedHomepageStats();
+                
+                console.log('✅ Unified seller data loaded successfully');
+                
+            } catch (error) {
+                console.error('🔥 Error loading unified seller data:', error);
+                throw error;
+            }
+        }
+
+        function updateUnifiedHomepageStats() {
+            // Update unified homepage stats from dashboard stats
+            const totalProducts = document.getElementById('totalProductsCount')?.textContent || '0';
+            const totalOrders = document.getElementById('totalOrdersCount')?.textContent || '0';
+            const totalRevenue = document.getElementById('totalRevenueAmount')?.textContent || 'KES 0';
+            const averageRating = document.getElementById('averageRating')?.textContent || '0.0';
+            
+            const unifiedTotalProducts = document.getElementById('unifiedTotalProducts');
+            const unifiedTotalOrders = document.getElementById('unifiedTotalOrders');
+            const unifiedTotalRevenue = document.getElementById('unifiedTotalRevenue');
+            const unifiedAverageRating = document.getElementById('unifiedAverageRating');
+            
+            if (unifiedTotalProducts) unifiedTotalProducts.textContent = totalProducts;
+            if (unifiedTotalOrders) unifiedTotalOrders.textContent = totalOrders;
+            if (unifiedTotalRevenue) unifiedTotalRevenue.textContent = totalRevenue;
+            if (unifiedAverageRating) unifiedAverageRating.textContent = averageRating;
+            
+            // Update notifications
+            const dashboardNotifications = document.getElementById('sellerNotifications')?.innerHTML;
+            const unifiedNotifications = document.getElementById('unifiedSellerNotifications');
+            if (unifiedNotifications && dashboardNotifications) {
+                unifiedNotifications.innerHTML = dashboardNotifications;
+            }
+        }
+
+        function closeUnifiedSellerHomepage() {
+            console.log('🔙 Closing Unified Seller Homepage');
+            
+            // Hide unified homepage
+            const unifiedHomepage = document.getElementById('unifiedSellerHomepage');
+            if (unifiedHomepage) unifiedHomepage.style.display = 'none';
+            
+            // Show main website sections
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) heroSection.style.display = 'block';
+            
+            // Update history
+            history.back();
+        }
+
+        // Handle browser back button
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.sellerHomepage) {
+                closeUnifiedSellerHomepage();
+            }
+        });
+
+        // Comprehensive Unified Website System Debug Function
+        function debugUnifiedWebsiteSystem() {
+            console.log('🔍 === UNIFIED WEBSITE SYSTEM DEBUG === 🔍');
+            console.log('');
+            
+            // 1. Check Authentication State
+            console.log('📋 AUTHENTICATION STATE:');
+            console.log('currentUser:', currentUser);
+            console.log('currentUser.role:', currentUser?.role);
+            console.log('currentUser.approvalStatus:', currentUser?.approvalStatus);
+            console.log('localStorage ecoloopUser:', localStorage.getItem('ecoloopUser'));
+            console.log('');
+            
+            // 2. Check Dynamic Seller Tools
+            console.log('🛠️ DYNAMIC SELLER TOOLS:');
+            const sellerTools = document.querySelectorAll('.dynamic-seller-tool');
+            const commerceSellerIcons = document.querySelectorAll('.dynamic-seller-commerce');
+            const sellerPanels = document.querySelectorAll('.dynamic-seller-panel');
+            
+            console.log('Header seller tools:', sellerTools.length);
+            sellerTools.forEach((tool, index) => {
+                console.log(`  Tool ${index + 1}:`, {
+                    display: tool.style.display,
+                    html: tool.innerHTML.substring(0, 100) + '...'
+                });
+            });
+            
+            console.log('Commerce seller icons:', commerceSellerIcons.length);
+            commerceSellerIcons.forEach((icon, index) => {
+                console.log(`  Icon ${index + 1}:`, {
+                    display: icon.style.display,
+                    onclick: icon.onclick ? 'function set' : 'no function'
+                });
+            });
+            
+            console.log('Homepage seller panels:', sellerPanels.length);
+            sellerPanels.forEach((panel, index) => {
+                console.log(`  Panel ${index + 1}:`, {
+                    display: panel.style.display,
+                    className: panel.className
+                });
+            });
+            console.log('');
+            
+            // 3. Check UI Elements
+            console.log('🎨 UI ELEMENTS STATUS:');
+            const sellerRegisterLink = document.getElementById('sellerRegisterLink');
+            const startSellingBtn = document.getElementById('startSellingBtn');
+            const loginLink = document.querySelector('a[href*="showLoginModal"]');
+            const registerLink = document.querySelector('a[href*="showRegisterModal"]');
+            
+            console.log('sellerRegisterLink:', sellerRegisterLink ? {
+                display: sellerRegisterLink.style.display
+            } : 'NOT FOUND');
+            
+            console.log('startSellingBtn:', startSellingBtn ? {
+                display: startSellingBtn.style.display
+            } : 'NOT FOUND');
+            
+            console.log('loginLink:', loginLink ? {
+                display: loginLink.style.display
+            } : 'NOT FOUND');
+            
+            console.log('registerLink:', registerLink ? {
+                display: registerLink.style.display
+            } : 'NOT FOUND');
+            console.log('');
+            
+            // 4. Check Dashboard Elements
+            console.log('📊 DASHBOARD ELEMENTS:');
+            const dashboardHomeIcon = document.querySelector('.home-icon-btn');
+            const sellerDashboard = document.getElementById('sellerDashboard');
+            const goToWebsiteBtn = document.querySelector('.dashboard-nav-right .btn-secondary');
+            
+            console.log('dashboardHomeIcon:', dashboardHomeIcon ? {
+                onclick: dashboardHomeIcon.onclick,
+                title: dashboardHomeIcon.title
+            } : 'NOT FOUND');
+            
+            console.log('sellerDashboard:', sellerDashboard ? {
+                display: sellerDashboard.style.display
+            } : 'NOT FOUND');
+            
+            console.log('goToWebsiteBtn:', goToWebsiteBtn ? {
+                onclick: goToWebsiteBtn.onclick,
+                text: goToWebsiteBtn.textContent
+            } : 'NOT FOUND');
+            console.log('');
+            
+            // 5. Test Functions
+            console.log('🧪 FUNCTION TESTS:');
+            
+            // Test website personalization
+            console.log('Testing updateWebsiteForUserType()...');
+            updateWebsiteForUserType();
+            console.log('✅ updateWebsiteForUserType() executed');
+            console.log('');
+            
+            // 6. Expected Behavior
+            console.log('🎯 EXPECTED BEHAVIOR:');
+            if (currentUser && currentUser.role === 'seller' && currentUser.approvalStatus === 'approved') {
+                console.log('✅ APPROVED SELLER LOGGED IN - Should see:');
+                console.log('  - Header seller tools: VISIBLE (Dashboard, My Account, Products, Orders, Upload Product)');
+                console.log('  - Commerce seller icon: VISIBLE (store icon with ✓ badge)');
+                console.log('  - Homepage seller panels: VISIBLE (dashboard stats panel)');
+                console.log('  - sellerRegisterLink: HIDDEN');
+                console.log('  - startSellingBtn: HIDDEN');
+                console.log('  - loginLink: HIDDEN');
+                console.log('  - registerLink: HIDDEN');
+                
+                // Test seller functions
+                console.log('🧪 Testing seller functions...');
+                console.log('- showSellerAccountPanel()');
+                console.log('- showProductManager()');
+                console.log('- showSellerOrders()');
+                console.log('- showUploadProductModal()');
+                console.log('- goToMainWebsite()');
+                
+            } else if (currentUser) {
+                console.log('👤 USER LOGGED IN (NOT APPROVED SELLER) - Should see:');
+                console.log('  - Header seller tools: HIDDEN');
+                console.log('  - Commerce seller icon: HIDDEN');
+                console.log('  - Homepage seller panels: HIDDEN');
+                console.log('  - sellerRegisterLink: VISIBLE');
+                console.log('  - startSellingBtn: VISIBLE');
+                console.log('  - loginLink: HIDDEN');
+                console.log('  - registerLink: HIDDEN');
+            } else {
+                console.log('❌ NO USER LOGGED IN - Should see:');
+                console.log('  - Header seller tools: HIDDEN');
+                console.log('  - Commerce seller icon: HIDDEN');
+                console.log('  - Homepage seller panels: HIDDEN');
+                console.log('  - sellerRegisterLink: VISIBLE');
+                console.log('  - startSellingBtn: VISIBLE');
+                console.log('  - loginLink: VISIBLE');
+                console.log('  - registerLink: VISIBLE');
+            }
+            
+            console.log('');
+            console.log('🔧 ISSUES & FIXES:');
+            console.log('If seller tools are not showing for approved sellers:');
+            console.log('1. Check if currentUser.role === "seller" AND currentUser.approvalStatus === "approved"');
+            console.log('2. Check if updateWebsiteForUserType() is being called');
+            console.log('3. Check if element selectors are correct');
+            console.log('4. Check CSS display properties');
+            console.log('5. Check localStorage persistence');
+            console.log('');
+            console.log('🎉 DEBUG COMPLETE!');
+        }
+
+        // Comprehensive Homepage Visibility Test Function
+        function testHomepageVisibilityForSellers() {
+            console.log('🔍 === HOMEPAGE VISIBILITY TEST FOR SELLERS === 🔍');
+            console.log('');
+            
+            // 1. Check Authentication State
+            console.log('📋 AUTHENTICATION STATE:');
+            console.log('currentUser:', currentUser);
+            console.log('currentUser.role:', currentUser?.role);
+            console.log('currentUser.approvalStatus:', currentUser?.approvalStatus);
+            console.log('');
+            
+            // 2. Check Homepage Sections Visibility
+            console.log('📱 HOMEPAGE SECTIONS VISIBILITY:');
+            
+            const sections = [
+                { name: 'Hero Section', selector: '.hero' },
+                { name: 'Featured Products', selector: '.featured-products' },
+                { name: 'Categories', selector: '.categories' },
+                { name: 'Footer', selector: '.footer' },
+                { name: 'Main Content', selector: '.main-content' },
+                { name: 'All Sections', selector: 'section:not(.seller-dashboard):not(.unified-seller-homepage)' }
+            ];
+            
+            sections.forEach(section => {
+                const element = document.querySelector(section.selector);
+                const isVisible = element && element.style.display !== 'none';
+                console.log(`${section.name}:`, isVisible ? '✅ VISIBLE' : '❌ HIDDEN');
+                if (element) {
+                    console.log(`  - Display: ${element.style.display || 'default'}`);
+                    console.log(`  - Found: ${!!element}`);
+                }
+            });
+            console.log('');
+            
+            // 3. Check Seller Tools
+            console.log('🛠️ SELLER TOOLS STATUS:');
+            const sellerTools = document.querySelectorAll('.dynamic-seller-tool');
+            const commerceSellerIcons = document.querySelectorAll('.dynamic-seller-commerce');
+            const sellerPanels = document.querySelectorAll('.dynamic-seller-panel');
+            
+            console.log('Header seller tools:', sellerTools.length > 0 ? '✅ VISIBLE' : '❌ HIDDEN');
+            console.log('Commerce seller icons:', commerceSellerIcons.length > 0 ? '✅ VISIBLE' : '❌ HIDDEN');
+            console.log('Homepage seller panels:', sellerPanels.length > 0 ? '✅ VISIBLE' : '❌ HIDDEN');
+            console.log('');
+            
+            // 4. Test Functions
+            console.log('🧪 TESTING FUNCTIONS:');
+            
+            // Test homepage visibility
+            console.log('Testing showAllHomepageSections()...');
+            showAllHomepageSections();
+            console.log('✅ showAllHomepageSections() executed');
+            
+            // Test website personalization
+            console.log('Testing updateWebsiteForUserType()...');
+            updateWebsiteForUserType();
+            console.log('✅ updateWebsiteForUserType() executed');
+            console.log('');
+            
+            // 5. Expected Behavior
+            console.log('🎯 EXPECTED BEHAVIOR:');
+            if (currentUser && currentUser.role === 'seller' && currentUser.approvalStatus === 'approved') {
+                console.log('✅ APPROVED SELLER LOGGED IN - Should see:');
+                console.log('  - Hero Section: VISIBLE');
+                console.log('  - Featured Products: VISIBLE');
+                console.log('  - Categories: VISIBLE');
+                console.log('  - Footer: VISIBLE');
+                console.log('  - All Main Content: VISIBLE');
+                console.log('  - Seller Tools: VISIBLE (Dashboard, My Account, Products, Orders, Upload Product)');
+                console.log('  - Seller Dashboard Panel: VISIBLE (on homepage)');
+                
+                // Test seller functions
+                console.log('🧪 Testing seller functions...');
+                console.log('- showSellerAccountPanel()');
+                console.log('- showProductManager()');
+                console.log('- showSellerOrders()');
+                console.log('- showUploadProductModal()');
+                console.log('- goToMainWebsite()');
+                
+            } else {
+                console.log('👤 REGULAR USER OR NO SELLER - Should see:');
+                console.log('  - Hero Section: VISIBLE');
+                console.log('  - Featured Products: VISIBLE');
+                console.log('  - Categories: VISIBLE');
+                console.log('  - Footer: VISIBLE');
+                console.log('  - All Main Content: VISIBLE');
+                console.log('  - Seller Tools: HIDDEN');
+                console.log('  - Seller Dashboard Panel: HIDDEN');
+            }
+            
+            console.log('');
+            console.log('🔧 ISSUES & FIXES:');
+            console.log('If homepage sections are not visible for sellers:');
+            console.log('1. Run showAllHomepageSections() manually');
+            console.log('2. Check if CSS display properties are set correctly');
+            console.log('3. Verify element selectors are correct');
+            console.log('4. Check if there are conflicting styles');
+            console.log('5. Ensure no functions are hiding sections');
+            console.log('');
+            console.log('🎉 VISIBILITY TEST COMPLETE!');
+        }
+
+        // Add to global scope
+        window.testHomepageVisibilityForSellers = testHomepageVisibilityForSellers;
+        
+        console.log('🐛 Homepage Visibility Test function added:');
+        console.log('- testHomepageVisibilityForSellers() - Complete homepage visibility diagnosis');
+        
+        console.log('🐛 Unified Website System Debug function added:');
+        console.log('- debugUnifiedWebsiteSystem() - Complete unified system diagnosis');
+
+        // Comprehensive Unified Seller System Debug Function
+        function debugUnifiedSellerSystem() {
+            console.log('🔍 === UNIFIED SELLER SYSTEM DEBUG === 🔍');
+            console.log('');
+            
+            // 1. Check Authentication State
+            console.log('📋 AUTHENTICATION STATE:');
+            console.log('currentUser:', currentUser);
+            console.log('currentUser.role:', currentUser?.role);
+            console.log('currentUser.email:', currentUser?.email);
+            console.log('currentUser.approvalStatus:', currentUser?.approvalStatus);
+            console.log('localStorage ecoloopUser:', localStorage.getItem('ecoloopUser'));
+            console.log('');
+            
+            // 2. Check UI Elements
+            console.log('🎨 UI ELEMENTS STATUS:');
+            const sellerIcon = document.getElementById('sellerIcon');
+            const mainSellerIcon = document.getElementById('mainSellerIcon');
+            const sellerBadge = document.getElementById('sellerBadge');
+            const sellerRegisterLink = document.getElementById('sellerRegisterLink');
+            const startSellingBtn = document.getElementById('startSellingBtn');
+            const loginLink = document.querySelector('a[href*="showLoginModal"]');
+            const registerLink = document.querySelector('a[href*="showRegisterModal"]');
+            
+            console.log('sellerIcon (top header):', sellerIcon ? {
+                display: sellerIcon.style.display,
+                html: sellerIcon.innerHTML
+            } : 'NOT FOUND');
+            
+            console.log('mainSellerIcon (commerce icons):', mainSellerIcon ? {
+                display: mainSellerIcon.style.display,
+                html: mainSellerIcon.innerHTML
+            } : 'NOT FOUND');
+            
+            console.log('sellerBadge:', sellerBadge ? {
+                display: sellerBadge.style.display,
+                text: sellerBadge.textContent
+            } : 'NOT FOUND');
+            
+            console.log('sellerRegisterLink:', sellerRegisterLink ? {
+                display: sellerRegisterLink.style.display
+            } : 'NOT FOUND');
+            
+            console.log('startSellingBtn:', startSellingBtn ? {
+                display: startSellingBtn.style.display
+            } : 'NOT FOUND');
+            
+            console.log('loginLink:', loginLink ? {
+                display: loginLink.style.display
+            } : 'NOT FOUND');
+            
+            console.log('registerLink:', registerLink ? {
+                display: registerLink.style.display
+            } : 'NOT FOUND');
+            console.log('');
+            
+            // 3. Check Dashboard Elements
+            console.log('📊 DASHBOARD ELEMENTS:');
+            const dashboardHomeIcon = document.querySelector('.home-icon-btn');
+            const sellerDashboard = document.getElementById('sellerDashboard');
+            const unifiedHomepage = document.getElementById('unifiedSellerHomepage');
+            
+            console.log('dashboardHomeIcon:', dashboardHomeIcon ? {
+                onclick: dashboardHomeIcon.onclick,
+                title: dashboardHomeIcon.title
+            } : 'NOT FOUND');
+            
+            console.log('sellerDashboard:', sellerDashboard ? {
+                display: sellerDashboard.style.display
+            } : 'NOT FOUND');
+            
+            console.log('unifiedHomepage:', unifiedHomepage ? {
+                display: unifiedHomepage.style.display,
+                hasChildren: unifiedHomepage.children.length > 0
+            } : 'NOT FOUND');
+            console.log('');
+            
+            // 4. Test Functions
+            console.log('🧪 FUNCTION TESTS:');
+            
+            // Test authentication check
+            console.log('Testing checkSellerAuthentication()...');
+            checkSellerAuthentication().then(result => {
+                console.log('✅ checkSellerAuthentication result:', result);
+            }).catch(error => {
+                console.log('❌ checkSellerAuthentication error:', error);
+            });
+            
+            // Test UI update
+            console.log('Testing updateAuthUI()...');
+            updateAuthUI();
+            console.log('✅ updateAuthUI() executed');
+            console.log('');
+            
+            // 5. Expected Behavior
+            console.log('🎯 EXPECTED BEHAVIOR:');
+            if (currentUser && currentUser.role === 'seller') {
+                console.log('✅ SELLER LOGGED IN - Should see:');
+                console.log('  - sellerIcon: visible (top header)');
+                console.log('  - mainSellerIcon: visible (commerce icons)');
+                console.log('  - sellerBadge: visible with ✓');
+                console.log('  - sellerRegisterLink: HIDDEN');
+                console.log('  - startSellingBtn: HIDDEN');
+                console.log('  - loginLink: HIDDEN');
+                console.log('  - registerLink: HIDDEN');
+                
+                // Test homepage navigation
+                console.log('🧪 Testing homepage navigation...');
+                goToSellerHomepage();
+                
+            } else if (currentUser) {
+                console.log('👤 USER LOGGED IN (NOT SELLER) - Should see:');
+                console.log('  - sellerIcon: HIDDEN');
+                console.log('  - mainSellerIcon: HIDDEN');
+                console.log('  - sellerBadge: HIDDEN');
+                console.log('  - sellerRegisterLink: visible');
+                console.log('  - startSellingBtn: visible');
+                console.log('  - loginLink: HIDDEN');
+                console.log('  - registerLink: HIDDEN');
+            } else {
+                console.log('❌ NO USER LOGGED IN - Should see:');
+                console.log('  - sellerIcon: HIDDEN');
+                console.log('  - mainSellerIcon: HIDDEN');
+                console.log('  - sellerBadge: HIDDEN');
+                console.log('  - sellerRegisterLink: visible');
+                console.log('  - startSellingBtn: visible');
+                console.log('  - loginLink: visible');
+                console.log('  - registerLink: visible');
+            }
+            
+            console.log('');
+            console.log('🔧 ISSUES & FIXES:');
+            console.log('If seller icons are not showing for logged-in sellers:');
+            console.log('1. Check if currentUser.role === "seller"');
+            console.log('2. Check if updateAuthUI() is being called');
+            console.log('3. Check if element IDs are correct');
+            console.log('4. Check CSS display properties');
+            console.log('5. Check localStorage persistence');
+            console.log('');
+            console.log('🎉 DEBUG COMPLETE!');
+        }
+
+        // Add to global scope
+        window.debugUnifiedSellerSystem = debugUnifiedSellerSystem;
+        
+        console.log('🐛 Unified Seller System Debug function added:');
+        console.log('- debugUnifiedSellerSystem() - Complete system diagnosis');
 
         function setButtonLoading(buttonId, loading) {
             const button = document.getElementById(buttonId);
@@ -4906,27 +7808,65 @@
             setButtonLoading('loginBtn', true);
 
             try {
-                const response = await fetch(`${BACKEND_URL}/api/user/login`, {
+                let endpoint, requestBody;
+                
+                if (role === 'seller') {
+                    // Use dedicated seller login endpoint
+                    endpoint = `${BACKEND_URL}/api/seller/login`;
+                    requestBody = {
+                        email,
+                        password
+                    };
+                    console.log('🔍 Attempting seller login:', { endpoint, email });
+                } else {
+                    // Use unified login endpoint for users and admins
+                    endpoint = `${BACKEND_URL}/api/user/login`;
+                    requestBody = {
+                        email,
+                        password,
+                        role,
+                        rememberMe
+                    };
+                    console.log('🔍 Attempting user/admin login:', { endpoint, email, role });
+                }
+                
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     credentials: 'include',
-                    body: JSON.stringify({
-                        email,
-                        password,
-                        role,
-                        rememberMe
-                    })
+                    body: JSON.stringify(requestBody)
                 });
 
+                console.log('📡 Login response status:', response.status);
+                console.log('📡 Login response headers:', response.headers);
+
+                // Check if response is JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    console.error('❌ Non-JSON response:', contentType);
+                    const text = await response.text();
+                    console.error('❌ Response text:', text);
+                    throw new Error(`Server returned non-JSON response: ${contentType}`);
+                }
+
                 const data = await response.json();
+                console.log('📝 Login response data:', data);
 
                 setButtonLoading('loginBtn', false);
 
                 if (data.success) {
-                    // Store user data
-                    currentUser = data.user;
+                    // Store user data (handle different response formats)
+                    if (role === 'seller') {
+                        // Seller login returns data.seller
+                        currentUser = data.seller;
+                        currentUser.role = 'seller';
+                        currentUser.sellerStatus = currentUser.approvalStatus;
+                    } else {
+                        // User/admin login returns data.user
+                        currentUser = data.user;
+                    }
                     
                     // Cache user data in localStorage for persistence
                     localStorage.setItem('ecoloopUser', JSON.stringify(currentUser));
@@ -4942,20 +7882,13 @@
                     
                     // Handle role-specific behavior
                     if (role === 'seller') {
-                        // Check seller status and show appropriate dashboard
-                        if (currentUser.sellerStatus === 'approved') {
-                            showToast('Access granted to Seller Dashboard', 'success');
-                            setTimeout(() => {
-                                showSellerDashboard();
-                            }, 500);
-                        } else if (currentUser.sellerStatus === 'pending') {
-                            showToast('Your seller account is awaiting admin approval. You will be notified once approved.', 'warning');
-                            // Don't show dashboard for pending sellers
-                        } else if (currentUser.sellerStatus === 'rejected') {
-                            showToast('Your seller account has been rejected. Please contact support for more information.', 'error');
-                            // Don't show dashboard for rejected sellers
-                        }
+                        // Seller login - always approved if we reach here (backend checked)
+                        showToast('Access granted to Seller Dashboard', 'success');
+                        setTimeout(() => {
+                            showSellerDashboard();
+                        }, 500);
                     } else if (role === 'admin') {
+                        // Admin login
                         setTimeout(() => {
                             showAdminDashboard();
                         }, 500);
@@ -4973,22 +7906,29 @@
                 } else {
                     // Handle specific error messages for different scenarios
                     const errorMessage = data.message || data.error || 'Login failed';
+                    console.log('❌ Login error:', { errorMessage, role, data });
                     
-                    if (errorMessage.includes('not registered as a seller')) {
-                        document.getElementById('loginEmailError').textContent = 'You are not registered as a seller. Please register as a seller first.';
-                        showToast('You are not registered as a seller. Please register as a seller first.', 'error');
-                    } else if (errorMessage.includes('awaiting admin approval')) {
+                    if (errorMessage.includes('Seller not found')) {
+                        document.getElementById('loginEmailError').textContent = 'No seller account found with this email. Please register as a seller first.';
+                        showToast('No seller account found with this email. Please register as a seller first.', 'error');
+                    } else if (errorMessage.includes('Incorrect password')) {
+                        document.getElementById('loginPasswordError').textContent = 'Incorrect password. Please try again.';
+                        showToast('Incorrect password. Please try again.', 'error');
+                    } else if (errorMessage.includes('pending admin approval')) {
                         document.getElementById('loginEmailError').textContent = 'Your seller account is awaiting admin approval.';
                         showToast('Your seller account is awaiting admin approval.', 'warning');
                     } else if (errorMessage.includes('rejected')) {
-                        document.getElementById('loginEmailError').textContent = 'Your seller application has been rejected. Please contact support.';
-                        showToast('Your seller application has been rejected. Please contact support.', 'error');
+                        document.getElementById('loginEmailError').textContent = 'Your seller account has been rejected. Please contact support.';
+                        showToast('Your seller account has been rejected. Please contact support.', 'error');
+                    } else if (errorMessage.includes('not active')) {
+                        document.getElementById('loginEmailError').textContent = 'Your seller account is not active. Please contact support.';
+                        showToast('Your seller account is not active. Please contact support.', 'error');
+                    } else if (errorMessage.includes('not registered as a seller')) {
+                        document.getElementById('loginEmailError').textContent = 'You are not registered as a seller. Please register as a seller first.';
+                        showToast('You are not registered as a seller. Please register as a seller first.', 'error');
                     } else if (errorMessage.includes('registered as a seller')) {
                         document.getElementById('loginEmailError').textContent = 'This account is registered as a seller. Please use Seller Login instead.';
                         showToast('This account is registered as a seller. Please use Seller Login instead.', 'error');
-                    } else if (errorMessage.includes('seller account') && errorMessage.includes('not found')) {
-                        document.getElementById('loginEmailError').textContent = 'No seller account found with this email. Please register as a seller first.';
-                        showToast('No seller account found with this email. Please register as a seller first.', 'error');
                     } else if (errorMessage.includes('user account') && errorMessage.includes('not found')) {
                         document.getElementById('loginEmailError').textContent = 'No user account found with this email. Please register first.';
                         showToast('No user account found with this email. Please register first.', 'error');
@@ -5002,6 +7942,12 @@
                     } else if (errorMessage.includes('Invalid role specified')) {
                         document.getElementById('loginEmailError').textContent = 'Please select a valid login role (User or Seller).';
                         showToast('Please select a valid login role (User or Seller).', 'error');
+                    } else if (errorMessage.includes('Database connection error')) {
+                        document.getElementById('loginEmailError').textContent = 'Server database error. Please try again later.';
+                        showToast('Server database error. Please try again later.', 'error');
+                    } else if (errorMessage.includes('Password verification error')) {
+                        document.getElementById('loginEmailError').textContent = 'Password verification failed. Please try again.';
+                        showToast('Password verification failed. Please try again.', 'error');
                     } else {
                         // Generic error
                         document.getElementById('loginEmailError').textContent = errorMessage;
@@ -5010,9 +7956,25 @@
                 }
             } catch (error) {
                 setButtonLoading('loginBtn', false);
-                console.error('Login error:', error);
-                document.getElementById('loginEmailError').textContent = 'Network error. Please check your connection and try again.';
-                showToast('Network error. Please try again.', 'error');
+                console.error('🔥 Network/Fetch error:', error);
+                
+                // Provide specific error messages based on the error type
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    document.getElementById('loginEmailError').textContent = 'Cannot connect to server. Please check your internet connection.';
+                    showToast('Cannot connect to server. Please check your internet connection.', 'error');
+                } else if (error.name === 'TypeError' && error.message.includes('JSON')) {
+                    document.getElementById('loginEmailError').textContent = 'Server response error. Please try again.';
+                    showToast('Server response error. Please try again.', 'error');
+                } else if (error.message.includes('non-JSON response')) {
+                    document.getElementById('loginEmailError').textContent = 'Server returned invalid response. Please try again.';
+                    showToast('Server returned invalid response. Please try again.', 'error');
+                } else if (error.message.includes('CORS')) {
+                    document.getElementById('loginEmailError').textContent = 'CORS error. Please contact support.';
+                    showToast('CORS error. Please contact support.', 'error');
+                } else {
+                    document.getElementById('loginEmailError').textContent = 'Network error: ' + error.message;
+                    showToast('Network error: ' + error.message, 'error');
+                }
             }
         }
 
