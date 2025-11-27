@@ -4781,6 +4781,737 @@
                 padding: 20px 15px;
             }
         }
+
+        /* ============================================
+           NYUMBASURE STYLES - COMPLETELY ISOLATED
+           ============================================ */
+        
+        /* NyumbaSure Icon Container - Non-Intrusive */
+        .nyumbasure-icon-container {
+            position: absolute;
+            top: 50%;
+            right: -180px;
+            transform: translateY(-50%);
+            z-index: 25;
+            opacity: 0;
+            animation: nyumbasureFadeIn 1s ease-out 2s forwards;
+        }
+
+        .nyumbasure-icon-link {
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nyumbasure-icon-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px;
+            background: rgba(0, 100, 200, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 100, 200, 0.3);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nyumbasure-icon-wrapper:hover {
+            background: rgba(0, 100, 200, 0.2);
+            border-color: rgba(0, 100, 200, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 100, 200, 0.3);
+        }
+
+        .nyumbasure-icon {
+            font-size: 32px;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .nyumbasure-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: #0064c8;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        @keyframes nyumbasureFadeIn {
+            to {
+                opacity: 1;
+                right: -160px;
+            }
+        }
+
+        /* NyumbaSure Homepage Styles - Completely Isolated */
+        .nyumbasure-homepage {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            z-index: 10000;
+            overflow-y: auto;
+        }
+
+        .nyumbasure-homepage.active {
+            display: block;
+        }
+
+        .nyumbasure-hero {
+            background: linear-gradient(135deg, #0064c8 0%, #004494 100%);
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nyumbasure-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="nyumbasure-grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23nyumbasure-grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .nyumbasure-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nyumbasure-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .nyumbasure-hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .nyumbasure-cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #0064c8;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nyumbasure-cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nyumbasure-features {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .nyumbasure-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nyumbasure-section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 50px;
+        }
+
+        .nyumbasure-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .nyumbasure-feature-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+
+        .nyumbasure-feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: #0064c8;
+        }
+
+        .nyumbasure-feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .nyumbasure-feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .nyumbasure-feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .nyumbasure-search-section {
+            background: #f8f9fa;
+            padding: 60px 20px;
+        }
+
+        .nyumbasure-search-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nyumbasure-search-form {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nyumbasure-search-input {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .nyumbasure-search-select {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .nyumbasure-search-button {
+            padding: 15px 30px;
+            background: #0064c8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nyumbasure-search-button:hover {
+            background: #004494;
+        }
+
+        .nyumbasure-listings {
+            padding: 60px 20px;
+            background: white;
+        }
+
+        .nyumbasure-listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .nyumbasure-listing-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+
+        .nyumbasure-listing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .nyumbasure-listing-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .nyumbasure-listing-content {
+            padding: 20px;
+        }
+
+        .nyumbasure-listing-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0064c8;
+            margin-bottom: 10px;
+        }
+
+        .nyumbasure-listing-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .nyumbasure-listing-location {
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nyumbasure-listing-verified {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .nyumbasure-how-it-works {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .nyumbasure-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .nyumbasure-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .nyumbasure-step-number {
+            width: 60px;
+            height: 60px;
+            background: #0064c8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .nyumbasure-step-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .nyumbasure-step-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .nyumbasure-pricing {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .nyumbasure-pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .nyumbasure-pricing-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .nyumbasure-pricing-card.featured {
+            border-color: #0064c8;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 100, 200, 0.2);
+        }
+
+        .nyumbasure-pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .nyumbasure-pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .nyumbasure-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #0064c8;
+            margin-bottom: 10px;
+        }
+
+        .nyumbasure-price-period {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .nyumbasure-pricing-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .nyumbasure-pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .nyumbasure-pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f8f9fa;
+            color: #666;
+        }
+
+        .nyumbasure-pricing-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #0064c8;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .nyumbasure-pricing-button:hover {
+            background: #004494;
+            transform: translateY(-2px);
+        }
+
+        .nyumbasure-navigation {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10001;
+            display: flex;
+            gap: 10px;
+        }
+
+        .nyumbasure-nav-button {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #0064c8;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nyumbasure-nav-button:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* NyumbaSure Dashboard Styles - Completely Isolated */
+        .nyumbasure-dashboard {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #f8f9fa;
+            z-index: 10000;
+            overflow-y: auto;
+        }
+
+        .nyumbasure-dashboard.active {
+            display: block;
+        }
+
+        .nyumbasure-dashboard-header {
+            background: linear-gradient(135deg, #0064c8 0%, #004494 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nyumbasure-dashboard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nyumbasure-dashboard-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nyumbasure-dashboard-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nyumbasure-dashboard-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nyumbasure-dashboard-menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nyumbasure-dashboard-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .nyumbasure-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .nyumbasure-dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nyumbasure-dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .nyumbasure-dashboard-card h3 {
+            color: #0064c8;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .nyumbasure-dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .nyumbasure-stat-card {
+            background: linear-gradient(135deg, #0064c8 0%, #004494 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .nyumbasure-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .nyumbasure-stat-label {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .nyumbasure-upload-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .nyumbasure-form-group {
+            margin-bottom: 20px;
+        }
+
+        .nyumbasure-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .nyumbasure-form-group input,
+        .nyumbasure-form-group select,
+        .nyumbasure-form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .nyumbasure-form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .nyumbasure-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .nyumbasure-submit-button {
+            background: #0064c8;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nyumbasure-submit-button:hover {
+            background: #004494;
+            transform: translateY(-2px);
+        }
+
+        .nyumbasure-listings-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nyumbasure-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .nyumbasure-table th {
+            background: #0064c8;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .nyumbasure-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .nyumbasure-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .nyumbasure-status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .nyumbasure-status-verified {
+            background: #28a745;
+            color: white;
+        }
+
+        .nyumbasure-status-pending {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .nyumbasure-status-rejected {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Responsive Design for NyumbaSure */
+        @media (max-width: 768px) {
+            .nyumbasure-icon-container {
+                position: static;
+                transform: none;
+                text-align: center;
+                margin: 20px auto;
+                opacity: 1;
+                animation: none;
+            }
+
+            .nyumbasure-search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .nyumbasure-form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .nyumbasure-dashboard-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .nyumbasure-dashboard-nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nyumbasure-navigation {
+                position: static;
+                justify-content: center;
+                padding: 20px;
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 15px;
+                margin: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -4854,6 +5585,16 @@
                     <div class="btn-glow"></div>
                 </a>
             </div>
+        </div>
+        
+        <!-- NyumbaSure Icon - Non-Intrusive Addition -->
+        <div class="nyumbasure-icon-container">
+            <a href="#nyumba" class="nyumbasure-icon-link" onclick="showNyumbaSure(); return false;" title="NyumbaSure - Verified Affordable Housing">
+                <div class="nyumbasure-icon-wrapper">
+                    <span class="nyumbasure-icon">🏠</span>
+                    <span class="nyumbasure-text">NyumbaSure</span>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -11407,7 +12148,549 @@
             stopRealTimeUpdates();
         });
 
+        // ============================================
+        // NYUMBASURE JAVASCRIPT - COMPLETELY ISOLATED
+        // ============================================
+        
+        // NyumbaSure Navigation Functions
+        function showNyumbaSure() {
+            // Hide all main sections
+            document.querySelectorAll('section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Hide other overlays
+            document.getElementById('adminDashboard')?.classList.remove('active');
+            document.getElementById('sellerDashboard')?.classList.remove('active');
+            
+            // Show NyumbaSure homepage
+            document.getElementById('nyumbasure-homepage').classList.add('active');
+            document.getElementById('nyumbasure-dashboard').classList.remove('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function hideNyumbaSure() {
+            // Hide NyumbaSure sections
+            document.getElementById('nyumbasure-homepage').classList.remove('active');
+            document.getElementById('nyumbasure-dashboard').classList.remove('active');
+            
+            // Show all main sections
+            document.querySelectorAll('section').forEach(section => {
+                section.style.display = '';
+            });
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function showNyumbaSureDashboard() {
+            // Hide homepage
+            document.getElementById('nyumbasure-homepage').classList.remove('active');
+            
+            // Show dashboard
+            document.getElementById('nyumbasure-dashboard').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        function showNyumbaSureUpload() {
+            // Show dashboard and scroll to upload form
+            showNyumbaSureDashboard();
+            document.getElementById('nyumbasure-upload-form').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function showNyumbaSureListings() {
+            // Show dashboard and scroll to listings table
+            showNyumbaSureDashboard();
+            document.querySelector('.nyumbasure-listings-table').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // NyumbaSure Form Functions
+        function searchNyumbaSureProperties(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const searchTerm = formData.get('search') || event.target.querySelector('input[type="text"]').value;
+            const propertyType = formData.get('type') || event.target.querySelector('select').value;
+            
+            // Show loading state
+            const button = event.target.querySelector('.nyumbasure-search-button');
+            const originalText = button.textContent;
+            button.textContent = 'Searching...';
+            button.disabled = true;
+            
+            // Simulate search (in real implementation, this would call an API)
+            setTimeout(() => {
+                // Reset button
+                button.textContent = originalText;
+                button.disabled = false;
+                
+                // Show results notification
+                showNyumbaSureNotification(`Found 3 properties matching "${searchTerm}"`, 'success');
+                
+                // Scroll to listings
+                document.getElementById('nyumbasure-listings').scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        }
+        
+        function uploadNyumbaSureProperty(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const propertyData = {
+                title: formData.get('title') || document.getElementById('nyumbasure-property-title').value,
+                type: formData.get('type') || document.getElementById('nyumbasure-property-type').value,
+                price: formData.get('price') || document.getElementById('nyumbasure-property-price').value,
+                location: formData.get('location') || document.getElementById('nyumbasure-property-location').value,
+                description: formData.get('description') || document.getElementById('nyumbasure-property-description').value
+            };
+            
+            // Show loading state
+            const button = event.target.querySelector('.nyumbasure-submit-button');
+            const originalText = button.textContent;
+            button.textContent = 'Uploading...';
+            button.disabled = true;
+            
+            // Simulate upload (in real implementation, this would call an API)
+            setTimeout(() => {
+                // Reset button
+                button.textContent = originalText;
+                button.disabled = false;
+                
+                // Reset form
+                event.target.reset();
+                
+                // Show success notification
+                showNyumbaSureNotification('Property uploaded successfully! It will be reviewed within 24 hours.', 'success');
+                
+                // Scroll to listings
+                showNyumbaSureListings();
+            }, 2000);
+        }
+        
+        function showNyumbaSureNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `nyumbasure-notification nyumbasure-notification-${type}`;
+            notification.innerHTML = `
+                <div class="nyumbasure-notification-content">
+                    <span class="nyumbasure-notification-message">${message}</span>
+                    <button class="nyumbasure-notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                </div>
+            `;
+            
+            // Add styles if not already present
+            if (!document.querySelector('#nyumbasure-notification-styles')) {
+                const styles = document.createElement('style');
+                styles.id = 'nyumbasure-notification-styles';
+                styles.textContent = `
+                    .nyumbasure-notification {
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        z-index: 10002;
+                        min-width: 300px;
+                        max-width: 400px;
+                        background: white;
+                        border-radius: 10px;
+                        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+                        animation: nyumbasureSlideIn 0.3s ease-out;
+                    }
+                    
+                    .nyumbasure-notification-success {
+                        border-left: 4px solid #28a745;
+                    }
+                    
+                    .nyumbasure-notification-error {
+                        border-left: 4px solid #dc3545;
+                    }
+                    
+                    .nyumbasure-notification-info {
+                        border-left: 4px solid #0064c8;
+                    }
+                    
+                    .nyumbasure-notification-content {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 15px 20px;
+                    }
+                    
+                    .nyumbasure-notification-message {
+                        flex: 1;
+                        color: #333;
+                        font-weight: 500;
+                    }
+                    
+                    .nyumbasure-notification-close {
+                        background: none;
+                        border: none;
+                        font-size: 20px;
+                        cursor: pointer;
+                        color: #666;
+                        padding: 0;
+                        margin-left: 10px;
+                    }
+                    
+                    .nyumbasure-notification-close:hover {
+                        color: #333;
+                    }
+                    
+                    @keyframes nyumbasureSlideIn {
+                        from {
+                            transform: translateX(100%);
+                            opacity: 0;
+                        }
+                        to {
+                            transform: translateX(0);
+                            opacity: 1;
+                        }
+                    }
+                `;
+                document.head.appendChild(styles);
+            }
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+        
+        // Make NyumbaSure functions globally available
+        window.showNyumbaSure = showNyumbaSure;
+        window.hideNyumbaSure = hideNyumbaSure;
+        window.showNyumbaSureDashboard = showNyumbaSureDashboard;
+        window.showNyumbaSureUpload = showNyumbaSureUpload;
+        window.showNyumbaSureListings = showNyumbaSureListings;
+        window.searchNyumbaSureProperties = searchNyumbaSureProperties;
+        window.uploadNyumbaSureProperty = uploadNyumbaSureProperty;
+        window.showNyumbaSureNotification = showNyumbaSureNotification;
+
         </script>
         <script src="assets/js/productLayer.js"></script>
-</body>
+        
+        <!-- ============================================
+             NYUMBASURE HTML - COMPLETELY ISOLATED
+             ============================================ -->
+        
+        <!-- NyumbaSure Homepage -->
+        <div id="nyumbasure-homepage" class="nyumbasure-homepage">
+            <!-- Navigation -->
+            <div class="nyumbasure-navigation">
+                <a href="#" class="nyumbasure-nav-button" onclick="hideNyumbaSure(); return false;">← Back to EcoLoop</a>
+                <a href="#" class="nyumbasure-nav-button" onclick="showNyumbaSureDashboard(); return false;">Dashboard</a>
+            </div>
+            
+            <!-- Hero Section -->
+            <section class="nyumbasure-hero">
+                <div class="nyumbasure-hero-content">
+                    <h1>NyumbaSure</h1>
+                    <p>Verified Affordable Housing & Rentals Platform</p>
+                    <a href="#nyumbasure-listings" class="nyumbasure-cta-button">Explore Properties</a>
+                </div>
+            </section>
+            
+            <!-- Features Section -->
+            <section class="nyumbasure-features">
+                <div class="nyumbasure-container">
+                    <h2 class="nyumbasure-section-title">Why Choose NyumbaSure?</h2>
+                    <div class="nyumbasure-features-grid">
+                        <div class="nyumbasure-feature-card">
+                            <span class="nyumbasure-feature-icon">✓</span>
+                            <h3 class="nyumbasure-feature-title">Verified Listings</h3>
+                            <p class="nyumbasure-feature-description">All properties are thoroughly verified for authenticity and legality</p>
+                        </div>
+                        <div class="nyumbasure-feature-card">
+                            <span class="nyumbasure-feature-icon">💰</span>
+                            <h3 class="nyumbasure-feature-title">Affordable Prices</h3>
+                            <p class="nyumbasure-feature-description">Competitive pricing with no hidden fees or unexpected charges</p>
+                        </div>
+                        <div class="nyumbasure-feature-card">
+                            <span class="nyumbasure-feature-icon">🔒</span>
+                            <h3 class="nyumbasure-feature-title">Secure Transactions</h3>
+                            <p class="nyumbasure-feature-description">Safe payment processing and fraud protection for all users</p>
+                        </div>
+                        <div class="nyumbasure-feature-card">
+                            <span class="nyumbasure-feature-icon">🏠</span>
+                            <h3 class="nyumbasure-feature-title">Wide Selection</h3>
+                            <p class="nyumbasure-feature-description">Diverse property types from apartments to family homes</p>
+                        </div>
+                        <div class="nyumbasure-feature-card">
+                            <span class="nyumbasure-feature-icon">🤝</span>
+                            <h3 class="nyumbasure-feature-title">Direct Support</h3>
+                            <p class="nyumbasure-feature-description">Personalized assistance throughout your rental journey</p>
+                        </div>
+                        <div class="nyumbasure-feature-card">
+                            <span class="nyumbasure-feature-icon">📱</span>
+                            <h3 class="nyumbasure-feature-title">Easy to Use</h3>
+                            <p class="nyumbasure-feature-description">Intuitive platform designed for seamless property search</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Search Section -->
+            <section class="nyumbasure-search-section">
+                <div class="nyumbasure-search-container">
+                    <h2 class="nyumbasure-section-title">Find Your Perfect Home</h2>
+                    <form class="nyumbasure-search-form" onsubmit="searchNyumbaSureProperties(event)">
+                        <input type="text" class="nyumbasure-search-input" placeholder="Search by location, property type..." required>
+                        <select class="nyumbasure-search-select">
+                            <option value="">All Types</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="house">House</option>
+                            <option value="studio">Studio</option>
+                            <option value="office">Office Space</option>
+                        </select>
+                        <button type="submit" class="nyumbasure-search-button">Search</button>
+                    </form>
+                </div>
+            </section>
+            
+            <!-- Listings Section -->
+            <section class="nyumbasure-listings" id="nyumbasure-listings">
+                <div class="nyumbasure-container">
+                    <h2 class="nyumbasure-section-title">Featured Properties</h2>
+                    <div class="nyumbasure-listings-grid">
+                        <div class="nyumbasure-listing-card">
+                            <img src="https://via.placeholder.com/400x200/0064c8/ffffff?text=Modern+Apartment" alt="Property" class="nyumbasure-listing-image">
+                            <div class="nyumbasure-listing-content">
+                                <div class="nyumbasure-listing-price">KES 25,000/month</div>
+                                <h3 class="nyumbasure-listing-title">Modern 2BR Apartment</h3>
+                                <div class="nyumbasure-listing-location">📍 Kilimani, Nairobi</div>
+                                <span class="nyumbasure-listing-verified">✓ Verified</span>
+                            </div>
+                        </div>
+                        <div class="nyumbasure-listing-card">
+                            <img src="https://via.placeholder.com/400x200/0064c8/ffffff?text=Family+House" alt="Property" class="nyumbasure-listing-image">
+                            <div class="nyumbasure-listing-content">
+                                <div class="nyumbasure-listing-price">KES 45,000/month</div>
+                                <h3 class="nyumbasure-listing-title">Spacious 3BR Family House</h3>
+                                <div class="nyumbasure-listing-location">📍 Lavington, Nairobi</div>
+                                <span class="nyumbasure-listing-verified">✓ Verified</span>
+                            </div>
+                        </div>
+                        <div class="nyumbasure-listing-card">
+                            <img src="https://via.placeholder.com/400x200/0064c8/ffffff?text=Studio+Apartment" alt="Property" class="nyumbasure-listing-image">
+                            <div class="nyumbasure-listing-content">
+                                <div class="nyumbasure-listing-price">KES 15,000/month</div>
+                                <h3 class="nyumbasure-listing-title">Cozy Studio Apartment</h3>
+                                <div class="nyumbasure-listing-location">📍 Westlands, Nairobi</div>
+                                <span class="nyumbasure-listing-verified">✓ Verified</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- How It Works Section -->
+            <section class="nyumbasure-how-it-works">
+                <div class="nyumbasure-container">
+                    <h2 class="nyumbasure-section-title">How It Works</h2>
+                    <div class="nyumbasure-steps">
+                        <div class="nyumbasure-step">
+                            <div class="nyumbasure-step-number">1</div>
+                            <h3 class="nyumbasure-step-title">Search Properties</h3>
+                            <p class="nyumbasure-step-description">Browse our verified listings using advanced filters</p>
+                        </div>
+                        <div class="nyumbasure-step">
+                            <div class="nyumbasure-step-number">2</div>
+                            <h3 class="nyumbasure-step-title">Schedule Viewing</h3>
+                            <p class="nyumbasure-step-description">Book property viewings at your convenience</p>
+                        </div>
+                        <div class="nyumbasure-step">
+                            <div class="nyumbasure-step-number">3</div>
+                            <h3 class="nyumbasure-step-title">Apply Online</h3>
+                            <p class="nyumbasure-step-description">Submit your application securely online</p>
+                        </div>
+                        <div class="nyumbasure-step">
+                            <div class="nyumbasure-step-number">4</div>
+                            <h3 class="nyumbasure-step-title">Move In</h3>
+                            <p class="nyumbasure-step-description">Complete paperwork and get your keys</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Pricing Section -->
+            <section class="nyumbasure-pricing">
+                <div class="nyumbasure-container">
+                    <h2 class="nyumbasure-section-title">Transparent Pricing</h2>
+                    <div class="nyumbasure-pricing-grid">
+                        <div class="nyumbasure-pricing-card">
+                            <div class="nyumbasure-price">FREE</div>
+                            <div class="nyumbasure-price-period">For Tenants</div>
+                            <h3 class="nyumbasure-pricing-title">Basic Search</h3>
+                            <ul class="nyumbasure-pricing-features">
+                                <li>✓ Browse all listings</li>
+                                <li>✓ Property photos</li>
+                                <li>✓ Contact landlords</li>
+                                <li>✓ Save favorites</li>
+                            </ul>
+                            <a href="#" class="nyumbasure-pricing-button">Start Searching</a>
+                        </div>
+                        <div class="nyumbasure-pricing-card featured">
+                            <div class="nyumbasure-price">KES 500</div>
+                            <div class="nyumbasure-price-period">For Landlords</div>
+                            <h3 class="nyumbasure-pricing-title">Premium Listing</h3>
+                            <ul class="nyumbasure-pricing-features">
+                                <li>✓ Featured placement</li>
+                                <li>✓ Verified badge</li>
+                                <li>✓ Priority support</li>
+                                <li>✓ Analytics dashboard</li>
+                                <li>✓ Unlimited listings</li>
+                            </ul>
+                            <a href="#" class="nyumbasure-pricing-button">List Property</a>
+                        </div>
+                        <div class="nyumbasure-pricing-card">
+                            <div class="nyumbasure-price">KES 1,000</div>
+                            <div class="nyumbasure-price-period">For Agents</div>
+                            <h3 class="nyumbasure-pricing-title">Professional</h3>
+                            <ul class="nyumbasure-pricing-features">
+                                <li>✓ Multiple listings</li>
+                                <li>✓ Agent verification</li>
+                                <li>✓ Client management</li>
+                                <li>✓ Marketing tools</li>
+                            </ul>
+                            <a href="#" class="nyumbasure-pricing-button">Become Agent</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- NyumbaSure Dashboard -->
+        <div id="nyumbasure-dashboard" class="nyumbasure-dashboard">
+            <!-- Dashboard Header -->
+            <header class="nyumbasure-dashboard-header">
+                <nav class="nyumbasure-dashboard-nav">
+                    <div class="nyumbasure-dashboard-logo">
+                        <span>🏠</span>
+                        <span>NyumbaSure Dashboard</span>
+                    </div>
+                    <div class="nyumbasure-dashboard-menu">
+                        <a href="#" onclick="showNyumbaSure(); return false;">Homepage</a>
+                        <a href="#" onclick="showNyumbaSureUpload(); return false;">Upload Property</a>
+                        <a href="#" onclick="showNyumbaSureListings(); return false;">My Listings</a>
+                        <a href="#" onclick="hideNyumbaSure(); return false;">Back to EcoLoop</a>
+                    </div>
+                </nav>
+            </header>
+            
+            <!-- Dashboard Content -->
+            <main class="nyumbasure-dashboard-content">
+                <!-- Stats Section -->
+                <div class="nyumbasure-dashboard-stats">
+                    <div class="nyumbasure-stat-card">
+                        <div class="nyumbasure-stat-number">12</div>
+                        <div class="nyumbasure-stat-label">Active Listings</div>
+                    </div>
+                    <div class="nyumbasure-stat-card">
+                        <div class="nyumbasure-stat-number">48</div>
+                        <div class="nyumbasure-stat-label">Total Views</div>
+                    </div>
+                    <div class="nyumbasure-stat-card">
+                        <div class="nyumbasure-stat-number">5</div>
+                        <div class="nyumbasure-stat-label">Pending Applications</div>
+                    </div>
+                    <div class="nyumbasure-stat-card">
+                        <div class="nyumbasure-stat-number">8</div>
+                        <div class="nyumbasure-stat-label">Verified Properties</div>
+                    </div>
+                </div>
+                
+                <!-- Upload Property Form -->
+                <div class="nyumbasure-upload-form" id="nyumbasure-upload-form">
+                    <h2>Upload New Property</h2>
+                    <form onsubmit="uploadNyumbaSureProperty(event)">
+                        <div class="nyumbasure-form-row">
+                            <div class="nyumbasure-form-group">
+                                <label for="nyumbasure-property-title">Property Title</label>
+                                <input type="text" id="nyumbasure-property-title" required>
+                            </div>
+                            <div class="nyumbasure-form-group">
+                                <label for="nyumbasure-property-type">Property Type</label>
+                                <select id="nyumbasure-property-type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="apartment">Apartment</option>
+                                    <option value="house">House</option>
+                                    <option value="studio">Studio</option>
+                                    <option value="office">Office Space</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="nyumbasure-form-row">
+                            <div class="nyumbasure-form-group">
+                                <label for="nyumbasure-property-price">Monthly Rent (KES)</label>
+                                <input type="number" id="nyumbasure-property-price" required>
+                            </div>
+                            <div class="nyumbasure-form-group">
+                                <label for="nyumbasure-property-location">Location</label>
+                                <input type="text" id="nyumbasure-property-location" required>
+                            </div>
+                        </div>
+                        <div class="nyumbasure-form-group">
+                            <label for="nyumbasure-property-description">Description</label>
+                            <textarea id="nyumbasure-property-description" required></textarea>
+                        </div>
+                        <div class="nyumbasure-form-group">
+                            <label for="nyumbasure-property-images">Property Images</label>
+                            <input type="file" id="nyumbasure-property-images" multiple accept="image/*">
+                        </div>
+                        <button type="submit" class="nyumbasure-submit-button">Upload Property</button>
+                    </form>
+                </div>
+                
+                <!-- Listings Table -->
+                <div class="nyumbasure-listings-table">
+                    <table class="nyumbasure-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Price</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Modern 2BR Apartment</td>
+                                <td>Apartment</td>
+                                <td>KES 25,000</td>
+                                <td>Kilimani</td>
+                                <td><span class="nyumbasure-status-badge nyumbasure-status-verified">Verified</span></td>
+                                <td><button class="nyumbasure-submit-button">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Spacious 3BR House</td>
+                                <td>House</td>
+                                <td>KES 45,000</td>
+                                <td>Lavington</td>
+                                <td><span class="nyumbasure-status-badge nyumbasure-status-pending">Pending</span></td>
+                                <td><button class="nyumbasure-submit-button">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Cozy Studio</td>
+                                <td>Studio</td>
+                                <td>KES 15,000</td>
+                                <td>Westlands</td>
+                                <td><span class="nyumbasure-status-badge nyumbasure-status-verified">Verified</span></td>
+                                <td><button class="nyumbasure-submit-button">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </body>
 </html>
