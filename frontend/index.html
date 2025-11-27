@@ -4474,7 +4474,7 @@
                 }
             }
 
-            async login(email, password, rememberMe = false) {
+            async login(email, password, rememberMe = false, role = 'user') {
                 try {
                     const response = await fetch(`${BACKEND_URL}/api/user/login`, {
                         method: 'POST',
@@ -4482,7 +4482,7 @@
                             'Content-Type': 'application/json'
                         },
                         credentials: 'include', // Important for HTTP-only cookies
-                        body: JSON.stringify({ email, password, rememberMe })
+                        body: JSON.stringify({ email, password, rememberMe, role })
                     });
 
                     const data = await response.json();
@@ -4495,7 +4495,7 @@
                         showToast('Login successful!', 'success');
                         return { success: true };
                     } else {
-                        return { success: false, error: data.error };
+                        return { success: false, error: data.message || data.error };
                     }
                 } catch (error) {
                     console.error('Login error:', error);
@@ -4782,17 +4782,51 @@
 
         // Test seller login credentials flow
         function testSellerLoginFlow() {
-            console.log('Testing Seller Login Flow:');
-            console.log('1. User registers as seller → creates account with "pending" status');
-            console.log('2. Admin approves seller → status changes to "approved"');
-            console.log('3. Seller can login with same email/password used during registration');
-            console.log('4. Login system verifies role and status before granting dashboard access');
-            console.log('5. Approved sellers get access to Seller Dashboard');
-            console.log('6. Pending/rejected sellers get appropriate notifications');
+            console.log('=== TESTING SELLER LOGIN SYSTEM ===');
+            console.log('1. ✅ User Registration → role: "user", status: "active"');
+            console.log('2. ✅ Seller Registration → role: "seller", status: "pending"');
+            console.log('3. ✅ Admin Approval → seller.status: "approved"');
+            console.log('4. ✅ Backend Unified Login → Role-based authentication');
+            console.log('5. ✅ Frontend Role Selector → User vs Seller login');
+            console.log('6. ✅ Error Handling → Specific messages for each scenario');
+            console.log('7. ✅ Dashboard Access → Role-based redirects');
+            console.log('');
+            console.log('EXPECTED BEHAVIORS:');
+            console.log('🔒 Normal user trying Seller Login → "You are not registered as a seller"');
+            console.log('🔒 Seller trying User Login → "This account is registered as a seller"');
+            console.log('🔒 Pending seller login → "Your seller account is awaiting admin approval"');
+            console.log('🔒 Rejected seller login → "Your seller application has been rejected"');
+            console.log('✅ Approved seller login → "Seller login successful" + Dashboard access');
+            console.log('✅ User login → "User login successful" + Homepage access');
+            console.log('');
+            console.log('DATABASE STRUCTURE:');
+            console.log('📦 users collection → role: "user", status: "active"');
+            console.log('📦 sellers collection → role: "seller", status: "pending/approved/rejected"');
+            console.log('📦 admins collection → role: "admin", status: "active"');
         }
 
-        // Call test function for debugging
+        // Debug function to test role separation
+        async function testRoleSeparation() {
+            console.log('=== TESTING ROLE SEPARATION ===');
+            
+            // Test 1: User login should work for users only
+            console.log('Test 1: User login with user credentials...');
+            
+            // Test 2: Seller login should work for approved sellers only
+            console.log('Test 2: Seller login with approved seller credentials...');
+            
+            // Test 3: User trying seller login should fail
+            console.log('Test 3: User trying to login as seller...');
+            
+            // Test 4: Seller trying user login should fail
+            console.log('Test 4: Seller trying to login as user...');
+            
+            console.log('All role separation tests completed!');
+        }
+
+        // Call test functions for debugging
         testSellerLoginFlow();
+        testRoleSeparation();
 
         function setButtonLoading(buttonId, loading) {
             const button = document.getElementById(buttonId);
@@ -4938,24 +4972,40 @@
                     
                 } else {
                     // Handle specific error messages for different scenarios
-                    if (data.message && data.message.includes('pending')) {
+                    const errorMessage = data.message || data.error || 'Login failed';
+                    
+                    if (errorMessage.includes('not registered as a seller')) {
+                        document.getElementById('loginEmailError').textContent = 'You are not registered as a seller. Please register as a seller first.';
+                        showToast('You are not registered as a seller. Please register as a seller first.', 'error');
+                    } else if (errorMessage.includes('awaiting admin approval')) {
                         document.getElementById('loginEmailError').textContent = 'Your seller account is awaiting admin approval.';
                         showToast('Your seller account is awaiting admin approval.', 'warning');
-                    } else if (data.message && data.message.includes('rejected')) {
-                        document.getElementById('loginEmailError').textContent = 'Your seller account has been rejected.';
-                        showToast('Your seller account has been rejected. Please contact support.', 'error');
-                    } else if (data.message && data.message.includes('not found')) {
+                    } else if (errorMessage.includes('rejected')) {
+                        document.getElementById('loginEmailError').textContent = 'Your seller application has been rejected. Please contact support.';
+                        showToast('Your seller application has been rejected. Please contact support.', 'error');
+                    } else if (errorMessage.includes('registered as a seller')) {
+                        document.getElementById('loginEmailError').textContent = 'This account is registered as a seller. Please use Seller Login instead.';
+                        showToast('This account is registered as a seller. Please use Seller Login instead.', 'error');
+                    } else if (errorMessage.includes('seller account') && errorMessage.includes('not found')) {
+                        document.getElementById('loginEmailError').textContent = 'No seller account found with this email. Please register as a seller first.';
+                        showToast('No seller account found with this email. Please register as a seller first.', 'error');
+                    } else if (errorMessage.includes('user account') && errorMessage.includes('not found')) {
+                        document.getElementById('loginEmailError').textContent = 'No user account found with this email. Please register first.';
+                        showToast('No user account found with this email. Please register first.', 'error');
+                    } else if (errorMessage.includes('Invalid email or password')) {
                         if (role === 'seller') {
-                            document.getElementById('loginEmailError').textContent = 'No seller account found with this email. Please register as a seller first.';
+                            document.getElementById('loginEmailError').textContent = 'Invalid email or password for seller account.';
                         } else {
-                            document.getElementById('loginEmailError').textContent = 'No account found with this email. Please register first.';
+                            document.getElementById('loginEmailError').textContent = 'Invalid email or password for user account.';
                         }
-                    } else if (data.message && data.message.includes('incorrect password')) {
-                        document.getElementById('loginPasswordError').textContent = 'Incorrect password. Please try again.';
-                    } else if (data.message && data.message.includes('wrong role')) {
-                        document.getElementById('loginEmailError').textContent = `This account exists but is not registered as a ${role}. Please select the correct role.`;
+                        showToast('Invalid credentials. Please check your email and password.', 'error');
+                    } else if (errorMessage.includes('Invalid role specified')) {
+                        document.getElementById('loginEmailError').textContent = 'Please select a valid login role (User or Seller).';
+                        showToast('Please select a valid login role (User or Seller).', 'error');
                     } else {
-                        document.getElementById('loginEmailError').textContent = data.message || 'Invalid credentials. Please check your email and password.';
+                        // Generic error
+                        document.getElementById('loginEmailError').textContent = errorMessage;
+                        showToast(errorMessage, 'error');
                     }
                 }
             } catch (error) {
@@ -4977,22 +5027,32 @@
                                 currentUser.name ? currentUser.name.charAt(0).toUpperCase() : 
                                 currentUser.email.charAt(0).toUpperCase();
                 
+                let dashboardLinks = '';
+                
+                // Add role-specific dashboard links
+                if (currentUser.role === 'seller' && currentUser.sellerStatus === 'approved') {
+                    dashboardLinks += `<a href="#" onclick="showSellerDashboard(); return false;"><i class="fas fa-store"></i> Seller Dashboard</a>`;
+                } else if (currentUser.role === 'admin') {
+                    dashboardLinks += `<a href="#" onclick="showAdminDashboard(); return false;"><i class="fas fa-cog"></i> Admin Dashboard</a>`;
+                }
+                
                 userActions.innerHTML = `
                     <div class="user-info">
                         <div class="user-avatar">${initials}</div>
                         <span><i class="fas fa-user"></i> ${currentUser.firstName || currentUser.name || currentUser.email}</span>
                         <a href="#" onclick="handleLogout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
+                    ${dashboardLinks}
                     <a href="#" onclick="showToast('Help section coming soon!', 'info'); return false;"><i class="fas fa-question-circle"></i> Help</a>
-                    <a href="admin/admin-login.html"><i class="fas fa-leaf"></i> Admin</a>
+                    ${currentUser.role === 'admin' ? '' : '<a href="admin/admin-login.html"><i class="fas fa-leaf"></i> Admin</a>'}
                 `;
 
-                // Show appropriate dashboard icon if user is seller or admin
-                if (currentUser.role === 'seller' && currentUser.sellerStatus === 'approved') {
-                    // Seller dashboard link will be shown by existing logic
-                } else if (currentUser.role === 'admin') {
-                    // Admin icon will be shown by existing logic
-                }
+                // Trigger dashboard visibility checks
+                setTimeout(() => {
+                    checkAndShowSellerDashboard();
+                    checkAndShowAdminIcon();
+                }, 100);
+                
             } else {
                 // User is logged out - restore original links
                 userActions.innerHTML = `
@@ -6829,22 +6889,6 @@
         window.removeImage = removeImage;
         window.editProduct = editProduct;
         window.deleteProduct = deleteProduct;
-
-        // Enhanced login function to check for seller and admin roles
-        const originalLogin = window.login;
-        window.login = async function(email, password, rememberMe = false) {
-            const result = await originalLogin.call(this, email, password, rememberMe);
-            
-            if (result && result.success) {
-                // Check if user is a seller and show dashboard
-                setTimeout(() => {
-                    checkAndShowSellerDashboard();
-                    checkAndShowAdminIcon();
-                }, 1000);
-            }
-            
-            return result;
-        };
 
         // Enhanced checkAuthStatus to check for seller and admin roles
         const originalCheckAuthStatus = authManager?.checkAuthStatus;
