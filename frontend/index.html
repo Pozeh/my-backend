@@ -6055,11 +6055,11 @@
         }
 
         /* ============================================
-           FUTURISTIC FOOTER ANIMATIONS
+           ATOMIC SPACE SIMULATION FOOTER ANIMATIONS
            ============================================ */
         
-        /* Footer Futuristic Background Container */
-        .footer-futuristic-background {
+        /* Atomic Space Background Container */
+        .atomic-space-background {
             position: absolute;
             top: 0;
             left: 0;
@@ -6068,290 +6068,187 @@
             pointer-events: none;
             z-index: 1;
             overflow: hidden;
+            background: radial-gradient(ellipse at center, 
+                rgba(0, 10, 30, 0.9) 0%, 
+                rgba(0, 5, 20, 0.95) 40%, 
+                rgba(0, 0, 10, 1) 100%);
         }
         
-        /* Footer Holographic Streams */
-        .footer-holographic-streams {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.03) 50%, transparent 70%),
-                linear-gradient(-45deg, transparent 30%, rgba(255, 0, 255, 0.02) 50%, transparent 70%),
-                linear-gradient(135deg, transparent 30%, rgba(0, 255, 255, 0.02) 50%, transparent 70%);
-            background-size: 200% 200%, 150% 150%, 180% 180%;
-            animation: footerHolographicFlow 15s ease-in-out infinite;
-        }
-        
-        /* Footer Neon Particle Waves */
-        .footer-neon-particle-waves {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.08) 0%, transparent 25%),
-                radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.05) 0%, transparent 30%);
-            background-size: 100% 100%, 120% 120%, 150% 150%;
-            animation: footerNeonWave 12s ease-in-out infinite;
-        }
-        
-        /* Footer Cybernetic Grid */
-        .footer-cybernetic-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(90deg, transparent 49%, rgba(0, 255, 255, 0.02) 50%, transparent 51%),
-                linear-gradient(0deg, transparent 49%, rgba(255, 0, 255, 0.02) 50%, transparent 51%);
-            background-size: 50px 50px, 50px 50px;
-            animation: footerGridPulse 8s ease-in-out infinite;
-        }
-        
-        /* Footer Light Streaks */
-        .footer-light-streaks {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%),
-                linear-gradient(-45deg, transparent 30%, rgba(0, 255, 255, 0.03) 50%, transparent 70%),
-                linear-gradient(90deg, transparent 35%, rgba(255, 0, 255, 0.02) 50%, transparent 65%);
-            background-size: 300% 100%, 250% 100%, 200% 100%;
-            animation: footerLightStreakFlow 20s linear infinite;
-        }
-        
-        /* Footer Particles Container */
-        .footer-particles-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
-        }
-        
-        /* Footer Energy Waves */
-        .footer-energy-waves {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(ellipse at 30% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 40%),
-                radial-gradient(ellipse at 70% 80%, rgba(255, 0, 255, 0.08) 0%, transparent 35%),
-                radial-gradient(ellipse at 50% 50%, rgba(0, 255, 255, 0.05) 0%, transparent 50%);
-            background-size: 100% 100%, 120% 120%, 150% 150%;
-            animation: footerEnergyWave 10s ease-in-out infinite;
-        }
-        
-        /* Footer Holographic Overlay */
-        .footer-holographic-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.02) 50%, transparent 70%),
-                linear-gradient(-45deg, transparent 40%, rgba(255, 0, 255, 0.01) 50%, transparent 60%);
-            background-size: 200% 200%, 180% 180%;
-            animation: footerHolographicPulse 18s ease-in-out infinite;
-        }
-        
-        /* Footer Neon Grid */
-        .footer-neon-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(90deg, transparent 48%, rgba(0, 255, 255, 0.015) 50%, transparent 52%),
-                linear-gradient(0deg, transparent 48%, rgba(255, 0, 255, 0.015) 50%, transparent 52%),
-                linear-gradient(45deg, transparent 48%, rgba(0, 255, 255, 0.01) 50%, transparent 52%),
-                linear-gradient(-45deg, transparent 48%, rgba(255, 0, 255, 0.01) 50%, transparent 52%);
-            background-size: 60px 60px, 60px 60px, 80px 80px, 80px 80px;
-            animation: footerNeonGridPulse 12s ease-in-out infinite;
-        }
-        
-        /* Footer Canvas */
-        #footerBackgroundCanvas {
+        /* Atomic Space Canvas */
+        #atomicSpaceCanvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            opacity: 0.6;
+            opacity: 0.8;
         }
         
-        /* Footer Animation Keyframes */
-        @keyframes footerHolographicFlow {
-            0%, 100% { 
-                background-position: 0% 50%, 0% 50%, 0% 50%;
-                opacity: 0.3;
-            }
-            25% { 
-                background-position: 100% 50%, 50% 0%, 75% 100%;
-                opacity: 0.5;
-            }
-            50% { 
-                background-position: 50% 100%, 100% 50%, 0% 0%;
-                opacity: 0.4;
-            }
-            75% { 
-                background-position: 75% 0%, 0% 100%, 50% 50%;
-                opacity: 0.6;
-            }
-        }
-        
-        @keyframes footerNeonWave {
-            0%, 100% { 
-                background-position: 0% 0%, 100% 100%, 50% 50%;
-                opacity: 0.4;
-                transform: scale(1);
-            }
-            33% { 
-                background-position: 50% 50%, 0% 0%, 100% 100%;
-                opacity: 0.6;
-                transform: scale(1.05);
-            }
-            66% { 
-                background-position: 100% 100%, 50% 50%, 0% 0%;
-                opacity: 0.5;
-                transform: scale(0.95);
-            }
-        }
-        
-        @keyframes footerGridPulse {
-            0%, 100% { 
-                opacity: 0.2;
-                transform: scale(1);
-            }
-            50% { 
-                opacity: 0.4;
-                transform: scale(1.02);
-            }
-        }
-        
-        @keyframes footerLightStreakFlow {
-            0% { 
-                background-position: -300% 0%, -250% 0%, -200% 0%;
-                opacity: 0.3;
-            }
-            100% { 
-                background-position: 300% 0%, 250% 0%, 200% 0%;
-                opacity: 0.5;
-            }
-        }
-        
-        @keyframes footerEnergyWave {
-            0%, 100% { 
-                background-position: 0% 0%, 100% 100%, 50% 50%;
-                opacity: 0.3;
-                transform: scale(1);
-            }
-            25% { 
-                background-position: 50% 0%, 0% 100%, 100% 50%;
-                opacity: 0.5;
-                transform: scale(1.03);
-            }
-            50% { 
-                background-position: 100% 50%, 50% 0%, 0% 100%;
-                opacity: 0.4;
-                transform: scale(0.97);
-            }
-            75% { 
-                background-position: 50% 100%, 100% 50%, 0% 0%;
-                opacity: 0.6;
-                transform: scale(1.01);
-            }
-        }
-        
-        @keyframes footerHolographicPulse {
-            0%, 100% { 
-                background-position: 0% 50%, 0% 50%;
-                opacity: 0.2;
-            }
-            50% { 
-                background-position: 100% 50%, 100% 50%;
-                opacity: 0.4;
-            }
-        }
-        
-        @keyframes footerNeonGridPulse {
-            0%, 100% { 
-                opacity: 0.15;
-                transform: scale(1);
-            }
-            25% { 
-                opacity: 0.25;
-                transform: scale(1.01);
-            }
-            50% { 
-                opacity: 0.2;
-                transform: scale(1);
-            }
-            75% { 
-                opacity: 0.3;
-                transform: scale(0.99);
-            }
-        }
-        
-        /* Footer particles animation */
-        .footer-particles-container::before,
-        .footer-particles-container::after {
-            content: '';
+        /* Atomic Particles Layer */
+        .atomic-particles-layer {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.8) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: footerParticleFloat 8s ease-in-out infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(100, 200, 255, 0.3) 1px, transparent 1px),
+                radial-gradient(circle at 60% 70%, rgba(255, 100, 200, 0.3) 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, rgba(200, 255, 100, 0.3) 1px, transparent 1px),
+                radial-gradient(circle at 40% 80%, rgba(255, 200, 100, 0.3) 1px, transparent 1px);
+            background-size: 50px 50px, 60px 60px, 40px 40px, 55px 55px;
+            animation: atomicParticleFloat 25s infinite linear;
         }
         
-        .footer-particles-container::before {
-            top: 20%;
-            left: 20%;
-            animation-delay: 0s;
+        /* Molecular Connections Layer */
+        .molecular-connections-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: 
+                linear-gradient(45deg, 
+                    transparent 30%, 
+                    rgba(100, 200, 255, 0.1) 50%, 
+                    transparent 70%),
+                linear-gradient(-45deg, 
+                    transparent 40%, 
+                    rgba(255, 100, 200, 0.1) 60%, 
+                    transparent 80%),
+                linear-gradient(90deg, 
+                    transparent 20%, 
+                    rgba(200, 255, 100, 0.05) 50%, 
+                    transparent 80%);
+            background-size: 200px 200px, 150px 150px, 300px 300px;
+            animation: molecularConnectionPulse 20s infinite ease-in-out;
         }
         
-        .footer-particles-container::after {
-            top: 70%;
-            right: 30%;
-            animation-delay: 3s;
+        /* Orbital Nodes Layer */
+        .orbital-nodes-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(100, 200, 255, 0.4) 3px, transparent 8px),
+                radial-gradient(circle at 75% 25%, rgba(255, 100, 200, 0.4) 3px, transparent 8px),
+                radial-gradient(circle at 25% 75%, rgba(200, 255, 100, 0.4) 3px, transparent 8px),
+                radial-gradient(circle at 75% 75%, rgba(255, 200, 100, 0.4) 3px, transparent 8px),
+                radial-gradient(circle at 50% 50%, rgba(150, 150, 255, 0.3) 5px, transparent 15px);
+            background-size: 100px 100px, 120px 120px, 80px 80px, 110px 110px, 200px 200px;
+            animation: orbitalNodeRotation 30s infinite linear;
         }
         
-        @keyframes footerParticleFloat {
-            0%, 100% { 
-                transform: translate(0, 0) scale(1);
+        /* Cosmic Glow Layer */
+        .cosmic-glow-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: 
+                radial-gradient(ellipse at 30% 40%, rgba(100, 200, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(255, 100, 200, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 30%, rgba(200, 255, 100, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 70%, rgba(255, 200, 100, 0.15) 0%, transparent 40%);
+            animation: cosmicGlowPulse 15s infinite ease-in-out;
+        }
+        
+        /* Atomic Space Animation Keyframes */
+        @keyframes atomicParticleFloat {
+            0% {
+                background-position: 0% 0%, 100% 100%, 50% 0%, 0% 100%;
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                background-position: 100% 0%, 0% 100%, 100% 100%, 50% 50%;
+                transform: rotate(90deg) scale(1.1);
+            }
+            50% {
+                background-position: 100% 100%, 0% 0%, 0% 100%, 100% 0%;
+                transform: rotate(180deg) scale(1);
+            }
+            75% {
+                background-position: 0% 100%, 100% 0%, 50% 50%, 0% 0%;
+                transform: rotate(270deg) scale(0.9);
+            }
+            100% {
+                background-position: 0% 0%, 100% 100%, 50% 0%, 0% 100%;
+                transform: rotate(360deg) scale(1);
+            }
+        }
+        
+        /* Molecular Connection Animation */
+        @keyframes molecularConnectionPulse {
+            0%, 100% {
                 opacity: 0.3;
+                transform: scale(1) rotate(0deg);
             }
-            25% { 
-                transform: translate(30px, -20px) scale(1.2);
+            25% {
                 opacity: 0.6;
+                transform: scale(1.05) rotate(90deg);
             }
-            50% { 
-                transform: translate(-20px, -40px) scale(0.8);
+            50% {
                 opacity: 0.4;
+                transform: scale(0.95) rotate(180deg);
             }
-            75% { 
-                transform: translate(-30px, 20px) scale(1.1);
+            75% {
                 opacity: 0.7;
+                transform: scale(1.02) rotate(270deg);
             }
         }
         
-        /* Ensure footer content stays above animations */
+        /* Orbital Node Rotation Animation */
+        @keyframes orbitalNodeRotation {
+            0% {
+                background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%, 50% 50%;
+                transform: rotate(0deg);
+            }
+            20% {
+                background-position: 50% 50%, 50% 100%, 100% 50%, 0% 50%, 75% 25%;
+                transform: rotate(72deg);
+            }
+            40% {
+                background-position: 100% 100%, 0% 100%, 100% 0%, 0% 0%, 25% 75%;
+                transform: rotate(144deg);
+            }
+            60% {
+                background-position: 50% 100%, 50% 0%, 0% 50%, 100% 50%, 75% 75%;
+                transform: rotate(216deg);
+            }
+            80% {
+                background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%, 25% 25%;
+                transform: rotate(288deg);
+            }
+            100% {
+                background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%, 50% 50%;
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Cosmic Glow Pulse Animation */
+        @keyframes cosmicGlowPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            33% {
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+            66% {
+                opacity: 0.4;
+                transform: scale(0.9);
+            }
+        }
+        /* Footer content positioning */
         .footer .container {
             position: relative;
             z-index: 10;
@@ -6372,46 +6269,52 @@
             z-index: 10;
         }
         
-        /* Footer animation optimization */
-        .footer-futuristic-background,
-        .footer-futuristic-background * {
+        /* Atomic space animation optimization */
+        .atomic-space-background,
+        .atomic-space-background * {
             animation-play-state: running !important;
             transform: translateZ(0);
             will-change: transform, opacity;
             backface-visibility: hidden;
         }
         
-        /* Responsive footer animations */
+        /* Responsive atomic space animations */
         @media (max-width: 768px) {
-            .footer-futuristic-background {
+            .atomic-space-background {
                 opacity: 0.7;
             }
             
-            .footer-holographic-streams,
-            .footer-neon-particle-waves,
-            .footer-energy-waves {
-                animation-duration: 20s;
+            .atomic-particles-layer {
+                animation-duration: 30s;
+                background-size: 40px 40px, 50px 50px, 35px 35px, 45px 45px;
             }
             
-            .footer-light-streaks {
+            .molecular-connections-layer {
                 animation-duration: 25s;
+                background-size: 150px 150px, 120px 120px, 250px 250px;
             }
             
-            .footer-cybernetic-grid,
-            .footer-neon-grid {
-                background-size: 40px 40px, 40px 40px, 60px 60px, 60px 60px;
+            .orbital-nodes-layer {
+                animation-duration: 35s;
+                background-size: 80px 80px, 100px 100px, 70px 70px, 90px 90px, 150px 150px;
+            }
+            
+            .cosmic-glow-layer {
+                animation-duration: 20s;
             }
         }
         
         @media (max-width: 480px) {
-            .footer-futuristic-background {
+            .atomic-space-background {
                 opacity: 0.5;
             }
             
-            .footer-particles-container::before,
-            .footer-particles-container::after {
-                width: 3px;
-                height: 3px;
+            .atomic-particles-layer {
+                background-size: 30px 30px, 35px 35px, 25px 25px, 32px 32px;
+            }
+            
+            .orbital-nodes-layer {
+                background-size: 60px 60px, 70px 70px, 50px 50px, 65px 65px, 120px 120px;
             }
         }
     </style>
@@ -6558,17 +6461,13 @@
         <!-- Kenyan Flag Creative Background Elements -->
         <div class="kenyan-texture"></div>
         
-        <!-- Futuristic Footer Background Elements -->
-        <div class="footer-futuristic-background">
-            <div class="footer-holographic-streams"></div>
-            <div class="footer-neon-particle-waves"></div>
-            <div class="footer-cybernetic-grid"></div>
-            <div class="footer-light-streaks"></div>
-            <div class="footer-particles-container"></div>
-            <div class="footer-energy-waves"></div>
-            <div class="footer-holographic-overlay"></div>
-            <div class="footer-neon-grid"></div>
-            <canvas id="footerBackgroundCanvas" aria-hidden="true"></canvas>
+        <!-- Atomic Space Simulation Background Elements -->
+        <div class="atomic-space-background">
+            <canvas id="atomicSpaceCanvas" aria-hidden="true"></canvas>
+            <div class="atomic-particles-layer"></div>
+            <div class="molecular-connections-layer"></div>
+            <div class="orbital-nodes-layer"></div>
+            <div class="cosmic-glow-layer"></div>
         </div>
         
         <div class="container">
@@ -8098,11 +7997,281 @@
                 initializeBackgroundCanvas(rightCanvas, 'right');
             }
             
-            // Initialize footer background canvas
-            const footerCanvas = document.getElementById('footerBackgroundCanvas');
-            if (footerCanvas) {
-                initializeBackgroundCanvas(footerCanvas, 'footer');
+            // Initialize atomic space canvas
+            const atomicCanvas = document.getElementById('atomicSpaceCanvas');
+            if (atomicCanvas) {
+                initializeAtomicSpaceCanvas(atomicCanvas);
             }
+        }
+
+        // Atomic Space Simulation Function
+        function initializeAtomicSpaceCanvas(canvas) {
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            function resizeCanvas() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Atomic particles system
+            const atoms = [];
+            const molecules = [];
+            const connections = [];
+            const maxAtoms = 25;
+            const maxMolecules = 15;
+            const maxConnections = 30;
+            
+            // Atom class
+            class Atom {
+                constructor() {
+                    this.reset();
+                }
+                
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.radius = Math.random() * 3 + 2;
+                    this.electrons = Math.floor(Math.random() * 4) + 1;
+                    this.color = this.getRandomColor();
+                    this.glowIntensity = Math.random() * 0.5 + 0.5;
+                    this.orbitRadius = this.radius + 5 + Math.random() * 10;
+                    this.orbitSpeed = (Math.random() * 0.02 + 0.01) * (Math.random() > 0.5 ? 1 : -1);
+                    this.orbitAngle = Math.random() * Math.PI * 2;
+                }
+                
+                getRandomColor() {
+                    const colors = [
+                        'rgba(100, 200, 255, ',  // Cyan
+                        'rgba(255, 100, 200, ',  // Magenta  
+                        'rgba(200, 255, 100, ',  // Green
+                        'rgba(255, 200, 100, ',  // Orange
+                        'rgba(150, 150, 255, '   // Purple
+                    ];
+                    return colors[Math.floor(Math.random() * colors.length)];
+                }
+                
+                update() {
+                    // Movement
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    // Boundary collision with bounce
+                    if (this.x <= this.radius || this.x >= canvas.width - this.radius) {
+                        this.vx *= -0.8;
+                        this.x = Math.max(this.radius, Math.min(canvas.width - this.radius, this.x));
+                    }
+                    if (this.y <= this.radius || this.y >= canvas.height - this.radius) {
+                        this.vy *= -0.8;
+                        this.y = Math.max(this.radius, Math.min(canvas.height - this.radius, this.y));
+                    }
+                    
+                    // Add slight random movement
+                    this.vx += (Math.random() - 0.5) * 0.01;
+                    this.vy += (Math.random() - 0.5) * 0.01;
+                    
+                    // Speed limit
+                    const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                    if (speed > 1) {
+                        this.vx = (this.vx / speed) * 1;
+                        this.vy = (this.vy / speed) * 1;
+                    }
+                    
+                    // Update orbit
+                    this.orbitAngle += this.orbitSpeed;
+                    
+                    // Update glow
+                    this.glowIntensity = 0.5 + Math.sin(Date.now() * 0.001 + this.x) * 0.3;
+                }
+                
+                draw() {
+                    // Draw nucleus
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color + '0.8)';
+                    ctx.fill();
+                    
+                    // Draw glow
+                    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius * 3);
+                    gradient.addColorStop(0, this.color + (this.glowIntensity * 0.6) + ')');
+                    gradient.addColorStop(0.5, this.color + (this.glowIntensity * 0.3) + ')');
+                    gradient.addColorStop(1, this.color + '0)');
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius * 3, 0, Math.PI * 2);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                    
+                    // Draw orbiting electrons
+                    for (let i = 0; i < this.electrons; i++) {
+                        const electronAngle = this.orbitAngle + (i * Math.PI * 2 / this.electrons);
+                        const electronX = this.x + Math.cos(electronAngle) * this.orbitRadius;
+                        const electronY = this.y + Math.sin(electronAngle) * this.orbitRadius;
+                        
+                        ctx.beginPath();
+                        ctx.arc(electronX, electronY, 1.5, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                        ctx.fill();
+                        
+                        // Electron trail
+                        ctx.beginPath();
+                        ctx.arc(electronX, electronY, 3, 0, Math.PI * 2);
+                        ctx.fillStyle = this.color + '0.3)';
+                        ctx.fill();
+                    }
+                }
+            }
+            
+            // Molecule class
+            class Molecule {
+                constructor() {
+                    this.reset();
+                }
+                
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.3;
+                    this.vy = (Math.random() - 0.5) * 0.3;
+                    this.atoms = [];
+                    const atomCount = Math.floor(Math.random() * 3) + 2;
+                    
+                    for (let i = 0; i < atomCount; i++) {
+                        this.atoms.push({
+                            offsetX: (Math.random() - 0.5) * 30,
+                            offsetY: (Math.random() - 0.5) * 30,
+                            radius: Math.random() * 2 + 1,
+                            color: 'rgba(150, 200, 255, 0.7)'
+                        });
+                    }
+                    
+                    this.rotation = Math.random() * Math.PI * 2;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+                }
+                
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.rotation += this.rotationSpeed;
+                    
+                    // Boundary collision
+                    if (this.x <= 20 || this.x >= canvas.width - 20) {
+                        this.vx *= -0.8;
+                        this.x = Math.max(20, Math.min(canvas.width - 20, this.x));
+                    }
+                    if (this.y <= 20 || this.y >= canvas.height - 20) {
+                        this.vy *= -0.8;
+                        this.y = Math.max(20, Math.min(canvas.height - 20, this.y));
+                    }
+                    
+                    // Random movement
+                    this.vx += (Math.random() - 0.5) * 0.005;
+                    this.vy += (Math.random() - 0.5) * 0.005;
+                }
+                
+                draw() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    
+                    // Draw bonds between atoms
+                    ctx.strokeStyle = 'rgba(100, 200, 255, 0.4)';
+                    ctx.lineWidth = 1;
+                    for (let i = 0; i < this.atoms.length; i++) {
+                        for (let j = i + 1; j < this.atoms.length; j++) {
+                            ctx.beginPath();
+                            ctx.moveTo(this.atoms[i].offsetX, this.atoms[i].offsetY);
+                            ctx.lineTo(this.atoms[j].offsetX, this.atoms[j].offsetY);
+                            ctx.stroke();
+                        }
+                    }
+                    
+                    // Draw atoms
+                    for (const atom of this.atoms) {
+                        ctx.beginPath();
+                        ctx.arc(atom.offsetX, atom.offsetY, atom.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = atom.color;
+                        ctx.fill();
+                    }
+                    
+                    ctx.restore();
+                }
+            }
+            
+            // Connection class
+            class Connection {
+                constructor(atom1, atom2) {
+                    this.atom1 = atom1;
+                    this.atom2 = atom2;
+                    this.strength = Math.random() * 0.5 + 0.5;
+                    this.pulsePhase = Math.random() * Math.PI * 2;
+                }
+                
+                draw() {
+                    const dx = this.atom2.x - this.atom1.x;
+                    const dy = this.atom2.y - this.atom1.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        const opacity = (1 - distance / 150) * this.strength * (0.5 + Math.sin(Date.now() * 0.002 + this.pulsePhase) * 0.5);
+                        ctx.strokeStyle = `rgba(100, 200, 255, ${opacity})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(this.atom1.x, this.atom1.y);
+                        ctx.lineTo(this.atom2.x, this.atom2.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            // Initialize particles
+            for (let i = 0; i < maxAtoms; i++) {
+                atoms.push(new Atom());
+            }
+            
+            for (let i = 0; i < maxMolecules; i++) {
+                molecules.push(new Molecule());
+            }
+            
+            // Animation loop
+            function animate() {
+                ctx.fillStyle = 'rgba(0, 0, 10, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Update and draw connections
+                connections.length = 0;
+                for (let i = 0; i < atoms.length; i++) {
+                    for (let j = i + 1; j < atoms.length; j++) {
+                        if (connections.length < maxConnections) {
+                            connections.push(new Connection(atoms[i], atoms[j]));
+                        }
+                    }
+                }
+                
+                // Draw connections
+                for (const connection of connections) {
+                    connection.draw();
+                }
+                
+                // Update and draw molecules
+                for (const molecule of molecules) {
+                    molecule.update();
+                    molecule.draw();
+                }
+                
+                // Update and draw atoms
+                for (const atom of atoms) {
+                    atom.update();
+                    atom.draw();
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
         }
 
         function initializeBackgroundCanvas(canvas, side) {
