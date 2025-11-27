@@ -38,6 +38,11 @@ router.post('/register', async (req, res) => {
     
     // Create new user (without password hashing for now)
     const user = {
+      // Role and Status
+      role: "user",
+      status: "active",
+      
+      // Personal Details
       firstName,
       lastName,
       email,
@@ -58,7 +63,6 @@ router.post('/register', async (req, res) => {
       dateOfBirth,
       gender,
       type: "buyer",
-      status: "active",
       createdAt: new Date(),
       updatedAt: new Date(),
       lastLogin: null
