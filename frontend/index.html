@@ -4789,11 +4789,11 @@
         /* NyumbaSure Icon Container - Non-Intrusive */
         .nyumbasure-icon-container {
             position: absolute;
-            top: 50%;
-            right: -180px;
-            transform: translateY(-50%);
+            top: 20px;
+            right: 20px;
             z-index: 25;
             opacity: 0;
+            transform: scale(0.9);
             animation: nyumbasureFadeIn 1s ease-out 2s forwards;
         }
 
@@ -4841,7 +4841,7 @@
         @keyframes nyumbasureFadeIn {
             to {
                 opacity: 1;
-                right: -160px;
+                transform: scale(1.05);
             }
         }
 
@@ -5477,10 +5477,10 @@
         /* Responsive Design for NyumbaSure */
         @media (max-width: 768px) {
             .nyumbasure-icon-container {
-                position: static;
-                transform: none;
-                text-align: center;
-                margin: 20px auto;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                transform: scale(0.8);
                 opacity: 1;
                 animation: none;
             }
