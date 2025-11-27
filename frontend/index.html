@@ -7831,40 +7831,18 @@
                     element.style.animationPlayState = 'running';
                 }
                 
-                // Apply scroll compensation for position-based animations
-                const transform = styles.transform;
-                if (transform && transform !== 'none') {
-                    // Apply subtle scroll compensation to maintain visual continuity
-                    const scrollCompensation = scrollDelta * 0.1;
-                    element.style.transform = `${transform} translateY(${scrollCompensation}px)`;
-                    
-                    // Reset compensation after scroll ends
-                    if (!this.isScrolling) {
-                        setTimeout(() => {
-                            element.style.transform = transform;
-                        }, 100);
-                    }
-                }
+                // Remove scroll compensation to maintain original animation speed
+                // Let animations run at their natural pace without interference
+                // Only ensure animations don't pause during scroll
             },
             
             // Preserve transform animations
             preserveTransform(state, scrollOffset, scrollDelta) {
                 const { element } = state;
                 
-                // Get current transform matrix
-                const styles = window.getComputedStyle(element);
-                const currentTransform = styles.transform;
-                
-                if (currentTransform && currentTransform !== 'none') {
-                    // Apply scroll-neutralizing transform
-                    const scrollNeutralize = scrollDelta * 0.05;
-                    element.style.transform = `${currentTransform} translateY(${scrollNeutralize}px)`;
-                    
-                    // Smooth reset after scroll
-                    requestAnimationFrame(() => {
-                        element.style.transform = currentTransform;
-                    });
-                }
+                // Remove scroll compensation to maintain original animation speed
+                // Let transform animations run at their natural pace
+                // Only ensure animations continue during scroll without interference
             },
             
             // Preserve canvas animations
@@ -7893,11 +7871,10 @@
             // Start continuous animation monitoring loop
             startAnimationLoop() {
                 const animate = (currentTime) => {
-                    // FPS limiting for performance
-                    if (currentTime - this.lastFrameTime >= this.frameInterval) {
-                        this.updateAllAnimations(currentTime);
-                        this.lastFrameTime = currentTime;
-                    }
+                    // Remove FPS limiting to maintain original animation speed
+                    // Allow animations to run at their natural speed
+                    this.updateAllAnimations(currentTime);
+                    this.lastFrameTime = currentTime;
                     
                     this.rafId = requestAnimationFrame(animate);
                 };
@@ -7920,14 +7897,12 @@
                 const deltaTime = currentTime - state.lastAnimationTime;
                 state.lastAnimationTime = currentTime;
                 
-                // Ensure animations don't pause during scroll
+                // Remove performance monitoring to avoid triggering optimizations
+                // Let animations run at their natural speed without interference
+                
+                // Only ensure animations don't pause during scroll
                 if (this.isScrolling) {
                     this.ensureAnimationContinuity(state, deltaTime);
-                }
-                
-                // Performance monitoring
-                if (deltaTime > this.frameInterval * 2) {
-                    this.optimizePerformance(state);
                 }
             },
             
@@ -7935,18 +7910,15 @@
             ensureAnimationContinuity(state, deltaTime) {
                 const { element, config } = state;
                 
-                // Force GPU acceleration during scroll
-                if (!state.forceGPU) {
-                    element.style.willChange = 'transform, opacity';
-                    element.style.transform = 'translateZ(0)';
-                    state.forceGPU = true;
-                }
-                
-                // Prevent animation stuttering
+                // Only ensure animations don't pause during scroll
+                // Avoid any performance optimizations that might slow down animations
                 const styles = window.getComputedStyle(element);
                 if (styles.animationPlayState === 'paused') {
                     element.style.animationPlayState = 'running';
                 }
+                
+                // Skip GPU forcing to maintain original animation speed
+                // Let animations run at their natural pace
             },
             
             // Optimize performance for struggling animations
@@ -7956,10 +7928,12 @@
                 // Reduce animation complexity if needed
                 if (state.performanceOptimized) return;
                 
-                // Apply performance optimizations
-                element.style.animationTimingFunction = 'linear';
-                element.style.animationIterationCount = 'infinite';
+                // Apply performance optimizations WITHOUT changing animation timing
+                // Preserve original animation speed and behavior
+                element.style.willChange = 'transform, opacity';
+                element.style.transform = 'translateZ(0)';
                 
+                // Mark as optimized without altering animation properties
                 state.performanceOptimized = true;
             },
             
