@@ -1,0 +1,596 @@
+/* ========================================
+   ULTIMATE MOBILE COMPACT-SCALING SYSTEM
+   ========================================
+   Universal mobile scaling for entire frontend
+   Guaranteed viewport fit with zero structural scrolling
+   ======================================== */
+
+@media (max-width: 768px) {
+    
+    /* ========================================
+       GLOBAL MOBILE COMPACT MODE
+       ======================================== */
+    html, body {
+        height: 100vh !important;
+        overflow: hidden !important;
+        position: relative !important;
+        font-size: 11px !important;
+    }
+    
+    .mobile-compact {
+        scale: var(--compact-scale) !important;
+        transform-origin: top center !important;
+        transform: scale(var(--compact-scale)) !important;
+        width: 100% !important;
+        height: auto !important;
+        position: relative !important;
+    }
+    
+    /* ========================================
+       DYNAMIC SCALING VARIABLES
+       ======================================== */
+    :root {
+        --compact-scale: 0.78;
+        --compact-header-height: 60px;
+        --compact-footer-height: 40px;
+        --compact-middle-height: calc(100vh - 100px);
+        
+        /* Ultra-compact spacing */
+        --compact-xs: 1px;
+        --compact-sm: 2px;
+        --compact-md: 3px;
+        --compact-lg: 4px;
+        --compact-xl: 6px;
+        --compact-2xl: 8px;
+        
+        /* Ultra-compact typography */
+        --compact-xs-font: 8px;
+        --compact-sm-font: 9px;
+        --compact-md-font: 10px;
+        --compact-lg-font: 11px;
+        --compact-xl-font: 12px;
+        --compact-2xl-font: 13px;
+        --compact-3xl-font: 14px;
+        --compact-4xl-font: 16px;
+        
+        /* Ultra-compact components */
+        --compact-button-height: 20px;
+        --compact-input-height: 18px;
+        --compact-icon-size: 8px;
+        --compact-card-height: 60px;
+        --compact-border-radius: 2px;
+    }
+    
+    /* ========================================
+       FIXED HEADER (ALWAYS VISIBLE)
+       ======================================== */
+    .mobile-header,
+    header,
+    .header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: var(--compact-header-height) !important;
+        max-height: 60px !important;
+        z-index: 9999 !important;
+        background: rgba(0, 0, 0, 0.95) !important;
+        backdrop-filter: blur(10px) !important;
+        border-bottom: 1px solid rgba(0, 255, 255, 0.2) !important;
+        padding: var(--compact-sm) var(--compact-md) !important;
+        margin: 0 !important;
+    }
+    
+    .mobile-logo {
+        font-size: var(--compact-lg-font) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .mobile-logo i {
+        font-size: var(--compact-icon-size) !important;
+        margin-right: var(--compact-xs) !important;
+    }
+    
+    .mobile-icon-btn,
+    .nav-btn,
+    .header-btn {
+        width: 16px !important;
+        height: 16px !important;
+        font-size: var(--compact-icon-size) !important;
+        padding: var(--compact-xs) !important;
+        margin: 0 var(--compact-xs) !important;
+    }
+    
+    .mobile-search-bar {
+        height: var(--compact-input-height) !important;
+        margin: var(--compact-xs) 0 !important;
+    }
+    
+    .mobile-search-input {
+        height: var(--compact-input-height) !important;
+        font-size: var(--compact-xs-font) !important;
+        padding: var(--compact-xs) var(--compact-sm) !important;
+    }
+    
+    /* ========================================
+       FIXED FOOTER (ALWAYS VISIBLE)
+       ======================================== */
+    .mobile-footer,
+    footer,
+    .footer {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: var(--compact-footer-height) !important;
+        max-height: 40px !important;
+        z-index: 9999 !important;
+        background: rgba(0, 0, 0, 0.95) !important;
+        backdrop-filter: blur(10px) !important;
+        border-top: 1px solid rgba(0, 255, 255, 0.2) !important;
+        padding: var(--compact-xs) var(--compact-sm) !important;
+        margin: 0 !important;
+    }
+    
+    .mobile-footer-content {
+        display: flex !important;
+        justify-content: space-around !important;
+        align-items: center !important;
+        height: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        gap: var(--compact-xs) !important;
+    }
+    
+    .mobile-footer-section {
+        flex: 1 !important;
+        text-align: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .mobile-footer-section h4 {
+        display: none !important; /* Hide titles on mobile */
+    }
+    
+    .mobile-footer-section p {
+        display: none !important; /* Hide descriptions on mobile */
+    }
+    
+    .mobile-footer-links {
+        display: none !important; /* Hide links on mobile */
+    }
+    
+    .mobile-footer-bottom {
+        display: none !important; /* Hide bottom section on mobile */
+    }
+    
+    .mobile-social-links {
+        display: flex !important;
+        gap: var(--compact-xs) !important;
+        justify-content: center !important;
+    }
+    
+    .mobile-social-links a {
+        width: 10px !important;
+        height: 10px !important;
+        font-size: 6px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Icon-only footer navigation */
+    .mobile-footer-section[data-section="home"]::before {
+        content: "🏠" !important;
+        font-size: 8px !important;
+        display: block !important;
+        margin: 0 !important;
+    }
+    
+    .mobile-footer-section[data-section="categories"]::before {
+        content: "📦" !important;
+        font-size: 8px !important;
+        display: block !important;
+        margin: 0 !important;
+    }
+    
+    .mobile-footer-section[data-section="account"]::before {
+        content: "👤" !important;
+        font-size: 8px !important;
+        display: block !important;
+        margin: 0 !important;
+    }
+    
+    .mobile-footer-section[data-section="contact"]::before {
+        content: "📞" !important;
+        font-size: 8px !important;
+        display: block !important;
+        margin: 0 !important;
+    }
+    
+    /* ========================================
+       MIDDLE SCROLLABLE CONTENT AREA
+       ======================================== */
+    .middle-scroll-area {
+        position: fixed !important;
+        top: var(--compact-header-height) !important;
+        bottom: var(--compact-footer-height) !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: var(--compact-middle-height) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        z-index: 1 !important;
+        background: transparent !important;
+        padding: var(--compact-sm) !important;
+    }
+    
+    /* ========================================
+       ULTRA-COMPACT TYPOGRAPHY
+       ======================================== */
+    body {
+        font-size: var(--compact-sm-font) !important;
+        line-height: 1.2 !important;
+    }
+    
+    h1 { font-size: var(--compact-4xl-font) !important; margin: var(--compact-xs) 0 !important; }
+    h2 { font-size: var(--compact-3xl-font) !important; margin: var(--compact-xs) 0 !important; }
+    h3 { font-size: var(--compact-2xl-font) !important; margin: var(--compact-xs) 0 !important; }
+    h4 { font-size: var(--compact-xl-font) !important; margin: var(--compact-xs) 0 !important; }
+    h5 { font-size: var(--compact-lg-font) !important; margin: var(--compact-xs) 0 !important; }
+    h6 { font-size: var(--compact-md-font) !important; margin: var(--compact-xs) 0 !important; }
+    p { font-size: var(--compact-sm-font) !important; margin: var(--compact-xs) 0 !important; }
+    
+    /* ========================================
+       ULTRA-COMPACT SPACING
+       ======================================== */
+    * {
+        box-sizing: border-box !important;
+    }
+    
+    [class*="container"],
+    [class*="section"],
+    [class*="panel"],
+    [class*="wrapper"] {
+        padding: var(--compact-sm) !important;
+        margin: var(--compact-xs) 0 !important;
+    }
+    
+    /* Remove all large margins and padding */
+    .mt-1, .mt-2, .mt-3, .mt-4, .mt-5 { margin-top: var(--compact-xs) !important; }
+    .mb-1, .mb-2, .mb-3, .mb-4, .mb-5 { margin-bottom: var(--compact-xs) !important; }
+    .pt-1, .pt-2, .pt-3, .pt-4, .pt-5 { padding-top: var(--compact-xs) !important; }
+    .pb-1, .pb-2, .pb-3, .pb-4, .pb-5 { padding-bottom: var(--compact-xs) !important; }
+    
+    /* ========================================
+       ULTRA-COMPACT BUTTONS
+       ======================================== */
+    .btn,
+    .button,
+    .cta-button,
+    .mobile-cta-button,
+    .action-btn {
+        height: var(--compact-button-height) !important;
+        padding: var(--compact-xs) var(--compact-sm) !important;
+        font-size: var(--compact-xs-font) !important;
+        border-radius: var(--compact-border-radius) !important;
+        margin: var(--compact-xs) !important;
+        min-height: var(--compact-button-height) !important;
+    }
+    
+    .btn-small,
+    .btn-compact {
+        height: 16px !important;
+        padding: 1px var(--compact-xs) !important;
+        font-size: 7px !important;
+    }
+    
+    /* ========================================
+       ULTRA-COMPACT CARDS
+       ======================================== */
+    .card,
+    .product-card,
+    .category-card,
+    .stat-card,
+    .dashboard-card,
+    .info-card {
+        padding: var(--compact-sm) !important;
+        margin: var(--compact-xs) !important;
+        border-radius: var(--compact-border-radius) !important;
+        min-height: var(--compact-card-height) !important;
+    }
+    
+    .card-image,
+    .product-image,
+    .category-image {
+        height: 30px !important;
+        width: 100% !important;
+        object-fit: cover !important;
+    }
+    
+    .card-title,
+    .product-title,
+    .category-title {
+        font-size: var(--compact-sm-font) !important;
+        margin: var(--compact-xs) 0 !important;
+        line-height: 1.1 !important;
+    }
+    
+    .card-text,
+    .product-text,
+    .category-text {
+        font-size: var(--compact-xs-font) !important;
+        margin: 0 !important;
+    }
+    
+    .card-price,
+    .product-price {
+        font-size: var(--compact-md-font) !important;
+        margin: var(--compact-xs) 0 !important;
+    }
+    
+    /* ========================================
+       COMPACT FEATURED PRODUCTS GRID
+       ======================================== */
+    .featured-grid,
+    .product-grid,
+    .mobile-featured-section {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: var(--compact-sm) !important;
+        margin: var(--compact-xs) 0 !important;
+    }
+    
+    /* 3-column for smaller items */
+    .category-grid,
+    .icon-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+    
+    /* ========================================
+       ULTRA-COMPACT SELLER DASHBOARD
+       ======================================== */
+    .seller-dashboard,
+    .dashboard-panel,
+    .stats-panel {
+        padding: var(--compact-sm) !important;
+        margin: var(--compact-xs) 0 !important;
+        min-height: 40px !important;
+    }
+    
+    .dashboard-title {
+        font-size: var(--compact-lg-font) !important;
+        margin: var(--compact-xs) 0 !important;
+    }
+    
+    .stats-grid,
+    .dashboard-stats {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: var(--compact-xs) !important;
+        margin: var(--compact-xs) 0 !important;
+    }
+    
+    .stat-item,
+    .stat-card {
+        padding: var(--compact-xs) !important;
+        text-align: center !important;
+        min-height: 30px !important;
+    }
+    
+    .stat-number {
+        font-size: var(--compact-lg-font) !important;
+        margin: 0 !important;
+    }
+    
+    .stat-label {
+        font-size: var(--compact-xs-font) !important;
+        margin: 0 !important;
+    }
+    
+    /* ========================================
+       ULTRA-COMPACT FORMS
+       ======================================== */
+    .form-group,
+    .form-field {
+        margin-bottom: var(--compact-xs) !important;
+    }
+    
+    .form-input,
+    .form-control,
+    input,
+    select,
+    textarea {
+        height: var(--compact-input-height) !important;
+        padding: var(--compact-xs) !important;
+        font-size: var(--compact-xs-font) !important;
+        border-radius: var(--compact-border-radius) !important;
+    }
+    
+    .form-label,
+    .field-label {
+        font-size: var(--compact-xs-font) !important;
+        margin-bottom: 1px !important;
+    }
+    
+    /* ========================================
+       ULTRA-COMPACT MODALS
+       ======================================== */
+    .modal,
+    .popup,
+    .dialog {
+        padding: var(--compact-sm) !important;
+        border-radius: var(--compact-border-radius) !important;
+        max-height: 80vh !important;
+    }
+    
+    .modal-header,
+    .popup-header {
+        padding: var(--compact-xs) !important;
+        margin-bottom: var(--compact-xs) !important;
+    }
+    
+    .modal-title,
+    .popup-title {
+        font-size: var(--compact-lg-font) !important;
+        margin: 0 !important;
+    }
+    
+    .modal-body,
+    .popup-body {
+        padding: var(--compact-xs) !important;
+    }
+    
+    /* ========================================
+       ULTRA-COMPACT ANIMATIONS
+       ======================================== */
+    .animated-bg,
+    .canvas-animation,
+    .particle-bg,
+    #ecoloopProductLayer,
+    .futuristic-hero-bg,
+    .futuristic-nyumba-bg,
+    .futuristic-footer-bg,
+    .futuristic-header-bg {
+        height: 30px !important;
+        opacity: 0.4 !important;
+        position: absolute !important;
+        z-index: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    /* ========================================
+       ULTRA-COMPACT ICONS
+       ======================================== */
+    .icon,
+    [class*="icon"],
+    [class*="fa-"] {
+        font-size: var(--compact-icon-size) !important;
+        margin: 0 var(--compact-xs) !important;
+    }
+    
+    .icon-large {
+        font-size: calc(var(--compact-icon-size) + 2px) !important;
+    }
+    
+    .icon-small {
+        font-size: 6px !important;
+    }
+    
+    /* ========================================
+       REMOVE ALL EXCESS HEIGHT
+       ======================================== */
+    .spacer,
+    .gap,
+    .divider,
+    [class*="separator"] {
+        height: var(--compact-xs) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .hero,
+    .main-banner,
+    .welcome-section,
+    .mobile-welcome-panel {
+        min-height: 40px !important;
+        max-height: 60px !important;
+        padding: var(--compact-sm) !important;
+        margin: var(--compact-xs) 0 !important;
+    }
+    
+    .hero-title,
+    .welcome-title {
+        font-size: var(--compact-xl-font) !important;
+        margin-bottom: var(--compact-xs) !important;
+    }
+    
+    .hero-subtitle,
+    .welcome-subtitle {
+        font-size: var(--compact-sm-font) !important;
+        margin-bottom: var(--compact-xs) !important;
+    }
+    
+    /* ========================================
+       SCROLLBAR STYLING
+       ======================================== */
+    .middle-scroll-area::-webkit-scrollbar {
+        width: 2px !important;
+    }
+    
+    .middle-scroll-area::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .middle-scroll-area::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 255, 0.3) !important;
+        border-radius: 1px !important;
+    }
+    
+    /* ========================================
+       SAFE AREA FOR NOTCHES
+       ======================================== */
+    @supports (padding: max(0px)) {
+        .mobile-header {
+            padding-top: max(var(--compact-sm), env(safe-area-inset-top)) !important;
+        }
+        
+        .mobile-footer {
+            padding-bottom: max(var(--compact-sm), env(safe-area-inset-bottom)) !important;
+        }
+        
+        .middle-scroll-area {
+            top: max(var(--compact-header-height), calc(var(--compact-header-height) + env(safe-area-inset-top))) !important;
+            bottom: max(var(--compact-footer-height), calc(var(--compact-footer-height) + env(safe-area-inset-bottom))) !important;
+        }
+    }
+    
+    /* ========================================
+       LANDSCAPE ORIENTATION
+       ======================================== */
+    @media (orientation: landscape) and (max-width: 768px) {
+        :root {
+            --compact-header-height: 50px;
+            --compact-footer-height: 35px;
+        }
+        
+        .mobile-footer-section::before {
+            font-size: 6px !important;
+        }
+        
+        .mobile-social-links a {
+            width: 8px !important;
+            height: 8px !important;
+            font-size: 5px !important;
+        }
+    }
+    
+    /* ========================================
+       DESKTOP COMPATIBILITY
+       ======================================== */
+    @media (min-width: 769px) {
+        html, body {
+            height: auto !important;
+            overflow: visible !important;
+        }
+        
+        .mobile-compact {
+            transform: none !important;
+            scale: 1 !important;
+        }
+        
+        .mobile-header,
+        .mobile-footer {
+            position: relative !important;
+            height: auto !important;
+        }
+        
+        .middle-scroll-area {
+            position: static !important;
+            height: auto !important;
+            overflow: visible !important;
+        }
+    }
+}
