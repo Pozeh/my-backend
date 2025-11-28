@@ -12,39 +12,40 @@ public class MainActivity extends BridgeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Configure WebView for forced desktop view
-        setupWebViewForDesktop();
+        // Configure WebView for mobile-friendly responsive view
+        setupWebViewForMobile();
     }
     
-    private void setupWebViewForDesktop() {
+    private void setupWebViewForMobile() {
         // Get the WebView from Capacitor bridge
         WebView webView = getBridge().getWebView();
         
         if (webView != null) {
-            // Force desktop view - CRITICAL SETTINGS
-            webView.getSettings().setLoadWithOverviewMode(false);
+            // Mobile-friendly settings
+            webView.getSettings().setLoadWithOverviewMode(true);
             webView.getSettings().setUseWideViewPort(true);
-            webView.getSettings().setSupportZoom(false);
+            webView.getSettings().setSupportZoom(true);
             webView.getSettings().setBuiltInZoomControls(false);
             webView.getSettings().setDisplayZoomControls(false);
             
-            // Set user agent to desktop
-            String desktopUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
-            webView.getSettings().setUserAgentString(desktopUserAgent);
+            // Use mobile user agent
+            String mobileUserAgent = webView.getSettings().getUserAgentString();
+            webView.getSettings().setUserAgentString(mobileUserAgent);
             
-            // Disable automatic scaling and fitting
-            webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+            // Enable responsive layout
+            webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
             
             // Enable hardware acceleration for smooth animations
             webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
             
-            // Enable JavaScript
+            // Enable JavaScript and DOM storage
             webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setDomStorageEnabled(true);
+            webView.getSettings().setDatabaseEnabled(true);
             
-            // Prevent zoom and scaling
-            webView.getSettings().setSupportZoom(false);
-            webView.getSettings().setBuiltInZoomControls(false);
-            webView.getSettings().setDisplayZoomControls(false);
+            // Allow responsive design to work properly
+            webView.getSettings().setAllowFileAccess(true);
+            webView.getSettings().setAllowContentAccess(true);
         }
     }
 }
