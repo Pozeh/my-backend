@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>EcoLoop Kenya - Sustainable Marketplace</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/productLayer.css">
@@ -29,10 +30,37 @@
             line-height: 1.6;
             color: var(--text-dark);
             min-width: 1200px; /* Force desktop minimum width */
+            width: 1200px; /* Fixed desktop width */
+            max-width: 1200px; /* Prevent scaling beyond desktop */
             overflow-x: auto; /* Allow horizontal scrolling if needed */
             overflow-y: auto; /* Ensure vertical scrolling is always allowed */
             height: auto; /* Allow body to grow naturally */
             min-height: 100vh; /* Ensure minimum full viewport height */
+            transform-origin: top left; /* Ensure scaling from top-left */
+        }
+
+        /* Scale container for mobile devices while maintaining desktop layout */
+        @media (max-width: 1200px) {
+            body {
+                transform: scale(calc(min(100vw, 100vh) / 1200));
+                width: 1200px; /* Keep desktop width */
+                min-width: unset; /* Remove min-width constraint */
+                overflow-x: visible; /* Hide horizontal scrollbars */
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                transform: scale(calc(100vw / 1200));
+                width: 1200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                transform: scale(calc(100vw / 1200));
+                width: 1200px;
+            }
         }
 
         /* Header Styles */
