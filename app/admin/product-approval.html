@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Approval System - EcoLoop Kenya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary-color: #10b981;
+            --accent-color: #8b5cf6;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-bg: #1e293b;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 32px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .stat-card.secondary {
+            background: linear-gradient(135deg, var(--secondary-color), #059669);
+        }
+
+        .stat-card.warning {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+        }
+
+        .stat-card.danger {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .filters {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-header {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            background: var(--light-bg);
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .product-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 8px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+
+        .status-approved {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .status-rejected {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        .product-description {
+            padding: 0 20px 20px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .product-actions {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-success {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: var(--text-secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .seller-info {
+            background: rgba(37, 99, 235, 0.05);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            margin-top: 12px;
+        }
+
+        .seller-info h4 {
+            font-size: 0.875rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .seller-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius-xl);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--light-bg);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--secondary-color);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--danger-color);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning-color);
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div>
+                    <h1><i class="fas fa-clipboard-check"></i> Product Approval System</h1>
+                    <p style="color: var(--text-secondary); margin-top: 8px;">Review and approve seller products for the marketplace</p>
+                </div>
+                <button class="btn btn-primary" onclick="refreshProducts()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+            
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingCount">0</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-card secondary">
+                    <div class="stat-number" id="approvedCount">0</div>
+                    <div class="stat-label">Approved</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-number" id="rejectedCount">0</div>
+                    <div class="stat-label">Rejected</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">Total</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label>Status:</label>
+                <select id="statusFilter" onchange="filterProducts()">
+                    <option value="all">All Products</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Category:</label>
+                <select id="categoryFilter" onchange="filterProducts()">
+                    <option value="all">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="home">Home & Garden</option>
+                    <option value="sports">Sports & Outdoors</option>
+                    <option value="books">Books & Media</option>
+                    <option value="toys">Toys & Games</option>
+                    <option value="food">Food & Beverages</option>
+                    <option value="health">Health & Beauty</option>
+                    <option value="automotive">Automotive</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Search:</label>
+                <input type="text" id="searchFilter" placeholder="Search products..." onkeyup="filterProducts()">
+            </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <div class="loading">
+                <div class="spinner"></div>
+                Loading products...
+            </div>
+        </div>
+
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <i class="fas fa-box-open"></i>
+            <h3>No products found</h3>
+            <p>No products match your current filters.</p>
+        </div>
+    </div>
+
+    <!-- Approval Modal -->
+    <div class="modal" id="approvalModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Approve Product</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="toast-icon fas"></i>
+        <span class="toast-message"></span>
+    </div>
+
+    <script>
+        class ProductApprovalSystem {
+            constructor() {
+                this.baseURL = 'https://my-backend-1-jk7w.onrender.com/api';
+                this.products = [];
+                this.filteredProducts = [];
+                this.init();
+            }
+
+            async init() {
+                await this.loadProducts();
+                this.setupEventListeners();
+            }
+
+            async loadProducts() {
+                try {
+                    // Try MongoDB first
+                    const response = await fetch(`${this.baseURL}/data`);
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            this.products = result.data.filter(item => 
+                                item.type === 'product' && !item.deleted
+                            );
+                        }
+                    }
+                } catch (error) {
+                    console.log('MongoDB not available, using localStorage');
+                    // Fallback to localStorage
+                    const sellerProducts = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
+                    const adminProducts = JSON.parse(localStorage.getItem('products') || '[]');
+                    this.products = [...sellerProducts, ...adminProducts].filter(p => p.type === 'product');
+                }
+                
+                this.filteredProducts = [...this.products];
+                this.renderProducts();
+                this.updateStats();
+            }
+
+            renderProducts() {
+                const grid = document.getElementById('productsGrid');
+                const emptyState = document.getElementById('emptyState');
+                
+                if (this.filteredProducts.length === 0) {
+                    grid.innerHTML = '';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+                
+                emptyState.style.display = 'none';
+                grid.innerHTML = this.filteredProducts.map(product => this.createProductCard(product)).join('');
+            }
+
+            createProductCard(product) {
+                const status = product.status || 'pending';
+                const statusClass = `status-${status}`;
+                
+                return `
+                    <div class="product-card">
+                        <div class="product-header">
+                            <img src="${product.image || 'https://via.placeholder.com/100x100'}" alt="${product.title}" class="product-image">
+                            <div class="product-info">
+                                <h3 class="product-title">${product.title}</h3>
+                                <div class="product-meta">
+                                    <span><i class="fas fa-tag"></i> ${product.category || 'Uncategorized'}</span>
+                                    <span><i class="fas fa-cube"></i> Stock: ${product.stock || 0}</span>
+                                    <span><i class="fas fa-clock"></i> ${new Date(product.createdAt).toLocaleDateString()}</span>
+                                </div>
+                                <div class="product-price">KES ${product.price?.toLocaleString() || 0}</div>
+                                <span class="status-badge ${statusClass}">${status}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="product-description">
+                            ${(product.description || 'No description available').substring(0, 150)}${(product.description || '').length > 150 ? '...' : ''}
+                        </div>
+                        
+                        <div class="seller-info">
+                            <h4><i class="fas fa-store"></i> Seller Information</h4>
+                            <div class="seller-details">
+                                <span><i class="fas fa-user"></i> ${product.sellerName || 'Unknown'}</span>
+                                <span><i class="fas fa-envelope"></i> ${product.sellerEmail || 'No email'}</span>
+                                <span><i class="fas fa-phone"></i> ${product.sellerPhone || 'No phone'}</span>
+                                <span><i class="fas fa-map-marker-alt"></i> ${product.sellerLocation || 'No location'}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="product-actions">
+                            ${status === 'pending' ? `
+                                <button class="btn btn-success" onclick="approvalSystem.showApprovalModal('${product.id}', 'approve')">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-danger" onclick="approvalSystem.showApprovalModal('${product.id}', 'reject')">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            ` : ''}
+                            ${status === 'approved' ? `
+                                <button class="btn btn-danger" onclick="approvalSystem.updateProductStatus('${product.id}', 'rejected')">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                                <button class="btn btn-secondary" onclick="approvalSystem.updateProductStatus('${product.id}', 'pending')">
+                                    <i class="fas fa-undo"></i> Revert to Pending
+                                </button>
+                            ` : ''}
+                            ${status === 'rejected' ? `
+                                <button class="btn btn-success" onclick="approvalSystem.updateProductStatus('${product.id}', 'approved')">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-secondary" onclick="approvalSystem.updateProductStatus('${product.id}', 'pending')">
+                                    <i class="fas fa-undo"></i> Revert to Pending
+                                </button>
+                            ` : ''}
+                            <button class="btn btn-primary" onclick="approvalSystem.viewProductDetails('${product.id}')">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            showApprovalModal(productId, action) {
+                const product = this.products.find(p => p.id === productId);
+                if (!product) return;
+
+                const modal = document.getElementById('approvalModal');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalContent = document.getElementById('modalContent');
+
+                modalTitle.textContent = action === 'approve' ? 'Approve Product' : 'Reject Product';
+                
+                modalContent.innerHTML = `
+                    <div style="margin-bottom: 20px;">
+                        <h4>Product: ${product.title}</h4>
+                        <p style="color: var(--text-secondary);">Price: KES ${product.price?.toLocaleString() || 0}</p>
+                        <p style="color: var(--text-secondary);">Seller: ${product.sellerName}</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>${action === 'approve' ? 'Approval Notes (Optional)' : 'Rejection Reason (Required)'}</label>
+                        <textarea id="approvalNotes" placeholder="${action === 'approve' ? 'Add any notes for the seller...' : 'Please provide a reason for rejection...'}" ${action === 'reject' ? 'required' : ''}></textarea>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" onclick="approvalSystem.closeModal()">Cancel</button>
+                        <button class="btn ${action === 'approve' ? 'btn-success' : 'btn-danger'}" onclick="approvalSystem.processApproval('${productId}', '${action}')">
+                            <i class="fas fa-${action === 'approve' ? 'check' : 'times'}"></i>
+                            ${action === 'approve' ? 'Approve Product' : 'Reject Product'}
+                        </button>
+                    </div>
+                `;
+
+                modal.classList.add('show');
+            }
+
+            async processApproval(productId, action) {
+                const notes = document.getElementById('approvalNotes').value;
+                
+                if (action === 'reject' && !notes.trim()) {
+                    this.showToast('Rejection reason is required', 'error');
+                    return;
+                }
+
+                const newStatus = action === 'approve' ? 'approved' : 'rejected';
+                await this.updateProductStatus(productId, newStatus, notes);
+                this.closeModal();
+            }
+
+            async updateProductStatus(productId, newStatus, notes = '') {
+                try {
+                    const product = this.products.find(p => p.id === productId);
+                    if (!product) return;
+
+                    // Update product status
+                    product.status = newStatus;
+                    product.statusNotes = notes;
+                    statusUpdatedAt: new Date().toISOString();
+
+                    // Update in MongoDB
+                    try {
+                        const response = await fetch(`${this.baseURL}/update`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                id: productId,
+                                status: newStatus,
+                                statusNotes: notes,
+                                statusUpdatedAt: new Date().toISOString()
+                            })
+                        });
+                        
+                        if (response.ok) {
+                            console.log('Product status updated in MongoDB');
+                        }
+                    } catch (mongoError) {
+                        console.log('MongoDB update failed, updating localStorage');
+                    }
+
+                    // Update localStorage
+                    this.updateLocalStorage();
+
+                    // If approved, also add to main products collection
+                    if (newStatus === 'approved') {
+                        await this.publishToMainShop(product);
+                    }
+
+                    // Refresh display
+                    await this.loadProducts();
+                    
+                    this.showToast(`Product ${newStatus} successfully!`, 'success');
+
+                } catch (error) {
+                    console.error('Error updating product status:', error);
+                    this.showToast('Error updating product status', 'error');
+                }
+            }
+
+            async publishToMainShop(product) {
+                try {
+                    // Create a copy for the main shop with proper structure
+                    const mainShopProduct = {
+                        ...product,
+                        id: product.id, // Keep same ID for consistency
+                        type: 'product',
+                        status: 'approved',
+                        publishedAt: new Date().toISOString(),
+                        // Ensure all required fields for main shop
+                        name: product.title,
+                        rating: product.rating || 4.0,
+                        reviews: product.reviews || 0,
+                        // Add seller contact info for messaging
+                        sellerEmail: product.sellerEmail,
+                        sellerName: product.sellerName,
+                        sellerPhone: product.sellerPhone,
+                        sellerLocation: product.sellerLocation
+                    };
+
+                    // Save to main products collection in MongoDB
+                    const response = await fetch(`${this.baseURL}/save`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            ...mainShopProduct,
+                            collection: 'products'
+                        })
+                    });
+
+                    if (response.ok) {
+                        console.log('Product published to main shop');
+                    }
+                } catch (error) {
+                    console.log('Publishing to main shop failed, but product is still approved');
+                }
+            }
+
+            updateLocalStorage() {
+                // Update seller products in localStorage
+                localStorage.setItem('sellerProducts', JSON.stringify(
+                    this.products.filter(p => p.type === 'product')
+                ));
+
+                // Update main products if approved
+                const approvedProducts = this.products.filter(p => p.status === 'approved');
+                localStorage.setItem('products', JSON.stringify(approvedProducts));
+            }
+
+            filterProducts() {
+                const statusFilter = document.getElementById('statusFilter').value;
+                const categoryFilter = document.getElementById('categoryFilter').value;
+                const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+
+                this.filteredProducts = this.products.filter(product => {
+                    const status = product.status || 'pending';
+                    const category = product.category || 'other';
+                    
+                    const matchesStatus = statusFilter === 'all' || status === statusFilter;
+                    const matchesCategory = categoryFilter === 'all' || category === categoryFilter;
+                    const matchesSearch = !searchFilter || 
+                        product.title.toLowerCase().includes(searchFilter) ||
+                        product.description.toLowerCase().includes(searchFilter) ||
+                        (product.sellerName && product.sellerName.toLowerCase().includes(searchFilter));
+
+                    return matchesStatus && matchesCategory && matchesSearch;
+                });
+
+                this.renderProducts();
+            }
+
+            updateStats() {
+                const pending = this.products.filter(p => (p.status || 'pending') === 'pending').length;
+                const approved = this.products.filter(p => p.status === 'approved').length;
+                const rejected = this.products.filter(p => p.status === 'rejected').length;
+                const total = this.products.length;
+
+                document.getElementById('pendingCount').textContent = pending;
+                document.getElementById('approvedCount').textContent = approved;
+                document.getElementById('rejectedCount').textContent = rejected;
+                document.getElementById('totalCount').textContent = total;
+            }
+
+            viewProductDetails(productId) {
+                const product = this.products.find(p => p.id === productId);
+                if (!product) return;
+
+                const modal = document.getElementById('approvalModal');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalContent = document.getElementById('modalContent');
+
+                modalTitle.textContent = 'Product Details';
+                
+                modalContent.innerHTML = `
+                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                        <img src="${product.image || 'https://via.placeholder.com/150x150'}" alt="${product.title}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px;">
+                        <div style="flex: 1;">
+                            <h3>${product.title}</h3>
+                            <p style="color: var(--text-secondary); margin: 8px 0;">Category: ${product.category || 'Uncategorized'}</p>
+                            <p style="color: var(--text-secondary); margin: 8px 0;">Price: <strong style="color: var(--primary-color);">KES ${product.price?.toLocaleString() || 0}</strong></p>
+                            <p style="color: var(--text-secondary); margin: 8px 0;">Stock: ${product.stock || 0}</p>
+                            <p style="color: var(--text-secondary); margin: 8px 0;">Condition: ${product.condition || 'New'}</p>
+                            <span class="status-badge status-${product.status || 'pending'}">${product.status || 'pending'}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4>Description</h4>
+                        <p style="color: var(--text-secondary); line-height: 1.6;">${product.description || 'No description available'}</p>
+                    </div>
+                    
+                    <div class="seller-info">
+                        <h4><i class="fas fa-store"></i> Seller Information</h4>
+                        <div class="seller-details">
+                            <span><i class="fas fa-user"></i> ${product.sellerName || 'Unknown'}</span>
+                            <span><i class="fas fa-envelope"></i> ${product.sellerEmail || 'No email'}</span>
+                            <span><i class="fas fa-phone"></i> ${product.sellerPhone || 'No phone'}</span>
+                            <span><i class="fas fa-map-marker-alt"></i> ${product.sellerLocation || 'No location'}</span>
+                        </div>
+                    </div>
+                    
+                    ${product.statusNotes ? `
+                        <div style="margin-top: 20px; padding: 12px; background: rgba(245, 158, 11, 0.1); border-radius: 8px;">
+                            <h4 style="color: var(--warning-color); margin-bottom: 8px;">Status Notes</h4>
+                            <p style="color: var(--text-secondary);">${product.statusNotes}</p>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" onclick="approvalSystem.closeModal()">Close</button>
+                    </div>
+                `;
+
+                modal.classList.add('show');
+            }
+
+            closeModal() {
+                document.getElementById('approvalModal').classList.remove('show');
+            }
+
+            showToast(message, type = 'success') {
+                const toast = document.getElementById('toast');
+                const icon = toast.querySelector('.toast-icon');
+                const messageEl = toast.querySelector('.toast-message');
+                
+                toast.className = `toast ${type} show`;
+                messageEl.textContent = message;
+                
+                icon.className = 'toast-icon fas';
+                switch(type) {
+                    case 'success':
+                        icon.classList.add('fa-check-circle');
+                        break;
+                    case 'error':
+                        icon.classList.add('fa-exclamation-circle');
+                        break;
+                    case 'warning':
+                        icon.classList.add('fa-exclamation-triangle');
+                        break;
+                    default:
+                        icon.classList.add('fa-info-circle');
+                }
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            setupEventListeners() {
+                // Close modal on outside click
+                document.getElementById('approvalModal').addEventListener('click', (e) => {
+                    if (e.target.id === 'approvalModal') {
+                        this.closeModal();
+                    }
+                });
+            }
+
+            async refreshProducts() {
+                document.getElementById('productsGrid').innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Refreshing products...
+                    </div>
+                `;
+                
+                await this.loadProducts();
+                this.showToast('Products refreshed successfully!', 'success');
+            }
+        }
+
+        // Initialize the approval system
+        let approvalSystem;
+        document.addEventListener('DOMContentLoaded', function() {
+            approvalSystem = new ProductApprovalSystem();
+        });
+
+        // Global functions for onclick handlers
+        function filterProducts() {
+            approvalSystem.filterProducts();
+        }
+
+        function refreshProducts() {
+            approvalSystem.refreshProducts();
+        }
+
+        function closeModal() {
+            approvalSystem.closeModal();
+        }
+    </script>
+</body>
+</html>

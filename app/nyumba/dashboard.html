@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NyumbaSure Dashboard - Agent & Admin Portal</title>
+    <meta name="description" content="NyumbaSure dashboard for agents and admins to manage listings, approvals, and statistics">
+    
+    <!-- NyumbaSure CSS -->
+    <link rel="stylesheet" href="/assets/css/nyumba.styles.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Dashboard specific styles */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+        
+        .nyumba-dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .nyumba-dashboard-sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--nyumba-primary) 0%, var(--nyumba-secondary) 100%);
+            color: white;
+            padding: 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        .nyumba-dashboard-logo {
+            padding: 30px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .nyumba-dashboard-logo h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nyumba-dashboard-nav {
+            padding: 20px 0;
+        }
+        
+        .nyumba-nav-item {
+            display: block;
+            padding: 15px 25px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        
+        .nyumba-nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding-left: 35px;
+        }
+        
+        .nyumba-nav-item.active {
+            background: rgba(0, 212, 170, 0.2);
+            color: var(--nyumba-accent);
+            border-left: 3px solid var(--nyumba-accent);
+        }
+        
+        .nyumba-nav-item i {
+            width: 20px;
+            margin-right: 12px;
+        }
+        
+        /* Main Content Area */
+        .nyumba-dashboard-main {
+            flex: 1;
+            margin-left: 280px;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+        
+        .nyumba-dashboard-header {
+            background: white;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        
+        .nyumba-header-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--nyumba-primary);
+        }
+        
+        .nyumba-header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .nyumba-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background: var(--nyumba-soft-concrete);
+            border-radius: 25px;
+        }
+        
+        .nyumba-user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--nyumba-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* Dashboard Content */
+        .nyumba-dashboard-content {
+            padding: 30px;
+        }
+        
+        .nyumba-dashboard-section {
+            display: none;
+        }
+        
+        .nyumba-dashboard-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Stats Grid */
+        .nyumba-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .nyumba-stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .nyumba-stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .nyumba-stat-card.listings {
+            border-left-color: var(--nyumba-accent);
+        }
+        
+        .nyumba-stat-card.orders {
+            border-left-color: #4caf50;
+        }
+        
+        .nyumba-stat-card.revenue {
+            border-left-color: #ff9800;
+        }
+        
+        .nyumba-stat-card.users {
+            border-left-color: #2196f3;
+        }
+        
+        .nyumba-stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .nyumba-stat-card.listings .nyumba-stat-icon {
+            background: rgba(0, 212, 170, 0.1);
+            color: var(--nyumba-accent);
+        }
+        
+        .nyumba-stat-card.orders .nyumba-stat-icon {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+        
+        .nyumba-stat-card.revenue .nyumba-stat-icon {
+            background: rgba(255, 152, 0, 0.1);
+            color: #ff9800;
+        }
+        
+        .nyumba-stat-card.users .nyumba-stat-icon {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196f3;
+        }
+        
+        .nyumba-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--nyumba-primary);
+            margin-bottom: 5px;
+        }
+        
+        .nyumba-stat-label {
+            color: var(--nyumba-concrete);
+            font-size: 0.9rem;
+        }
+        
+        .nyumba-stat-change {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        
+        .nyumba-stat-change.positive {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+        
+        .nyumba-stat-change.negative {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+        
+        /* Table Styles */
+        .nyumba-table-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+        }
+        
+        .nyumba-table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .nyumba-table-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--nyumba-primary);
+        }
+        
+        .nyumba-table-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nyumba-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nyumba-btn-primary {
+            background: var(--nyumba-accent);
+            color: white;
+        }
+        
+        .nyumba-btn-primary:hover {
+            background: #00b894;
+            transform: translateY(-2px);
+        }
+        
+        .nyumba-btn-secondary {
+            background: var(--nyumba-soft-concrete);
+            color: var(--nyumba-primary);
+        }
+        
+        .nyumba-btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .nyumba-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .nyumba-table th {
+            text-align: left;
+            padding: 15px;
+            background: var(--nyumba-soft-concrete);
+            font-weight: 600;
+            color: var(--nyumba-primary);
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .nyumba-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .nyumba-table tr:hover {
+            background: rgba(0, 212, 170, 0.02);
+        }
+        
+        .nyumba-status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .nyumba-status-badge.approved {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+        
+        .nyumba-status-badge.pending {
+            background: rgba(255, 152, 0, 0.1);
+            color: #ff9800;
+        }
+        
+        .nyumba-status-badge.rejected {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+        
+        .nyumba-status-badge.active {
+            background: rgba(0, 212, 170, 0.1);
+            color: var(--nyumba-accent);
+        }
+        
+        .nyumba-action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .nyumba-action-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .nyumba-action-btn.approve {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+        
+        .nyumba-action-btn.reject {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+        
+        .nyumba-action-btn.edit {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196f3;
+        }
+        
+        .nyumba-action-btn.delete {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+        
+        .nyumba-action-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Form Styles */
+        .nyumba-form-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .nyumba-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .nyumba-form-group {
+            margin-bottom: 20px;
+        }
+        
+        .nyumba-form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--nyumba-primary);
+            font-weight: 500;
+        }
+        
+        .nyumba-form-input,
+        .nyumba-form-select,
+        .nyumba-form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .nyumba-form-input:focus,
+        .nyumba-form-select:focus,
+        .nyumba-form-textarea:focus {
+            outline: none;
+            border-color: var(--nyumba-accent);
+            box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+        }
+        
+        .nyumba-form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .nyumba-form-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nyumba-dashboard-sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .nyumba-dashboard-main {
+                margin-left: 0;
+            }
+            
+            .nyumba-dashboard-content {
+                padding: 20px;
+            }
+            
+            .nyumba-stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nyumba-form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nyumba-table-container {
+                padding: 15px;
+            }
+            
+            .nyumba-dashboard-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+        
+        /* Loading State */
+        .nyumba-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: var(--nyumba-concrete);
+        }
+        
+        .nyumba-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 212, 170, 0.1);
+            border-top: 3px solid var(--nyumba-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 15px;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="nyumba-dashboard-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="nyumba-dashboard-sidebar">
+            <div class="nyumba-dashboard-logo">
+                <h1><i class="fas fa-home"></i> NyumbaSure</h1>
+            </div>
+            
+            <nav class="nyumba-dashboard-nav">
+                <a href="#" class="nyumba-nav-item active" data-section="overview">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard Overview
+                </a>
+                <a href="#" class="nyumba-nav-item" data-section="listings" id="navListings">
+                    <i class="fas fa-building"></i> My Listings
+                </a>
+                <a href="#" class="nyumba-nav-item" data-section="create-listing" id="navCreateListing">
+                    <i class="fas fa-plus-circle"></i> Create Listing
+                </a>
+                <a href="#" class="nyumba-nav-item" data-section="reports" id="navReports">
+                    <i class="fas fa-flag"></i> Reports
+                </a>
+                <a href="#" class="nyumba-nav-item" data-section="escrows" id="navEscrows">
+                    <i class="fas fa-shield-alt"></i> Escrow Transactions
+                </a>
+                <a href="#" class="nyumba-nav-item" data-section="pending-agents" id="navPendingAgents">
+                    <i class="fas fa-user-clock"></i> Pending Agents
+                </a>
+                <a href="#" class="nyumba-nav-item" data-section="pending-listings" id="navPendingListings">
+                    <i class="fas fa-building-clock"></i> Pending Listings
+                </a>
+                <a href="#" class="nyumba-nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+                <a href="/nyumba" class="nyumba-nav-item">
+                    <i class="fas fa-arrow-left"></i> Back to NyumbaSure
+                </a>
+            </nav>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <main class="nyumba-dashboard-main">
+            
+            <!-- Header -->
+            <header class="nyumba-dashboard-header">
+                <h2 class="nyumba-header-title" id="pageTitle">Dashboard Overview</h2>
+                <div class="nyumba-header-actions">
+                    <div class="nyumba-user-info">
+                        <div class="nyumba-user-avatar" id="userAvatar">U</div>
+                        <span id="userName">User Name</span>
+                    </div>
+                    <button class="nyumba-btn nyumba-btn-secondary" onclick="nyumbaDashboard.logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Dashboard Content -->
+            <div class="nyumba-dashboard-content">
+                
+                <!-- Overview Section -->
+                <section class="nyumba-dashboard-section active" id="overview">
+                    <div class="nyumba-stats-grid">
+                        <div class="nyumba-stat-card listings">
+                            <div class="nyumba-stat-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="nyumba-stat-value" id="totalListings">0</div>
+                            <div class="nyumba-stat-label">Total Listings</div>
+                            <div class="nyumba-stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 12% this month
+                            </div>
+                        </div>
+                        
+                        <div class="nyumba-stat-card orders">
+                            <div class="nyumba-stat-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="nyumba-stat-value" id="totalTransactions">0</div>
+                            <div class="nyumba-stat-label">Transactions</div>
+                            <div class="nyumba-stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 8% this month
+                            </div>
+                        </div>
+                        
+                        <div class="nyumba-stat-card revenue">
+                            <div class="nyumba-stat-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="nyumba-stat-value" id="totalRevenue">KES 0</div>
+                            <div class="nyumba-stat-label">Total Revenue</div>
+                            <div class="nyumba-stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 15% this month
+                            </div>
+                        </div>
+                        
+                        <div class="nyumba-stat-card users">
+                            <div class="nyumba-stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="nyumba-stat-value" id="totalUsers">0</div>
+                            <div class="nyumba-stat-label">Active Users</div>
+                            <div class="nyumba-stat-change positive">
+                                <i class="fas fa-arrow-up"></i> 20% this month
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activity -->
+                    <div class="nyumba-table-container">
+                        <div class="nyumba-table-header">
+                            <h3 class="nyumba-table-title">Recent Activity</h3>
+                        </div>
+                        <div id="recentActivity">
+                            <div class="nyumba-loading">
+                                <div class="nyumba-spinner"></div>
+                                <span>Loading recent activity...</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- My Listings Section -->
+                <section class="nyumba-dashboard-section" id="listings">
+                    <div class="nyumba-table-container">
+                        <div class="nyumba-table-header">
+                            <h3 class="nyumba-table-title">My Listings</h3>
+                            <div class="nyumba-table-actions">
+                                <button class="nyumba-btn nyumba-btn-primary" onclick="nyumbaDashboard.showSection('create-listing')">
+                                    <i class="fas fa-plus"></i> Add New Listing
+                                </button>
+                            </div>
+                        </div>
+                        <table class="nyumba-table">
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>Location</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listingsTableBody">
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="nyumba-loading">
+                                            <div class="nyumba-spinner"></div>
+                                            <span>Loading your listings...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Create Listing Section -->
+                <section class="nyumba-dashboard-section" id="create-listing">
+                    <div class="nyumba-form-container">
+                        <h3 class="nyumba-table-title">Create New Listing</h3>
+                        <form id="createListingForm">
+                            <div class="nyumba-form-grid">
+                                <div class="nyumba-form-group">
+                                    <label class="nyumba-form-label">Property Title *</label>
+                                    <input type="text" class="nyumba-form-input" name="title" required>
+                                </div>
+                                <div class="nyumba-form-group">
+                                    <label class="nyumba-form-label">Property Type *</label>
+                                    <select class="nyumba-form-select" name="propertyType" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Bedsitter">Bedsitter</option>
+                                        <option value="1BR">1 Bedroom</option>
+                                        <option value="2BR">2 Bedroom</option>
+                                        <option value="3BR">3 Bedroom</option>
+                                        <option value="House">House</option>
+                                    </select>
+                                </div>
+                                <div class="nyumba-form-group">
+                                    <label class="nyumba-form-label">Monthly Rent (KES) *</label>
+                                    <input type="number" class="nyumba-form-input" name="price" required>
+                                </div>
+                                <div class="nyumba-form-group">
+                                    <label class="nyumba-form-label">Deposit (KES) *</label>
+                                    <input type="number" class="nyumba-form-input" name="deposit" required>
+                                </div>
+                                <div class="nyumba-form-group">
+                                    <label class="nyumba-form-label">Service Charge (KES)</label>
+                                    <input type="number" class="nyumba-form-input" name="serviceCharge">
+                                </div>
+                                <div class="nyumba-form-group">
+                                    <label class="nyumba-form-label">Estimated Utilities (KES)</label>
+                                    <input type="number" class="nyumba-form-input" name="estUtilities">
+                                </div>
+                            </div>
+                            
+                            <div class="nyumba-form-group">
+                                <label class="nyumba-form-label">Location Details *</label>
+                                <div class="nyumba-form-grid">
+                                    <input type="text" class="nyumba-form-input" name="city" placeholder="City" required>
+                                    <input type="text" class="nyumba-form-input" name="area" placeholder="Area/Suburb" required>
+                                    <input type="text" class="nyumba-form-input" name="address" placeholder="Full Address">
+                                </div>
+                            </div>
+                            
+                            <div class="nyumba-form-group">
+                                <label class="nyumba-form-label">Description *</label>
+                                <textarea class="nyumba-form-textarea" name="description" required placeholder="Describe the property, its features, and what makes it special..."></textarea>
+                            </div>
+                            
+                            <div class="nyumba-form-group">
+                                <label class="nyumba-form-label">Amenities</label>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="amenities" value="parking"> Parking
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="amenities" value="gym"> Gym
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="amenities" value="pool"> Swimming Pool
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="amenities" value="security"> 24/7 Security
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="amenities" value="balcony"> Balcony
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="amenities" value="garden"> Garden
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="amenities" value="water_backup"> Water Backup
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="checkbox" name="amenities" value="servant_quarters"> Servant Quarters
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="nyumba-form-group">
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" name="furnished"> Furnished Property
+                                </label>
+                            </div>
+                            
+                            <div class="nyumba-form-buttons">
+                                <button type="button" class="nyumba-btn nyumba-btn-secondary" onclick="nyumbaDashboard.showSection('listings')">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="nyumba-btn nyumba-btn-primary">
+                                    <i class="fas fa-save"></i> Create Listing
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                
+                <!-- Reports Section (Admin Only) -->
+                <section class="nyumba-dashboard-section" id="reports">
+                    <div class="nyumba-table-container">
+                        <div class="nyumba-table-header">
+                            <h3 class="nyumba-table-title">Reported Listings</h3>
+                        </div>
+                        <table class="nyumba-table">
+                            <thead>
+                                <tr>
+                                    <th>Listing</th>
+                                    <th>Reporter</th>
+                                    <th>Reason</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportsTableBody">
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="nyumba-loading">
+                                            <div class="nyumba-spinner"></div>
+                                            <span>Loading reports...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Escrow Transactions Section -->
+                <section class="nyumba-dashboard-section" id="escrows">
+                    <div class="nyumba-table-container">
+                        <div class="nyumba-table-header">
+                            <h3 class="nyumba-table-title">Escrow Transactions</h3>
+                        </div>
+                        <table class="nyumba-table">
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Listing</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Expires</th>
+                                </tr>
+                            </thead>
+                            <tbody id="escrowsTableBody">
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="nyumba-loading">
+                                            <div class="nyumba-spinner"></div>
+                                            <span>Loading escrow transactions...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Pending Agents Section (Admin Only) -->
+                <section class="nyumba-dashboard-section" id="pending-agents">
+                    <div class="nyumba-table-container">
+                        <div class="nyumba-table-header">
+                            <h3 class="nyumba-table-title">Pending Agent Approvals</h3>
+                        </div>
+                        <table class="nyumba-table">
+                            <thead>
+                                <tr>
+                                    <th>Agent Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Business</th>
+                                    <th>Applied</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pendingAgentsTableBody">
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="nyumba-loading">
+                                            <div class="nyumba-spinner"></div>
+                                            <span>Loading pending agents...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Pending Listings Section (Admin Only) -->
+                <section class="nyumba-dashboard-section" id="pending-listings">
+                    <div class="nyumba-table-container">
+                        <div class="nyumba-table-header">
+                            <h3 class="nyumba-table-title">Pending Listing Approvals</h3>
+                        </div>
+                        <table class="nyumba-table">
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>Agent</th>
+                                    <th>Location</th>
+                                    <th>Price</th>
+                                    <th>Submitted</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pendingListingsTableBody">
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="nyumba-loading">
+                                            <div class="nyumba-spinner"></div>
+                                            <span>Loading pending listings...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Settings Section -->
+                <section class="nyumba-dashboard-section" id="settings">
+                    <div class="nyumba-form-container">
+                        <h3 class="nyumba-table-title">Account Settings</h3>
+                        <form id="settingsForm">
+                            <div class="nyumba-form-grid">
+                                <div class="nyumba-form-group">
+                                    <label class="nyumba-form-label">Business Name</label>
+                                    <input type="text" class="nyumba-form-input" name="businessName" id="settingsBusinessName">
+                                </div>
+                                <div class="nyumba-form-group">
+                                    <label class="nyumba-form-label">Phone Number</label>
+                                    <input type="tel" class="nyumba-form-input" name="phone" id="settingsPhone">
+                                </div>
+                            </div>
+                            
+                            <div class="nyumba-form-group">
+                                <label class="nyumba-form-label">Email Address</label>
+                                <input type="email" class="nyumba-form-input" name="email" id="settingsEmail" readonly>
+                            </div>
+                            
+                            <div class="nyumba-form-buttons">
+                                <button type="submit" class="nyumba-btn nyumba-btn-primary">
+                                    <i class="fas fa-save"></i> Save Settings
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                
+            </div>
+        </main>
+    </div>
+    
+    <!-- NyumbaSure Dashboard JavaScript -->
+    <script>
+        const NyumbaDashboard = {
+            API_BASE: '/api/nyumba',
+            BACKEND_URL: window.BACKEND_URL || 'https://ecoloop-backend.onrender.com',
+            currentUser: null,
+            userRole: null,
+            
+            init() {
+                console.log('🏠 Initializing NyumbaSure Dashboard...');
+                
+                // Get current user
+                this.currentUser = window.currentUser || null;
+                this.userRole = this.currentUser?.role || null;
+                
+                if (!this.currentUser) {
+                    this.redirectToLogin();
+                    return;
+                }
+                
+                this.setupEventListeners();
+                this.updateUserInfo();
+                this.setupNavigation();
+                this.loadDashboardData();
+                
+                console.log('✅ NyumbaSure Dashboard initialized');
+            },
+            
+            setupEventListeners() {
+                // Navigation clicks
+                document.querySelectorAll('.nyumba-nav-item[data-section]').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const section = e.target.dataset.section;
+                        this.showSection(section);
+                    });
+                });
+                
+                // Create listing form
+                const createForm = document.getElementById('createListingForm');
+                if (createForm) {
+                    createForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.createListing(e.target);
+                    });
+                }
+                
+                // Settings form
+                const settingsForm = document.getElementById('settingsForm');
+                if (settingsForm) {
+                    settingsForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.saveSettings(e.target);
+                    });
+                }
+            },
+            
+            setupNavigation() {
+                // Show/hide navigation items based on user role
+                if (this.userRole === 'seller') {
+                    // Agents can see their listings and create new ones
+                    document.getElementById('navListings').style.display = 'block';
+                    document.getElementById('navCreateListing').style.display = 'block';
+                    document.getElementById('navReports').style.display = 'none';
+                    document.getElementById('navEscrows').style.display = 'none';
+                    document.getElementById('navPendingAgents').style.display = 'none';
+                    document.getElementById('navPendingListings').style.display = 'none';
+                } else if (this.userRole === 'admin') {
+                    // Admins can see everything
+                    document.querySelectorAll('.nyumba-nav-item').forEach(item => {
+                        item.style.display = 'block';
+                    });
+                }
+            },
+            
+            showSection(sectionId) {
+                // Hide all sections
+                document.querySelectorAll('.nyumba-dashboard-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show selected section
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Update navigation
+                document.querySelectorAll('.nyumba-nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                const activeNav = document.querySelector(`[data-section="${sectionId}"]`);
+                if (activeNav) {
+                    activeNav.classList.add('active');
+                }
+                
+                // Update page title
+                const titles = {
+                    'overview': 'Dashboard Overview',
+                    'listings': 'My Listings',
+                    'create-listing': 'Create Listing',
+                    'reports': 'Reported Listings',
+                    'escrows': 'Escrow Transactions',
+                    'pending-agents': 'Pending Agent Approvals',
+                    'pending-listings': 'Pending Listing Approvals',
+                    'settings': 'Account Settings'
+                };
+                
+                document.getElementById('pageTitle').textContent = titles[sectionId] || 'Dashboard';
+                
+                // Load section-specific data
+                this.loadSectionData(sectionId);
+            },
+            
+            async loadSectionData(sectionId) {
+                switch (sectionId) {
+                    case 'overview':
+                        await this.loadOverviewData();
+                        break;
+                    case 'listings':
+                        await this.loadListings();
+                        break;
+                    case 'reports':
+                        await this.loadReports();
+                        break;
+                    case 'escrows':
+                        await this.loadEscrows();
+                        break;
+                    case 'pending-agents':
+                        await this.loadPendingAgents();
+                        break;
+                    case 'pending-listings':
+                        await this.loadPendingListings();
+                        break;
+                    case 'settings':
+                        this.loadSettings();
+                        break;
+                }
+            },
+            
+            async loadDashboardData() {
+                await this.loadOverviewData();
+            },
+            
+            async loadOverviewData() {
+                try {
+                    const response = await fetch(`${this.API_BASE}/stats`, {
+                        credentials: 'include'
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        const stats = data.stats;
+                        document.getElementById('totalListings').textContent = stats.totalListings || 0;
+                        document.getElementById('totalTransactions').textContent = stats.totalTransactions || 0;
+                        document.getElementById('totalRevenue').textContent = this.formatCurrency(stats.totalRevenue || 0);
+                        document.getElementById('totalUsers').textContent = stats.totalUsers || 0;
+                        
+                        // Load recent activity
+                        this.loadRecentActivity();
+                    }
+                } catch (error) {
+                    console.error('Failed to load dashboard stats:', error);
+                }
+            },
+            
+            async loadRecentActivity() {
+                try {
+                    const response = await fetch(`${this.API_BASE}/listings?limit=5`, {
+                        credentials: 'include'
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        const activityHtml = data.listings.map(listing => `
+                            <div style="padding: 15px; border-bottom: 1px solid #f0f0f0;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>${listing.title}</strong>
+                                        <div style="color: #666; font-size: 0.9rem; margin-top: 5px;">
+                                            ${listing.location.area}, ${listing.location.city} • ${this.formatCurrency(listing.price)}/month
+                                        </div>
+                                    </div>
+                                    <span class="nyumba-status-badge ${listing.status}">
+                                        ${listing.status}
+                                    </span>
+                                </div>
+                            </div>
+                        `).join('');
+                        
+                        document.getElementById('recentActivity').innerHTML = activityHtml || '<p style="padding: 20px; text-align: center; color: #666;">No recent activity</p>';
+                    }
+                } catch (error) {
+                    console.error('Failed to load recent activity:', error);
+                }
+            },
+            
+            async loadListings() {
+                try {
+                    const response = await fetch(`${this.API_BASE}/listings`, {
+                        credentials: 'include'
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        const listingsHtml = data.listings.map(listing => `
+                            <tr>
+                                <td>
+                                    <div>
+                                        <strong>${listing.title}</strong>
+                                        <div style="color: #666; font-size: 0.9rem;">${listing.propertyType}</div>
+                                    </div>
+                                </td>
+                                <td>${listing.location.area}, ${listing.location.city}</td>
+                                <td>${this.formatCurrency(listing.price)}/month</td>
+                                <td>
+                                    <span class="nyumba-status-badge ${listing.status}">
+                                        ${listing.status}
+                                    </span>
+                                </td>
+                                <td>${this.formatDate(listing.createdAt)}</td>
+                                <td>
+                                    <div class="nyumba-action-buttons">
+                                        <button class="nyumba-action-btn edit" onclick="nyumbaDashboard.editListing('${listing._id}')" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="nyumba-action-btn delete" onclick="nyumbaDashboard.deleteListing('${listing._id}')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('');
+                        
+                        document.getElementById('listingsTableBody').innerHTML = listingsHtml || '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No listings found</td></tr>';
+                    }
+                } catch (error) {
+                    console.error('Failed to load listings:', error);
+                    document.getElementById('listingsTableBody').innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #f44336;">Failed to load listings</td></tr>';
+                }
+            },
+            
+            async createListing(form) {
+                const formData = new FormData(form);
+                const listingData = {
+                    title: formData.get('title'),
+                    propertyType: formData.get('propertyType'),
+                    price: parseInt(formData.get('price')),
+                    deposit: parseInt(formData.get('deposit')),
+                    serviceCharge: parseInt(formData.get('serviceCharge')) || 0,
+                    estUtilities: parseInt(formData.get('estUtilities')) || 0,
+                    location: {
+                        city: formData.get('city'),
+                        area: formData.get('area'),
+                        address: formData.get('address')
+                    },
+                    description: formData.get('description'),
+                    furnished: formData.has('furnished'),
+                    amenities: formData.getAll('amenities')
+                };
+                
+                try {
+                    const response = await fetch(`${this.API_BASE}/listings`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(listingData),
+                        credentials: 'include'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.showToast('Listing created successfully!', 'success');
+                        form.reset();
+                        this.showSection('listings');
+                    } else {
+                        this.showToast(data.message || 'Failed to create listing', 'error');
+                    }
+                } catch (error) {
+                    console.error('Failed to create listing:', error);
+                    this.showToast('Failed to create listing', 'error');
+                }
+            },
+            
+            async deleteListing(listingId) {
+                if (!confirm('Are you sure you want to delete this listing?')) {
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`${this.API_BASE}/listings/${listingId}`, {
+                        method: 'DELETE',
+                        credentials: 'include'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.showToast('Listing deleted successfully', 'success');
+                        this.loadListings();
+                    } else {
+                        this.showToast(data.message || 'Failed to delete listing', 'error');
+                    }
+                } catch (error) {
+                    console.error('Failed to delete listing:', error);
+                    this.showToast('Failed to delete listing', 'error');
+                }
+            },
+            
+            async loadReports() {
+                try {
+                    const response = await fetch(`${this.API_BASE}/reports`, {
+                        credentials: 'include'
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        const reportsHtml = data.reports.map(report => `
+                            <tr>
+                                <td>${report.listingTitle}</td>
+                                <td>${report.reporterEmail}</td>
+                                <td>${report.reason}</td>
+                                <td>${this.formatDate(report.createdAt)}</td>
+                                <td>
+                                    <span class="nyumba-status-badge ${report.resolved ? 'approved' : 'pending'}">
+                                        ${report.resolved ? 'Resolved' : 'Pending'}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="nyumba-action-buttons">
+                                        ${!report.resolved ? `
+                                            <button class="nyumba-action-btn approve" onclick="nyumbaDashboard.resolveReport('${report._id}')" title="Mark as Resolved">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('');
+                        
+                        document.getElementById('reportsTableBody').innerHTML = reportsHtml || '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No reports found</td></tr>';
+                    }
+                } catch (error) {
+                    console.error('Failed to load reports:', error);
+                }
+            },
+            
+            async loadPendingAgents() {
+                try {
+                    const response = await fetch(`${this.API_BASE}/agents/pending`, {
+                        credentials: 'include'
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        const agentsHtml = data.agents.map(agent => `
+                            <tr>
+                                <td>${agent.name}</td>
+                                <td>${agent.email}</td>
+                                <td>${agent.phone}</td>
+                                <td>${agent.businessName || 'N/A'}</td>
+                                <td>${this.formatDate(agent.createdAt)}</td>
+                                <td>
+                                    <div class="nyumba-action-buttons">
+                                        <button class="nyumba-action-btn approve" onclick="nyumbaDashboard.approveAgent('${agent._id}')" title="Approve">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <button class="nyumba-action-btn reject" onclick="nyumbaDashboard.rejectAgent('${agent._id}')" title="Reject">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('');
+                        
+                        document.getElementById('pendingAgentsTableBody').innerHTML = agentsHtml || '<tr><td colspan="6" style="text-align: center; padding: 40px; color: #666;">No pending agents</td></tr>';
+                    }
+                } catch (error) {
+                    console.error('Failed to load pending agents:', error);
+                }
+            },
+            
+            async approveAgent(agentId) {
+                try {
+                    const response = await fetch(`${this.API_BASE}/agents/${agentId}/approve`, {
+                        method: 'POST',
+                        credentials: 'include'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.showToast('Agent approved successfully', 'success');
+                        this.loadPendingAgents();
+                    } else {
+                        this.showToast(data.message || 'Failed to approve agent', 'error');
+                    }
+                } catch (error) {
+                    console.error('Failed to approve agent:', error);
+                    this.showToast('Failed to approve agent', 'error');
+                }
+            },
+            
+            async rejectAgent(agentId) {
+                if (!confirm('Are you sure you want to reject this agent?')) {
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`${this.API_BASE}/agents/${agentId}/reject`, {
+                        method: 'POST',
+                        credentials: 'include'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.showToast('Agent rejected', 'success');
+                        this.loadPendingAgents();
+                    } else {
+                        this.showToast(data.message || 'Failed to reject agent', 'error');
+                    }
+                } catch (error) {
+                    console.error('Failed to reject agent:', error);
+                    this.showToast('Failed to reject agent', 'error');
+                }
+            },
+            
+            updateUserInfo() {
+                if (this.currentUser) {
+                    document.getElementById('userName').textContent = 
+                        this.currentUser.name || this.currentUser.firstName || 'User';
+                    
+                    const avatar = document.getElementById('userAvatar');
+                    if (avatar) {
+                        avatar.textContent = (this.currentUser.name || this.currentUser.firstName || 'U').charAt(0).toUpperCase();
+                    }
+                }
+            },
+            
+            loadSettings() {
+                if (this.currentUser) {
+                    document.getElementById('settingsBusinessName').value = 
+                        this.currentUser.businessName || this.currentUser.storeName || '';
+                    document.getElementById('settingsPhone').value = this.currentUser.phone || '';
+                    document.getElementById('settingsEmail').value = this.currentUser.email || '';
+                }
+            },
+            
+            async saveSettings(form) {
+                const formData = new FormData(form);
+                const settingsData = {
+                    businessName: formData.get('businessName'),
+                    phone: formData.get('phone')
+                };
+                
+                try {
+                    const response = await fetch(`${this.API_BASE}/agents/profile`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(settingsData),
+                        credentials: 'include'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.showToast('Settings saved successfully', 'success');
+                    } else {
+                        this.showToast(data.message || 'Failed to save settings', 'error');
+                    }
+                } catch (error) {
+                    console.error('Failed to save settings:', error);
+                    this.showToast('Failed to save settings', 'error');
+                }
+            },
+            
+            showToast(message, type = 'info') {
+                if (window.showToast) {
+                    window.showToast(message, type);
+                    return;
+                }
+                
+                // Fallback toast
+                const toast = document.createElement('div');
+                toast.className = `nyumba-toast nyumba-toast-${type}`;
+                toast.textContent = message;
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    z-index: 10000;
+                    animation: slideInRight 0.3s ease;
+                `;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.animation = 'slideOutRight 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            },
+            
+            formatCurrency(amount) {
+                return new Intl.NumberFormat('en-KE', {
+                    style: 'currency',
+                    currency: 'KES',
+                    minimumFractionDigits: 0
+                }).format(amount);
+            },
+            
+            formatDate(dateString) {
+                return new Intl.DateTimeFormat('en-KE', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                }).format(new Date(dateString));
+            },
+            
+            redirectToLogin() {
+                window.location.href = '/login?redirect=' + encodeURIComponent(window.location.href);
+            },
+            
+            logout() {
+                if (confirm('Are you sure you want to logout?')) {
+                    // Clear session and redirect
+                    window.location.href = '/logout';
+                }
+            }
+        };
+        
+        // Initialize dashboard when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            NyumbaDashboard.init();
+            
+            // Expose to global scope
+            window.nyumbaDashboard = NyumbaDashboard;
+        });
+    </script>
+</body>
+</html>

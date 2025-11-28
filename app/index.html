@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Optimized WebView viewport settings for Android -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>EcoLoop Kenya - Sustainable Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/mobile-app.css">
+    <link rel="stylesheet" href="assets/css/productLayer.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+</head>
+<body>
+    <!-- Mobile App Optimized Header -->
+    <header class="mobile-header">
+        <div class="mobile-top-bar">
+            <div class="mobile-header-content">
+                <div class="mobile-logo">
+                    <i class="fas fa-recycle"></i>
+                    <span>EcoLoop Kenya</span>
+                </div>
+                <div class="mobile-header-icons">
+                    <button class="mobile-icon-btn" onclick="openMessages()" aria-label="Messages">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                    <button class="mobile-icon-btn" onclick="showContactInfo()" aria-label="Contact">
+                        <i class="fas fa-phone"></i>
+                    </button>
+                    <button class="mobile-icon-btn" onclick="openSellerDashboard()" aria-label="Seller Dashboard">
+                        <i class="fas fa-store"></i>
+                    </button>
+                    <button class="mobile-icon-btn" onclick="openAdminPanel()" aria-label="Admin">
+                        <i class="fas fa-user-shield"></i>
+                    </button>
+                    <button class="mobile-icon-btn cart-btn" onclick="openCart()" aria-label="Shopping Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Search Bar -->
+        <div class="mobile-search-container">
+            <form class="mobile-search-form" onsubmit="performSearch(event)">
+                <div class="mobile-search-input-wrapper">
+                    <input type="text" class="mobile-search-input" placeholder="Search eco-friendly products..." id="mobileSearchInput">
+                    <button type="submit" class="mobile-search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <select class="mobile-category-select" id="mobileCategorySelect">
+                    <option value="">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="home">Home & Kitchen</option>
+                    <option value="sports">Sports</option>
+                    <option value="books">Books</option>
+                </select>
+            </form>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="mobile-main">
+        <!-- Mobile Welcome Panel -->
+        <section class="mobile-welcome-panel">
+            <div class="mobile-welcome-content">
+                <h1 class="mobile-welcome-title">WELCOME TO ECOLOOP KENYA</h1>
+                <p class="mobile-welcome-subtitle">Your sustainable marketplace for eco-friendly products</p>
+                <button class="mobile-cta-button" onclick="scrollToProducts()">
+                    <i class="fas fa-shopping-bag"></i>
+                    START SHOPPING
+                </button>
+            </div>
+            <!-- Animated Background Canvas -->
+            <div id="ecoloopProductLayer">
+                <canvas id="mobileProductCanvas"></canvas>
+            </div>
+        </section>
+
+        <!-- Mobile Seller Dashboard -->
+        <section class="mobile-seller-dashboard" id="mobileSellerSection">
+            <h2 class="mobile-section-title">Seller Dashboard</h2>
+            <div class="mobile-stats-grid">
+                <div class="mobile-stat-card">
+                    <i class="fas fa-box mobile-stat-icon"></i>
+                    <div class="mobile-stat-content">
+                        <span class="mobile-stat-number" id="mobileProductCount">0</span>
+                        <span class="mobile-stat-label">PRODUCTS</span>
+                    </div>
+                </div>
+                <div class="mobile-stat-card">
+                    <i class="fas fa-shopping-bag mobile-stat-icon"></i>
+                    <div class="mobile-stat-content">
+                        <span class="mobile-stat-number" id="mobileOrderCount">0</span>
+                        <span class="mobile-stat-label">ORDERS</span>
+                    </div>
+                </div>
+                <div class="mobile-stat-card">
+                    <i class="fas fa-chart-line mobile-stat-icon"></i>
+                    <div class="mobile-stat-content">
+                        <span class="mobile-stat-number" id="mobileRevenue">KES 0</span>
+                        <span class="mobile-stat-label">REVENUE</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-dashboard-actions">
+                <button class="mobile-action-btn primary" onclick="openFullDashboard()">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Full Dashboard
+                </button>
+                <button class="mobile-action-btn secondary" onclick="addNewProduct()">
+                    <i class="fas fa-plus"></i>
+                    Add Product
+                </button>
+                <button class="mobile-action-btn secondary" onclick="viewOrders()">
+                    <i class="fas fa-list"></i>
+                    View Orders
+                </button>
+            </div>
+        </section>
+
+        <!-- Mobile Shop by Category -->
+        <section class="mobile-categories" id="mobileCategoriesSection">
+            <h2 class="mobile-section-title">Shop by Category</h2>
+            <div class="mobile-category-grid">
+                <div class="mobile-category-card" onclick="browseCategory('electronics')">
+                    <div class="mobile-category-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3 class="mobile-category-name">Electronics</h3>
+                    <span class="mobile-category-count">12 products</span>
+                </div>
+                <div class="mobile-category-card" onclick="browseCategory('fashion')">
+                    <div class="mobile-category-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3 class="mobile-category-name">Fashion</h3>
+                    <span class="mobile-category-count">8 products</span>
+                </div>
+                <div class="mobile-category-card" onclick="browseCategory('gaming')">
+                    <div class="mobile-category-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="mobile-category-name">Gaming</h3>
+                    <span class="mobile-category-count">15 products</span>
+                </div>
+                <div class="mobile-category-card" onclick="browseCategory('home')">
+                    <div class="mobile-category-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="mobile-category-name">Home & Kitchen</h3>
+                    <span class="mobile-category-count">20 products</span>
+                </div>
+                <div class="mobile-category-card" onclick="browseCategory('sports')">
+                    <div class="mobile-category-icon">
+                        <i class="fas fa-football-ball"></i>
+                    </div>
+                    <h3 class="mobile-category-name">Sports</h3>
+                    <span class="mobile-category-count">10 products</span>
+                </div>
+                <div class="mobile-category-card" onclick="browseCategory('books')">
+                    <div class="mobile-category-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="mobile-category-name">Books</h3>
+                    <span class="mobile-category-count">25 products</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mobile Featured Products -->
+        <section class="mobile-featured-products" id="mobileProductsSection">
+            <h2 class="mobile-section-title">Featured Products</h2>
+            <div class="mobile-products-grid" id="mobileProductsGrid">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+            <div class="mobile-load-more">
+                <button class="mobile-load-more-btn" onclick="loadMoreProducts()">
+                    <i class="fas fa-plus-circle"></i>
+                    Load More Products
+                </button>
+            </div>
+        </section>
+
+        <!-- Mobile NyumbaSure Panel -->
+        <section class="mobile-nyumbasure-panel">
+            <div class="mobile-nyumbasure-content">
+                <div class="mobile-nyumbasure-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="mobile-nyumbasure-text">
+                    <h3 class="mobile-nyumbasure-title">NyumbaSure Protection</h3>
+                    <p class="mobile-nyumbasure-description">Buy with confidence - protected transactions and quality guarantees</p>
+                </div>
+                <button class="mobile-nyumbasure-btn" onclick="learnMoreAboutNyumbaSure()">
+                    Learn More
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mobile Footer -->
+    <footer class="mobile-footer">
+        <div class="mobile-footer-content">
+            <div class="mobile-footer-section">
+                <h4 class="mobile-footer-title">About EcoLoop</h4>
+                <p class="mobile-footer-text">Your trusted marketplace for sustainable and eco-friendly products in Kenya.</p>
+            </div>
+            <div class="mobile-footer-section">
+                <h4 class="mobile-footer-title">Quick Links</h4>
+                <ul class="mobile-footer-links">
+                    <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                    <li><a href="#" onclick="showPage('terms')">Terms</a></li>
+                    <li><a href="#" onclick="showPage('privacy')">Privacy</a></li>
+                </ul>
+            </div>
+            <div class="mobile-footer-section">
+                <h4 class="mobile-footer-title">Connect</h4>
+                <div class="mobile-social-links">
+                    <a href="#" class="mobile-social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="mobile-social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="mobile-social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="mobile-social-link"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-footer-bottom">
+            <p>&copy; 2024 EcoLoop Kenya. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Modals Container -->
+    <div id="mobileModalsContainer"></div>
+
+    <!-- Mobile App JavaScript -->
+    <script src="assets/js/mobile-app.js"></script>
+    <script src="assets/js/productLayer.js"></script>
+</body>
+</html>

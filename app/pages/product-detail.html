@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Mobile WebView optimized viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Product Details - EcoLoop Kenya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/mobile-app.css">
+    <style>
+        /* Mobile product detail specific styles */
+        .mobile-product-detail {
+            padding: 140px 15px 20px;
+            min-height: 100vh;
+        }
+        
+        .mobile-product-detail-header {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .mobile-breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .mobile-product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .mobile-product-image-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-main-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: var(--bg-light);
+        }
+        
+        .mobile-image-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .mobile-thumbnail {
+            width: 100%;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-thumbnail.active,
+        .mobile-thumbnail:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .mobile-product-info-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-product-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+        
+        .mobile-product-price-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .mobile-product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .mobile-product-discount {
+            background: #ffebee;
+            color: #e91e63;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .mobile-product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .mobile-stars {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .mobile-star {
+            color: #ffc107;
+            font-size: 14px;
+        }
+        
+        .mobile-rating-text {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .mobile-product-description {
+            margin-bottom: 20px;
+        }
+        
+        .mobile-description-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+        
+        .mobile-description-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-light);
+        }
+        
+        .mobile-product-specs {
+            margin-bottom: 20px;
+        }
+        
+        .mobile-specs-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+        
+        .mobile-specs-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .mobile-spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        
+        .mobile-spec-label {
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .mobile-spec-value {
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+        
+        .mobile-seller-info {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .mobile-seller-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .mobile-seller-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .mobile-seller-name {
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+        
+        .mobile-seller-rating {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .mobile-action-section {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            border-top: 1px solid #eee;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        
+        .mobile-action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .mobile-buy-now-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-add-cart-btn {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .mobile-action-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .mobile-reviews-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .mobile-reviews-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+        
+        .mobile-write-review-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .mobile-review-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-review-item:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .mobile-reviewer-name {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .mobile-review-date {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .mobile-review-rating {
+            margin-bottom: 8px;
+        }
+        
+        .mobile-review-text {
+            font-size: 14px;
+            line-height: 1.4;
+            color: var(--text-dark);
+        }
+        
+        /* Quantity selector */
+        .mobile-quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .mobile-quantity-label {
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+        
+        .mobile-quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: 5px;
+        }
+        
+        .mobile-quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-dark);
+        }
+        
+        .mobile-quantity-input {
+            width: 50px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 360px) {
+            .mobile-product-detail {
+                padding: 140px 10px 20px;
+            }
+            
+            .mobile-action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .mobile-image-thumbnails {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Loading state */
+        .mobile-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            color: #666;
+        }
+        
+        .mobile-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="mobile-top-bar">
+            <div class="mobile-header-content">
+                <button class="mobile-icon-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="mobile-logo">
+                    <i class="fas fa-recycle"></i>
+                    <span>EcoLoop Kenya</span>
+                </div>
+                <div class="mobile-header-icons">
+                    <button class="mobile-icon-btn cart-btn" onclick="openCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Product Detail Content -->
+    <main class="mobile-product-detail">
+        <!-- Loading State -->
+        <div id="mobileLoadingState" class="mobile-loading">
+            <div class="mobile-spinner"></div>
+            <span>Loading product details...</span>
+        </div>
+
+        <!-- Product Content (Hidden initially) -->
+        <div id="mobileProductContent" style="display: none;">
+            <!-- Breadcrumb -->
+            <div class="mobile-breadcrumb">
+                <a href="../index.html">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="#" onclick="goBack()">Products</a>
+                <i class="fas fa-chevron-right"></i>
+                <span id="mobileBreadcrumbName">Product Details</span>
+            </div>
+
+            <!-- Product Detail Grid -->
+            <div class="mobile-product-detail-grid">
+                <!-- Product Images -->
+                <div class="mobile-product-image-section">
+                    <img id="mobileMainImage" class="mobile-main-image" src="../assets/images/placeholder-product.jpg" alt="Product">
+                    <div class="mobile-image-thumbnails" id="mobileThumbnails">
+                        <!-- Thumbnails will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Product Information -->
+                <div class="mobile-product-info-section">
+                    <h1 id="mobileProductTitle" class="mobile-product-title">Loading...</h1>
+                    
+                    <div class="mobile-product-price-section">
+                        <span id="mobileProductPrice" class="mobile-product-price">KES 0</span>
+                        <span id="mobileProductDiscount" class="mobile-product-discount" style="display: none;">-20%</span>
+                    </div>
+
+                    <div class="mobile-product-rating">
+                        <div class="mobile-stars" id="mobileProductStars">
+                            <!-- Stars will be generated dynamically -->
+                        </div>
+                        <span class="mobile-rating-text" id="mobileRatingText">0.0 (0 reviews)</span>
+                    </div>
+
+                    <!-- Quantity Selector -->
+                    <div class="mobile-quantity-selector">
+                        <span class="mobile-quantity-label">Quantity:</span>
+                        <div class="mobile-quantity-controls">
+                            <button class="mobile-quantity-btn" onclick="decreaseQuantity()">-</button>
+                            <input type="number" id="mobileQuantityInput" class="mobile-quantity-input" value="1" min="1" max="10">
+                            <button class="mobile-quantity-btn" onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mobile-product-description">
+                        <h3 class="mobile-description-title">Description</h3>
+                        <p id="mobileProductDescription" class="mobile-description-text">Loading product description...</p>
+                    </div>
+
+                    <!-- Specifications -->
+                    <div class="mobile-product-specs">
+                        <h3 class="mobile-specs-title">Specifications</h3>
+                        <ul id="mobileSpecsList" class="mobile-specs-list">
+                            <!-- Specs will be loaded dynamically -->
+                        </ul>
+                    </div>
+
+                    <!-- Seller Information -->
+                    <div class="mobile-seller-info">
+                        <div class="mobile-seller-header">
+                            <div class="mobile-seller-avatar" id="mobileSellerAvatar">S</div>
+                            <div>
+                                <div id="mobileSellerName" class="mobile-seller-name">Loading Seller...</div>
+                                <div id="mobileSellerRating" class="mobile-seller-rating">0.0 rating</div>
+                            </div>
+                        </div>
+                        <button class="mobile-action-btn secondary" onclick="viewSellerProfile()" style="width: 100%;">
+                            <i class="fas fa-store"></i>
+                            View Seller Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="mobile-reviews-section">
+                <div class="mobile-reviews-header">
+                    <h3 class="mobile-reviews-title">Customer Reviews</h3>
+                    <button class="mobile-write-review-btn" onclick="writeReview()">Write Review</button>
+                </div>
+                <div id="mobileReviewsList">
+                    <!-- Reviews will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Fixed Action Bar -->
+    <div class="mobile-action-section">
+        <div class="mobile-action-buttons">
+            <button class="mobile-buy-now-btn" onclick="buyNow()">
+                Buy Now
+            </button>
+            <button class="mobile-add-cart-btn" onclick="addToCart()">
+                <i class="fas fa-cart-plus"></i>
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Modals Container -->
+    <div id="mobileModalsContainer"></div>
+
+    <!-- JavaScript -->
+    <script src="../assets/js/mobile-app.js"></script>
+    <script>
+        // Product detail specific JavaScript
+        let currentProduct = null;
+        let currentQuantity = 1;
+
+        // Initialize product detail page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProductDetail();
+        });
+
+        function loadProductDetail() {
+            // Get product ID from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id') || '1';
+            
+            // Load product data
+            loadProductData(productId);
+        }
+
+        async function loadProductData(productId) {
+            try {
+                // Try to fetch from API first
+                const response = await fetch(`../api/products/${productId}`);
+                if (response.ok) {
+                    currentProduct = await response.json();
+                } else {
+                    // Fallback to mock data
+                    currentProduct = getMockProductData(productId);
+                }
+            } catch (error) {
+                // Fallback to mock data
+                currentProduct = getMockProductData(productId);
+            }
+            
+            renderProductDetail();
+        }
+
+        function getMockProductData(productId) {
+            return {
+                id: productId,
+                name: 'Premium Wireless Headphones',
+                price: '2,500',
+                originalPrice: '3,000',
+                description: 'Experience premium sound quality with these eco-friendly wireless headphones. Made from recycled materials with exceptional comfort and battery life.',
+                images: [
+                    '../assets/images/headphones.jpg',
+                    '../assets/images/headphones2.jpg',
+                    '../assets/images/headphones3.jpg',
+                    '../assets/images/headphones4.jpg'
+                ],
+                rating: 4.5,
+                reviews: 128,
+                category: 'Electronics',
+                brand: 'EcoSound',
+                color: 'Black',
+                weight: '250g',
+                battery: '40 hours',
+                connectivity: 'Bluetooth 5.0',
+                seller: {
+                    id: 'seller1',
+                    name: 'EcoSound Store',
+                    rating: 4.8,
+                    avatar: 'ES'
+                },
+                specs: [
+                    { label: 'Brand', value: 'EcoSound' },
+                    { label: 'Model', value: 'Eco-WH100' },
+                    { label: 'Color', value: 'Black' },
+                    { label: 'Weight', value: '250g' },
+                    { label: 'Battery Life', value: '40 hours' },
+                    { label: 'Connectivity', value: 'Bluetooth 5.0' },
+                    { label: 'Warranty', value: '2 Years' }
+                ],
+                reviews: [
+                    {
+                        id: 1,
+                        name: 'John Doe',
+                        rating: 5,
+                        date: '2024-01-15',
+                        text: 'Excellent sound quality and very comfortable to wear. Love that they are made from recycled materials!'
+                    },
+                    {
+                        id: 2,
+                        name: 'Jane Smith',
+                        rating: 4,
+                        date: '2024-01-10',
+                        text: 'Great headphones for the price. Battery life is amazing and the sound is clear.'
+                    }
+                ]
+            };
+        }
+
+        function renderProductDetail() {
+            if (!currentProduct) return;
+
+            // Hide loading state
+            document.getElementById('mobileLoadingState').style.display = 'none';
+            document.getElementById('mobileProductContent').style.display = 'block';
+
+            // Update breadcrumb
+            document.getElementById('mobileBreadcrumbName').textContent = currentProduct.name;
+
+            // Update product info
+            document.getElementById('mobileProductTitle').textContent = currentProduct.name;
+            document.getElementById('mobileProductPrice').textContent = `KES ${currentProduct.price}`;
+            document.getElementById('mobileProductDescription').textContent = currentProduct.description;
+
+            // Update discount if available
+            if (currentProduct.originalPrice && currentProduct.originalPrice !== currentProduct.price) {
+                const discount = Math.round((1 - parseFloat(currentProduct.price.replace(',', '')) / parseFloat(currentProduct.originalPrice.replace(',', ''))) * 100);
+                const discountElement = document.getElementById('mobileProductDiscount');
+                discountElement.textContent = `-${discount}%`;
+                discountElement.style.display = 'inline-block';
+            }
+
+            // Update rating
+            renderRating(currentProduct.rating, currentProduct.reviews);
+
+            // Update images
+            renderProductImages(currentProduct.images);
+
+            // Update specifications
+            renderSpecifications(currentProduct.specs);
+
+            // Update seller info
+            renderSellerInfo(currentProduct.seller);
+
+            // Update reviews
+            renderReviews(currentProduct.reviews);
+        }
+
+        function renderRating(rating, reviewCount) {
+            const starsContainer = document.getElementById('mobileProductStars');
+            const ratingText = document.getElementById('mobileRatingText');
+            
+            // Render stars
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= Math.floor(rating)) {
+                    starsHTML += '<i class="fas fa-star mobile-star"></i>';
+                } else if (i - 0.5 <= rating) {
+                    starsHTML += '<i class="fas fa-star-half-alt mobile-star"></i>';
+                } else {
+                    starsHTML += '<i class="far fa-star mobile-star"></i>';
+                }
+            }
+            starsContainer.innerHTML = starsHTML;
+            
+            // Update rating text
+            ratingText.textContent = `${rating} (${reviewCount} reviews)`;
+        }
+
+        function renderProductImages(images) {
+            const mainImage = document.getElementById('mobileMainImage');
+            const thumbnailsContainer = document.getElementById('mobileThumbnails');
+            
+            // Set main image
+            mainImage.src = images[0];
+            
+            // Render thumbnails
+            let thumbnailsHTML = '';
+            images.forEach((image, index) => {
+                const activeClass = index === 0 ? 'active' : '';
+                thumbnailsHTML += `
+                    <img src="${image}" 
+                         class="mobile-thumbnail ${activeClass}" 
+                         onclick="changeMainImage('${image}', this)"
+                         alt="Product thumbnail ${index + 1}">
+                `;
+            });
+            thumbnailsContainer.innerHTML = thumbnailsHTML;
+        }
+
+        function changeMainImage(imageSrc, thumbnail) {
+            document.getElementById('mobileMainImage').src = imageSrc;
+            
+            // Update active thumbnail
+            document.querySelectorAll('.mobile-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            thumbnail.classList.add('active');
+        }
+
+        function renderSpecifications(specs) {
+            const specsList = document.getElementById('mobileSpecsList');
+            
+            let specsHTML = '';
+            specs.forEach(spec => {
+                specsHTML += `
+                    <li class="mobile-spec-item">
+                        <span class="mobile-spec-label">${spec.label}:</span>
+                        <span class="mobile-spec-value">${spec.value}</span>
+                    </li>
+                `;
+            });
+            specsList.innerHTML = specsHTML;
+        }
+
+        function renderSellerInfo(seller) {
+            document.getElementById('mobileSellerAvatar').textContent = seller.avatar;
+            document.getElementById('mobileSellerName').textContent = seller.name;
+            document.getElementById('mobileSellerRating').textContent = `${seller.rating} rating`;
+        }
+
+        function renderReviews(reviews) {
+            const reviewsList = document.getElementById('mobileReviewsList');
+            
+            if (reviews.length === 0) {
+                reviewsList.innerHTML = '<p style="text-align: center; color: #666;">No reviews yet. Be the first to review this product!</p>';
+                return;
+            }
+            
+            let reviewsHTML = '';
+            reviews.forEach(review => {
+                const starsHTML = generateReviewStars(review.rating);
+                reviewsHTML += `
+                    <div class="mobile-review-item">
+                        <div class="mobile-review-header">
+                            <span class="mobile-reviewer-name">${review.name}</span>
+                            <span class="mobile-review-date">${formatDate(review.date)}</span>
+                        </div>
+                        <div class="mobile-review-rating">${starsHTML}</div>
+                        <p class="mobile-review-text">${review.text}</p>
+                    </div>
+                `;
+            });
+            reviewsList.innerHTML = reviewsHTML;
+        }
+
+        function generateReviewStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<i class="fas fa-star mobile-star"></i>';
+                } else {
+                    stars += '<i class="far fa-star mobile-star"></i>';
+                }
+            }
+            return stars;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        // Quantity functions
+        function increaseQuantity() {
+            const input = document.getElementById('mobileQuantityInput');
+            const currentValue = parseInt(input.value);
+            if (currentValue < 10) {
+                input.value = currentValue + 1;
+                currentQuantity = currentValue + 1;
+            }
+        }
+
+        function decreaseQuantity() {
+            const input = document.getElementById('mobileQuantityInput');
+            const currentValue = parseInt(input.value);
+            if (currentValue > 1) {
+                input.value = currentValue - 1;
+                currentQuantity = currentValue - 1;
+            }
+        }
+
+        // Action functions
+        function addToCart() {
+            if (!currentProduct) return;
+            
+            showToast(`Added ${currentQuantity} item(s) to cart`);
+        }
+
+        function buyNow() {
+            if (!currentProduct) return;
+            
+            // Add to cart and go to checkout
+            addToCart();
+            // Redirect to checkout
+            window.location.href = 'cart-verification.html';
+        }
+
+        function viewSellerProfile() {
+            if (!currentProduct || !currentProduct.seller) return;
+            
+            // Show seller profile modal
+            const sellerContent = `
+                <div class="mobile-seller-detail">
+                    <div class="mobile-seller-avatar" style="width: 80px; height: 80px; font-size: 24px; margin: 0 auto 15px;">
+                        ${currentProduct.seller.avatar}
+                    </div>
+                    <h3>${currentProduct.seller.name}</h3>
+                    <div class="mobile-product-rating" style="justify-content: center; margin-bottom: 15px;">
+                        <div class="mobile-stars">${generateReviewStars(currentProduct.seller.rating)}</div>
+                        <span class="mobile-rating-text">${currentProduct.seller.rating} rating</span>
+                    </div>
+                    <p style="text-align: center; color: #666; margin-bottom: 20px;">
+                        Verified seller specializing in eco-friendly products
+                    </p>
+                    <button class="mobile-action-btn primary" style="width: 100%;" onclick="viewSellerProducts()">
+                        View All Products
+                    </button>
+                </div>
+            `;
+            
+            showMobileModal('Seller Profile', sellerContent);
+        }
+
+        function viewSellerProducts() {
+            closeMobileModal();
+            showToast(`Loading products from ${currentProduct.seller.name}...`);
+        }
+
+        function writeReview() {
+            const reviewContent = `
+                <form class="mobile-review-form" onsubmit="submitReview(event)">
+                    <div class="mobile-form-group">
+                        <label>Rating</label>
+                        <div class="mobile-rating-input">
+                            ${[1,2,3,4,5].map(star => `
+                                <i class="far fa-star mobile-star" onclick="setRating(${star})" data-rating="${star}"></i>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="mobile-form-group">
+                        <label>Your Review</label>
+                        <textarea name="review" required class="mobile-input" rows="4" placeholder="Share your experience with this product..."></textarea>
+                    </div>
+                    <button type="submit" class="mobile-action-btn primary">
+                        Submit Review
+                    </button>
+                </form>
+            `;
+            
+            showMobileModal('Write a Review', reviewContent);
+        }
+
+        function setRating(rating) {
+            document.querySelectorAll('.mobile-rating-input .mobile-star').forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('far');
+                    star.classList.add('fas');
+                } else {
+                    star.classList.remove('fas');
+                    star.classList.add('far');
+                }
+            });
+        }
+
+        function submitReview(event) {
+            event.preventDefault();
+            showToast('Review submitted successfully!');
+            closeMobileModal();
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Modal functions (reuse from mobile-app.js)
+        function showMobileModal(title, content) {
+            const modalContainer = document.getElementById('mobileModalsContainer');
+            
+            const modalHTML = `
+                <div class="mobile-modal" id="mobileModal">
+                    <div class="mobile-modal-content">
+                        <div class="mobile-modal-header">
+                            <h2 class="mobile-modal-title">${title}</h2>
+                            <button class="mobile-modal-close" onclick="closeMobileModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="mobile-modal-body">
+                            ${content}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modalContainer.innerHTML = modalHTML;
+            
+            setTimeout(() => {
+                document.getElementById('mobileModal').classList.add('modal-open');
+            }, 10);
+        }
+
+        function closeMobileModal() {
+            const modal = document.getElementById('mobileModal');
+            if (modal) {
+                modal.classList.remove('modal-open');
+                setTimeout(() => {
+                    document.getElementById('mobileModalsContainer').innerHTML = '';
+                }, 300);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'mobile-toast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.8);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 20px;
+                z-index: 3000;
+                font-size: 14px;
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('mobile-modal')) {
+                closeMobileModal();
+            }
+        });
+    </script>
+</body>
+</html>

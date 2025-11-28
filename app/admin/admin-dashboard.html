@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoLoop Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #f7931e;
+            --accent-color: #8e44ad;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-dark: linear-gradient(135deg, var(--dark-color) 0%, #34495e 100%);
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.15);
+            --shadow-lg: 0 8px 16px rgba(0,0,0,0.2);
+            --shadow-xl: 0 12px 24px rgba(0,0,0,0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--gradient-dark);
+            color: var(--white);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .sidebar-header {
+            padding: 30px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-logo i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .sidebar-logo span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .admin-info {
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        .admin-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 1.5rem;
+        }
+
+        .admin-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .admin-role {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 15px 25px;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+            padding-left: 30px;
+        }
+
+        .nav-item.active {
+            background: var(--primary-color);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--secondary-color);
+        }
+
+        .nav-item i {
+            width: 20px;
+            margin-right: 12px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 20px 30px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-btn {
+            background: none;
+            border: none;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .header-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .logout-btn {
+            background: var(--danger-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        /* Content Area */
+        .content {
+            padding: 30px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon.users {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+        }
+
+        .stat-icon.sellers {
+            background: rgba(23, 162, 184, 0.1);
+            color: var(--info-color);
+        }
+
+        .stat-icon.products {
+            background: rgba(255, 193, 7, 0.1);
+            color: var(--warning-color);
+        }
+
+        .stat-icon.orders {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .stat-change {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+
+        .stat-change.positive {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+        }
+
+        .stat-change.negative {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+        }
+
+        /* Tables */
+        .table-container {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .table-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: var(--white);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: var(--white);
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: var(--white);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark-color);
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-badge.active {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+        }
+
+        .status-badge.pending {
+            background: rgba(255, 193, 7, 0.1);
+            color: var(--warning-color);
+        }
+
+        .status-badge.inactive {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+        }
+
+        /* Loading Spinner */
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert.show {
+            display: flex;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        /* Mobile Responsive */
+        .mobile-menu-toggle {
+            display: none;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .header-title {
+                font-size: 1.4rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .data-table {
+                min-width: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-leaf"></i>
+                    <span>EcoLoop</span>
+                </div>
+            </div>
+
+            <div class="admin-info">
+                <div class="admin-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="admin-name" id="adminName">Admin User</div>
+                <div class="admin-role" id="adminRole">Administrator</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item" data-section="users">
+                    <i class="fas fa-users"></i>
+                    Users Management
+                </a>
+                <a href="#" class="nav-item" data-section="sellers">
+                    <i class="fas fa-store"></i>
+                    Sellers
+                </a>
+                <a href="#" class="nav-item" data-section="products">
+                    <i class="fas fa-box"></i>
+                    Products
+                </a>
+                <a href="#" class="nav-item" data-section="orders">
+                    <i class="fas fa-shopping-cart"></i>
+                    Orders
+                </a>
+                <a href="#" class="nav-item" data-section="messages">
+                    <i class="fas fa-envelope"></i>
+                    Messages
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="header-title" id="pageTitle">Dashboard</h1>
+                </div>
+
+                <div class="header-actions">
+                    <button class="header-btn" onclick="refreshData()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="header-btn" onclick="showNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span style="position: absolute; top: -5px; right: -5px; background: var(--danger-color); color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem;">3</span>
+                    </button>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content">
+                <!-- Alert Messages -->
+                <div id="alertMessage" class="alert">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="alertText"></span>
+                </div>
+
+                <!-- Dashboard Section -->
+                <section id="dashboard-section" class="content-section">
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-value" id="totalUsers">0</div>
+                            <div class="stat-label">Total Users</div>
+                            <span class="stat-change positive">+12%</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon sellers">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="stat-value" id="totalSellers">0</div>
+                            <div class="stat-label">Active Sellers</div>
+                            <span class="stat-change positive">+8%</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon products">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="stat-value" id="totalProducts">0</div>
+                            <div class="stat-label">Total Products</div>
+                            <span class="stat-change positive">+15%</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon orders">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-value" id="totalOrders">0</div>
+                            <div class="stat-label">Total Orders</div>
+                            <span class="stat-change negative">-3%</span>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2 class="table-title">Recent Activity</h2>
+                            <div class="table-actions">
+                                <button class="btn btn-primary btn-sm" onclick="exportData()">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>User</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentActivity">
+                                <tr>
+                                    <td colspan="5" class="loading">
+                                        <div class="spinner"></div>
+                                        <p>Loading recent activity...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Sellers Section -->
+                <section id="sellers-section" class="content-section" style="display: none;">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2 class="table-title">Seller Management</h2>
+                            <div class="table-actions">
+                                <select id="sellerStatusFilter" class="form-select" onchange="loadSellers()">
+                                    <option value="all">All Sellers</option>
+                                    <option value="pending">Pending Approval</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Business</th>
+                                    <th>Store</th>
+                                    <th>Applied</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sellersTable">
+                                <tr>
+                                    <td colspan="7" class="loading">
+                                        <div class="spinner"></div>
+                                        <p>Loading sellers...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Products Section -->
+                <section id="products-section" class="content-section" style="display: none;">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h2 class="table-title">Product Management</h2>
+                            <div class="table-actions">
+                                <button class="btn btn-primary btn-sm" onclick="addProduct()">
+                                    <i class="fas fa-plus"></i> Add Product
+                                </button>
+                            </div>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Seller</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable">
+                                <tr>
+                                    <td colspan="7" class="loading">
+                                        <div class="spinner"></div>
+                                        <p>Loading products...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            backendUrl: 'https://my-backend-1-jk7w.onrender.com',
+            localBackendUrl: 'http://localhost:3000',
+            sessionKey: 'ecoloop_admin_session'
+        };
+
+        // State Management
+        let isUsingLocalBackend = false;
+        let currentSection = 'dashboard';
+        let adminSession = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDashboard();
+        });
+
+        function initializeDashboard() {
+            // Check admin session
+            checkAdminSession();
+            
+            // Setup navigation
+            setupNavigation();
+            
+            // Test backend connection
+            testBackendConnection();
+            
+            // Load dashboard data
+            loadDashboardData();
+        }
+
+        // Check admin session
+        function checkAdminSession() {
+            const session = localStorage.getItem(CONFIG.sessionKey);
+            if (!session) {
+                showAlert('No session found. Redirecting to login...', 'danger');
+                setTimeout(() => {
+                    window.location.href = 'admin-login.html';
+                }, 2000);
+                return;
+            }
+
+            try {
+                adminSession = JSON.parse(session);
+                if (adminSession.expiry && adminSession.expiry < Date.now()) {
+                    // Session expired
+                    localStorage.removeItem(CONFIG.sessionKey);
+                    showAlert('Session expired. Redirecting to login...', 'danger');
+                    setTimeout(() => {
+                        window.location.href = 'admin-login.html';
+                    }, 2000);
+                    return;
+                }
+
+                // Update admin info
+                document.getElementById('adminName').textContent = adminSession.name || 'Admin User';
+                document.getElementById('adminRole').textContent = adminSession.role || 'Administrator';
+
+            } catch (error) {
+                console.error('Session parsing error:', error);
+                localStorage.removeItem(CONFIG.sessionKey);
+                window.location.href = 'admin-login.html';
+            }
+        }
+
+        // Setup navigation
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all items
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Show corresponding section
+                    const section = this.dataset.section;
+                    showSection(section);
+                });
+            });
+        }
+
+        // Show section
+        function showSection(section) {
+            currentSection = section;
+            
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.style.display = 'none';
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(`${section}-section`);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+            
+            // Update page title
+            updatePageTitle(section);
+            
+            // Load section data
+            loadSectionData(section);
+        }
+
+        // Update page title
+        function updatePageTitle(section) {
+            const titles = {
+                dashboard: 'Dashboard',
+                users: 'Users Management',
+                sellers: 'Seller Management',
+                products: 'Product Management',
+                orders: 'Order Management',
+                messages: 'Messages',
+                settings: 'Settings'
+            };
+            
+            document.getElementById('pageTitle').textContent = titles[section] || 'Dashboard';
+        }
+
+        // Test backend connection
+        async function testBackendConnection() {
+            try {
+                const response = await fetch(`${CONFIG.backendUrl}/api/test`);
+                if (response.ok) {
+                    isUsingLocalBackend = false;
+                    console.log('✅ Using deployed backend');
+                } else {
+                    throw new Error('Deployed backend not responding');
+                }
+            } catch (error) {
+                try {
+                    const response = await fetch(`${CONFIG.localBackendUrl}/api/test`);
+                    if (response.ok) {
+                        isUsingLocalBackend = true;
+                        console.log('✅ Using local backend');
+                        showAlert('Using local backend for development', 'info');
+                    } else {
+                        throw new Error('Local backend not responding');
+                    }
+                } catch (localError) {
+                    console.error('❌ No backend available');
+                    showAlert('No backend connection available', 'warning');
+                }
+            }
+        }
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/stats`);
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const stats = result.stats;
+                    document.getElementById('totalUsers').textContent = stats.totalUsers || 0;
+                    document.getElementById('totalSellers').textContent = stats.totalSellers || 0;
+                    document.getElementById('totalProducts').textContent = stats.totalProducts || 0;
+                    document.getElementById('totalOrders').textContent = stats.totalOrders || 0;
+                } else {
+                    console.error('Failed to load dashboard stats');
+                }
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+
+            // Load recent activity
+            loadRecentActivity();
+        }
+
+        // Load recent activity
+        async function loadRecentActivity() {
+            const tbody = document.getElementById('recentActivity');
+            
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/data`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    const activities = data.slice(0, 10); // Get last 10 items
+                    tbody.innerHTML = activities.map(item => `
+                        <tr>
+                            <td>${item.type || 'Unknown'}</td>
+                            <td>${item.title || item.name || 'No description'}</td>
+                            <td>${item.email || 'Unknown'}</td>
+                            <td>${new Date(item.createdAt || item.timestamp).toLocaleDateString()}</td>
+                            <td><span class="status-badge ${item.status || 'active'}">${item.status || 'Active'}</span></td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5">Failed to load activity</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading recent activity:', error);
+                tbody.innerHTML = '<tr><td colspan="5">Error loading activity</td></tr>';
+            }
+        }
+
+        // Load section data
+        function loadSectionData(section) {
+            switch (section) {
+                case 'sellers':
+                    loadSellers();
+                    break;
+                case 'products':
+                    loadProducts();
+                    break;
+                // Add more sections as needed
+            }
+        }
+
+        // Load sellers
+        async function loadSellers() {
+            const tbody = document.getElementById('sellersTable');
+            const statusFilter = document.getElementById('sellerStatusFilter').value;
+            
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const url = statusFilter !== 'all' 
+                    ? `${backendUrl}/api/admin/sellers?status=${statusFilter}`
+                    : `${backendUrl}/api/admin/sellers`;
+                    
+                const response = await fetch(url);
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const sellers = result.sellers || [];
+                    tbody.innerHTML = sellers.map(seller => {
+                        const createdDate = seller.createdAt ? new Date(seller.createdAt).toLocaleDateString() : 'Unknown';
+                        const statusClass = seller.status || 'pending';
+                        const statusText = seller.status ? seller.status.charAt(0).toUpperCase() + seller.status.slice(1) : 'Pending';
+                        
+                        let actions = '';
+                        if (seller.status === 'pending') {
+                            actions = `
+                                <button class="btn btn-success btn-sm" onclick="approveSeller('${seller._id}')" title="Approve Seller">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="rejectSeller('${seller._id}')" title="Reject Seller">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                                <button class="btn btn-info btn-sm" onclick="viewSellerDetails('${seller._id}')" title="View Details">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            `;
+                        } else if (seller.status === 'approved') {
+                            actions = `
+                                <button class="btn btn-info btn-sm" onclick="viewSellerDetails('${seller._id}')" title="View Details">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-warning btn-sm" onclick="rejectSeller('${seller._id}')" title="Reject Seller">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            `;
+                        } else {
+                            actions = `
+                                <button class="btn btn-info btn-sm" onclick="viewSellerDetails('${seller._id}')" title="View Details">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-success btn-sm" onclick="approveSeller('${seller._id}')" title="Approve Seller">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                            `;
+                        }
+                        
+                        return `
+                            <tr>
+                                <td>
+                                    <div class="seller-info">
+                                        <strong>${seller.firstName || 'Unknown'} ${seller.lastName || ''}</strong>
+                                        <br><small>${seller.phone || 'No phone'}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="email-info">
+                                        ${seller.email || 'Unknown'}
+                                        <br><small>ID: ${seller._id ? seller._id.substring(0, 8) + '...' : 'Unknown'}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="business-info">
+                                        <strong>${seller.businessName || 'No business'}</strong>
+                                        <br><small>${seller.businessType ? seller.businessType.replace('_', ' ').toUpperCase() : 'Unknown'}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="store-info">
+                                        <strong>${seller.storeName || 'No store'}</strong>
+                                        <br><small>${seller.storeCategory || 'Uncategorized'}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="date-info">
+                                        ${createdDate}
+                                        <br><small>${seller.lastLogin ? 'Last: ' + new Date(seller.lastLogin).toLocaleDateString() : 'Never logged in'}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="status-badge ${statusClass}">${statusText}</span>
+                                    ${seller.rejectionReason ? `<br><small class="text-danger">${seller.rejectionReason}</small>` : ''}
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        ${actions}
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                    
+                    if (sellers.length === 0) {
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    <i class="fas fa-info-circle"></i> No sellers found
+                                </td>
+                            </tr>
+                        `;
+                    }
+                } else {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center text-danger">
+                                <i class="fas fa-exclamation-triangle"></i> Failed to load sellers
+                            </td>
+                        </tr>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading sellers:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center text-danger">
+                            <i class="fas fa-exclamation-triangle"></i> Error loading sellers
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function viewSellerDetails(sellerId) {
+            // Show seller details modal (implement as needed)
+            showAlert(`Viewing details for seller: ${sellerId}`, 'info');
+        }
+
+        async function loadStats() {
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/stats`);
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const stats = result;
+                    document.getElementById('totalUsers').textContent = stats.totalUsers || 0;
+                    document.getElementById('totalSellers').textContent = stats.totalSellers || 0;
+                    document.getElementById('pendingSellers').textContent = stats.pendingSellers || 0;
+                    document.getElementById('totalProducts').textContent = stats.totalProducts || 0;
+                    document.getElementById('pendingProducts').textContent = stats.pendingProducts || 0;
+                    document.getElementById('totalOrders').textContent = stats.totalOrders || 0;
+                    document.getElementById('totalRevenue').textContent = 'KES ' + (stats.totalRevenue || 0).toLocaleString();
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Load products
+        async function loadProducts() {
+            const tbody = document.getElementById('productsTable');
+            
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/products`);
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    const products = result.products || [];
+                    tbody.innerHTML = products.map(product => `
+                        <tr>
+                            <td>${product.title || product.name || 'Unknown'}</td>
+                            <td>${product.category || 'Uncategorized'}</td>
+                            <td>${product.sellerName || 'Unknown'}</td>
+                            <td>KES ${product.price || 0}</td>
+                            <td>${product.stock || 0}</td>
+                            <td><span class="status-badge ${product.status || 'pending'}">${product.status || 'Pending'}</span></td>
+                            <td>
+                                <button class="btn btn-success btn-sm" onclick="approveProduct('${product._id}')">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="rejectProduct('${product._id}')">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7">No products found</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                tbody.innerHTML = '<tr><td colspan="7">Error loading products</td></tr>';
+            }
+        }
+
+        // Utility Functions
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alertMessage');
+            const alertText = document.getElementById('alertText');
+            const icon = alertDiv.querySelector('i');
+            
+            // Set alert type
+            alertDiv.className = `alert alert-${type} show`;
+            
+            // Set icon based on type
+            const icons = {
+                success: 'fas fa-check-circle',
+                danger: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            icon.className = icons[type] || icons.info;
+            
+            // Set message
+            alertText.textContent = message;
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alertDiv.classList.remove('show');
+            }, 5000);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        function refreshData() {
+            showAlert('Refreshing data...', 'info');
+            loadSectionData(currentSection);
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem(CONFIG.sessionKey);
+                showAlert('Logging out...', 'info');
+                setTimeout(() => {
+                    window.location.href = 'admin-login.html';
+                }, 1000);
+            }
+        }
+
+        function showNotifications() {
+            showAlert('You have 3 new notifications', 'info');
+        }
+
+        function exportData() {
+            showAlert('Exporting data...', 'info');
+            // Implement export functionality
+        }
+
+        function addSeller() {
+            showAlert('Add seller functionality coming soon', 'info');
+        }
+
+        function addProduct() {
+            showAlert('Add product functionality coming soon', 'info');
+        }
+
+        async function approveSeller(sellerId) {
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/sellers/${sellerId}/approve`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminEmail: adminSession.email })
+                });
+
+                if (response.ok) {
+                    showAlert('Seller approved successfully', 'success');
+                    loadSellers();
+                } else {
+                    showAlert('Failed to approve seller', 'danger');
+                }
+            } catch (error) {
+                console.error('Error approving seller:', error);
+                showAlert('Error approving seller', 'danger');
+            }
+        }
+
+        async function rejectSeller(sellerId) {
+            if (confirm('Are you sure you want to reject this seller?')) {
+                try {
+                    const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                    const response = await fetch(`${backendUrl}/api/admin/sellers/${sellerId}/reject`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ adminEmail: adminSession.email, reason: 'Rejected by admin' })
+                    });
+
+                    if (response.ok) {
+                        showAlert('Seller rejected successfully', 'success');
+                        loadSellers();
+                    } else {
+                        showAlert('Failed to reject seller', 'danger');
+                    }
+                } catch (error) {
+                    console.error('Error rejecting seller:', error);
+                    showAlert('Error rejecting seller', 'danger');
+                }
+            }
+        }
+
+        async function approveProduct(productId) {
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/products/${productId}/approve`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ adminEmail: adminSession.email })
+                });
+
+                if (response.ok) {
+                    showAlert('Product approved successfully', 'success');
+                    loadProducts();
+                } else {
+                    showAlert('Failed to approve product', 'danger');
+                }
+            } catch (error) {
+                console.error('Error approving product:', error);
+                showAlert('Error approving product', 'danger');
+            }
+        }
+
+        async function rejectProduct(productId) {
+            if (confirm('Are you sure you want to reject this product?')) {
+                try {
+                    const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                    const response = await fetch(`${backendUrl}/api/admin/products/${productId}/reject`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ adminEmail: adminSession.email, reason: 'Rejected by admin' })
+                    });
+
+                    if (response.ok) {
+                        showAlert('Product rejected successfully', 'success');
+                        loadProducts();
+                    } else {
+                        showAlert('Failed to reject product', 'danger');
+                    }
+                } catch (error) {
+                    console.error('Error rejecting product:', error);
+                    showAlert('Error rejecting product', 'danger');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

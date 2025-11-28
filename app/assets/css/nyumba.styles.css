@@ -1,0 +1,1088 @@
+/* ============================================
+   NYUMBASURE - PREMIUM URBAN HOUSING MARKETPLACE
+   Modern urban + trustworthy design language
+   ============================================ */
+
+/* CSS Variables for Urban Theme */
+:root {
+  --nyumba-primary: #2a4d3a;
+  --nyumba-secondary: #1a3d2a;
+  --nyumba-accent: #00d4aa;
+  --nyumba-accent-bright: #00ff88;
+  --nyumba-neon-cyan: #00ffff;
+  --nyumba-earth: #d4a574;
+  --nyumba-concrete: #8a8a8a;
+  --nyumba-soft-concrete: #f5f5f5;
+  --nyumba-dark: #1a1a1a;
+  --nyumba-light: #ffffff;
+  --nyumba-glass: rgba(255, 255, 255, 0.1);
+  --nyumba-glass-dark: rgba(26, 26, 26, 0.8);
+  --nyumba-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --nyumba-shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.15);
+  --nyumba-border: rgba(0, 212, 170, 0.2);
+  --nyumba-border-hover: rgba(0, 212, 170, 0.4);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .nyumba-* {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hero Section */
+.nyumba-hero {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--nyumba-primary) 0%, var(--nyumba-secondary) 50%, var(--nyumba-primary) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.nyumba-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 212, 170, 0.1) 0%, transparent 50%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="urban-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23urban-grid)"/></svg>');
+  animation: nyumbaUrbanFloat 20s ease-in-out infinite;
+}
+
+@keyframes nyumbaUrbanFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(1deg); }
+}
+
+.nyumba-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--nyumba-light);
+  max-width: 1200px;
+  padding: 0 20px;
+  animation: nyumbaFadeInUp 1s ease-out;
+}
+
+@keyframes nyumbaFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nyumba-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--nyumba-light), var(--nyumba-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 20px rgba(0, 212, 170, 0.3);
+}
+
+.nyumba-hero .subtitle {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  margin-bottom: 3rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
+}
+
+/* Search Bar */
+.nyumba-search-bar {
+  background: var(--nyumba-glass-dark);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--nyumba-border);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: var(--nyumba-shadow);
+  animation: nyumbaSlideInUp 0.8s ease-out 0.3s both;
+}
+
+@keyframes nyumbaSlideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nyumba-search-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  gap: 15px;
+  align-items: end;
+}
+
+.nyumba-search-input,
+.nyumba-search-select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  color: var(--nyumba-light);
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.nyumba-search-input::placeholder,
+.nyumba-search-select option {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.nyumba-search-input:focus,
+.nyumba-search-select:focus {
+  outline: none;
+  border-color: var(--nyumba-accent);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
+}
+
+.nyumba-search-button {
+  background: linear-gradient(135deg, var(--nyumba-accent), var(--nyumba-accent-bright));
+  border: none;
+  border-radius: 12px;
+  padding: 15px 30px;
+  color: var(--nyumba-dark);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nyumba-search-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.nyumba-search-button:hover::before {
+  left: 100%;
+}
+
+.nyumba-search-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+}
+
+/* Budget Slider */
+.nyumba-budget-slider {
+  grid-column: 1 / -1;
+  margin: 20px 0 10px;
+}
+
+.nyumba-slider-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+.nyumba-slider {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.nyumba-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--nyumba-accent);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 212, 170, 0.5);
+  transition: all 0.3s ease;
+}
+
+.nyumba-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 2px 15px rgba(0, 212, 170, 0.7);
+}
+
+/* Featured Listings */
+.nyumba-featured-section {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, var(--nyumba-soft-concrete) 0%, #e8e8e8 100%);
+}
+
+.nyumba-section-title {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--nyumba-primary);
+  margin-bottom: 3rem;
+  font-weight: 700;
+}
+
+.nyumba-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nyumba-listing-card {
+  background: var(--nyumba-light);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--nyumba-shadow);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  cursor: pointer;
+}
+
+.nyumba-listing-card:hover {
+  transform: translateY(-8px) rotateX(2deg);
+  box-shadow: var(--nyumba-shadow-hover);
+}
+
+.nyumba-listing-image {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.nyumba-listing-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.nyumba-listing-card:hover .nyumba-listing-image img {
+  transform: scale(1.1);
+}
+
+.nyumba-verified-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(135deg, var(--nyumba-accent), var(--nyumba-accent-bright));
+  color: var(--nyumba-dark);
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  animation: nyumbaPulse 2s ease-in-out infinite;
+}
+
+@keyframes nyumbaPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+.nyumba-listing-content {
+  padding: 25px;
+}
+
+.nyumba-listing-price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--nyumba-primary);
+  margin-bottom: 5px;
+}
+
+.nyumba-listing-price-period {
+  font-size: 0.9rem;
+  color: var(--nyumba-concrete);
+  font-weight: 400;
+}
+
+.nyumba-listing-title {
+  font-size: 1.3rem;
+  color: var(--nyumba-dark);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.nyumba-listing-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--nyumba-concrete);
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.nyumba-listing-specs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.nyumba-spec-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  color: var(--nyumba-concrete);
+}
+
+.nyumba-listing-utilities {
+  background: var(--nyumba-soft-concrete);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.nyumba-utility-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.nyumba-utility-label {
+  color: var(--nyumba-concrete);
+}
+
+.nyumba-utility-value {
+  color: var(--nyumba-primary);
+  font-weight: 600;
+}
+
+.nyumba-view-details-btn {
+  width: 100%;
+  background: var(--nyumba-primary);
+  color: var(--nyumba-light);
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nyumba-view-details-btn:hover {
+  background: var(--nyumba-secondary);
+  transform: translateY(-2px);
+}
+
+/* Filters Sidebar */
+.nyumba-filters-sidebar {
+  background: var(--nyumba-light);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: var(--nyumba-shadow);
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.nyumba-filter-group {
+  margin-bottom: 30px;
+}
+
+.nyumba-filter-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--nyumba-primary);
+  font-weight: 600;
+}
+
+.nyumba-filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nyumba-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nyumba-filter-option:hover {
+  color: var(--nyumba-accent);
+}
+
+.nyumba-filter-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--nyumba-accent);
+}
+
+/* M-Pesa Info Box */
+.nyumba-mpesa-info {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 30px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.nyumba-mpesa-info::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: nyumbaRotate 20s linear infinite;
+}
+
+@keyframes nyumbaRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.nyumba-mpesa-info h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.nyumba-mpesa-info p {
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+/* Flatmate Finder */
+.nyumba-flatmate-finder {
+  background: linear-gradient(135deg, var(--nyumba-neon-cyan), #00cccc);
+  color: var(--nyumba-dark);
+  padding: 30px;
+  border-radius: 20px;
+  margin: 30px 0;
+}
+
+.nyumba-flatmate-finder h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.nyumba-flatmate-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.nyumba-flatmate-input {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--nyumba-dark);
+  font-size: 14px;
+}
+
+.nyumba-flatmate-input::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.nyumba-flatmate-submit {
+  grid-column: 1 / -1;
+  background: var(--nyumba-dark);
+  color: var(--nyumba-light);
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nyumba-flatmate-submit:hover {
+  background: #000;
+  transform: translateY(-2px);
+}
+
+/* Modal Styles */
+.nyumba-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.nyumba-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nyumba-modal-content {
+  background: var(--nyumba-light);
+  border-radius: 20px;
+  max-width: 900px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: nyumbaModalSlideIn 0.4s ease-out;
+}
+
+@keyframes nyumbaModalSlideIn {
+  from {
+    transform: translateY(-50px) scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.nyumba-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--nyumba-soft-concrete);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.nyumba-modal-close:hover {
+  background: var(--nyumba-concrete);
+  transform: rotate(90deg);
+}
+
+/* Listing Details Modal */
+.nyumba-listing-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.nyumba-detail-images {
+  position: relative;
+}
+
+.nyumba-main-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.nyumba-image-thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  overflow-x: auto;
+}
+
+.nyumba-thumbnail {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.nyumba-thumbnail:hover,
+.nyumba-thumbnail.active {
+  border-color: var(--nyumba-accent);
+  transform: scale(1.05);
+}
+
+.nyumba-detail-info h2 {
+  color: var(--nyumba-primary);
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+
+.nyumba-detail-price {
+  font-size: 2.5rem;
+  color: var(--nyumba-accent);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.nyumba-detail-description {
+  color: var(--nyumba-concrete);
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.nyumba-detail-specs {
+  background: var(--nyumba-soft-concrete);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+}
+
+.nyumba-spec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.nyumba-spec-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nyumba-spec-label {
+  color: var(--nyumba-concrete);
+  font-size: 0.9rem;
+}
+
+.nyumba-spec-value {
+  color: var(--nyumba-primary);
+  font-weight: 600;
+}
+
+.nyumba-amenities {
+  margin-bottom: 25px;
+}
+
+.nyumba-amenities h4 {
+  color: var(--nyumba-primary);
+  margin-bottom: 15px;
+}
+
+.nyumba-amenity-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nyumba-amenity-tag {
+  background: var(--nyumba-glass);
+  border: 1px solid var(--nyumba-border);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: var(--nyumba-primary);
+}
+
+.nyumba-agent-info {
+  background: linear-gradient(135deg, var(--nyumba-primary), var(--nyumba-secondary));
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+}
+
+.nyumba-agent-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.nyumba-agent-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.nyumba-contact-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.nyumba-contact-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.nyumba-contact-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.nyumba-report-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nyumba-report-btn:hover {
+  background: rgba(255, 0, 0, 0.2);
+  color: white;
+}
+
+/* Report Modal */
+.nyumba-report-form {
+  padding: 30px;
+}
+
+.nyumba-form-group {
+  margin-bottom: 20px;
+}
+
+.nyumba-form-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--nyumba-primary);
+  font-weight: 600;
+}
+
+.nyumba-form-input,
+.nyumba-form-textarea {
+  width: 100%;
+  background: var(--nyumba-soft-concrete);
+  border: 1px solid var(--nyumba-concrete);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.nyumba-form-input:focus,
+.nyumba-form-textarea:focus {
+  outline: none;
+  border-color: var(--nyumba-accent);
+  box-shadow: 0 0 15px rgba(0, 212, 170, 0.2);
+}
+
+.nyumba-form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.nyumba-form-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+.nyumba-submit-btn,
+.nyumba-cancel-btn {
+  padding: 12px 30px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nyumba-submit-btn {
+  background: var(--nyumba-accent);
+  color: var(--nyumba-dark);
+  border: none;
+}
+
+.nyumba-submit-btn:hover {
+  background: var(--nyumba-accent-bright);
+  transform: translateY(-2px);
+}
+
+.nyumba-cancel-btn {
+  background: var(--nyumba-soft-concrete);
+  color: var(--nyumba-concrete);
+  border: 1px solid var(--nyumba-concrete);
+}
+
+.nyumba-cancel-btn:hover {
+  background: var(--nyumba-concrete);
+  color: white;
+}
+
+/* Map Preview */
+.nyumba-map-preview {
+  background: var(--nyumba-soft-concrete);
+  border-radius: 15px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+.nyumba-map-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nyumba-map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.nyumba-map-preview:hover .nyumba-map-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Neighborhood Snapshot */
+.nyumba-neighborhood-snapshot {
+  background: linear-gradient(135deg, var(--nyumba-earth), #c19660);
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+}
+
+.nyumba-neighborhood-title {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nyumba-neighborhood-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.nyumba-neighborhood-stat {
+  text-align: center;
+}
+
+.nyumba-stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.nyumba-stat-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.nyumba-stat-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.nyumba-stat-good { background: #4caf50; }
+.nyumba-stat-medium { background: #ff9800; }
+.nyumba-stat-poor { background: #f44336; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nyumba-hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .nyumba-search-form {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .nyumba-budget-slider {
+    grid-column: 1;
+  }
+  
+  .nyumba-featured-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .nyumba-listing-details {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .nyumba-spec-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .nyumba-contact-buttons {
+    flex-direction: column;
+  }
+  
+  .nyumba-neighborhood-stats {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .nyumba-flatmate-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .nyumba-modal-content {
+    width: 95%;
+    margin: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nyumba-hero {
+    padding: 20px;
+  }
+  
+  .nyumba-search-bar {
+    padding: 20px;
+  }
+  
+  .nyumba-featured-section {
+    padding: 40px 15px;
+  }
+  
+  .nyumba-listing-content {
+    padding: 20px;
+  }
+  
+  .nyumba-filters-sidebar {
+    padding: 20px;
+  }
+}
+
+/* Loading States */
+.nyumba-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: var(--nyumba-concrete);
+}
+
+.nyumba-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--nyumba-soft-concrete);
+  border-top: 3px solid var(--nyumba-accent);
+  border-radius: 50%;
+  animation: nyumbaSpin 1s linear infinite;
+  margin-right: 15px;
+}
+
+@keyframes nyumbaSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Empty States */
+.nyumba-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--nyumba-concrete);
+}
+
+.nyumba-empty-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.nyumba-empty-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--nyumba-primary);
+}
+
+.nyumba-empty-description {
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* Accessibility */
+.nyumba-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus States */
+.nyumba-focus-visible:focus-visible {
+  outline: 2px solid var(--nyumba-accent);
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .nyumba-hero,
+  .nyumba-search-bar,
+  .nyumba-modal,
+  .nyumba-contact-buttons {
+    display: none !important;
+  }
+  
+  .nyumba-listing-card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}

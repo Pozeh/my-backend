@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Mobile WebView optimized viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>EcoLoop Admin - Secure Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/mobile-app.css">
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #f7931e;
+            --accent-color: #8e44ad;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-dark: linear-gradient(135deg, var(--dark-color) 0%, #34495e 100%);
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.15);
+            --shadow-lg: 0 8px 16px rgba(0,0,0,0.2);
+            --shadow-xl: 0 12px 24px rgba(0,0,0,0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-dark);
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(142,68,173,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite reverse;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Login Container */
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            width: 100%;
+            max-width: 480px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.3);
+        }
+
+        /* Logo Section */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--white);
+            z-index: 1;
+            position: relative;
+        }
+
+        .brand-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .brand-subtitle {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Form Section */
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .form-subtitle {
+            color: #6c757d;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--white);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger-color);
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            z-index: 1;
+        }
+
+        .input-icon .form-input {
+            padding-left: 45px;
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        /* Remember Me */
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .form-checkbox input {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            accent-color: var(--primary-color);
+        }
+
+        .form-checkbox label {
+            color: var(--dark-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Links Section */
+        .links-section {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .link-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: underline;
+        }
+
+        .link-btn:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Admin Management Section */
+        .admin-management {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .admin-management.active {
+            display: block;
+        }
+
+        .admin-form {
+            display: grid;
+            gap: 15px;
+        }
+
+        .admin-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.show {
+            display: flex;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .login-container {
+                padding: 30px 20px;
+                max-width: 100%;
+            }
+
+            .brand-name {
+                font-size: 1.8rem;
+            }
+
+            .form-title {
+                font-size: 1.3rem;
+            }
+
+            .admin-form .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 25px 15px;
+            }
+
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .logo i {
+                font-size: 1.5rem;
+            }
+
+            .brand-name {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <div class="login-container">
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+            </div>
+            <h1 class="brand-name">EcoLoop Admin</h1>
+            <p class="brand-subtitle">Secure Management Portal</p>
+        </div>
+
+        <!-- Alert Messages -->
+        <div id="alertMessage" class="alert">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="alertText"></span>
+        </div>
+
+        <!-- Login Form -->
+        <div class="form-section" id="loginSection">
+            <h2 class="form-title">Admin Login</h2>
+            <p class="form-subtitle">Enter your credentials to access the dashboard</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="form-input" 
+                            placeholder="admin@ecoloop.com"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-input" 
+                            placeholder="Enter your password"
+                            required
+                        >
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="passwordIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-checkbox">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Remember me for 30 days</label>
+                </div>
+
+                <button type="submit" class="submit-btn" id="loginBtn">
+                    <span id="loginBtnText">Sign In</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Admin Management Section -->
+        <div class="admin-management" id="adminManagement">
+            <h3 style="margin-bottom: 15px; color: var(--dark-color);">
+                <i class="fas fa-user-shield"></i> Admin Management
+            </h3>
+            
+            <form id="adminForm" class="admin-form">
+                <div class="form-group">
+                    <label class="form-label" for="adminName">Full Name</label>
+                    <input type="text" id="adminName" class="form-input" placeholder="Enter admin name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="adminEmail">Email Address</label>
+                    <input type="email" id="adminEmail" class="form-input" placeholder="admin@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" class="form-input" placeholder="Create strong password" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="adminRole">Role</label>
+                    <select id="adminRole" class="form-input">
+                        <option value="admin">Admin</option>
+                        <option value="super_admin">Super Admin</option>
+                        <option value="moderator">Moderator</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn" id="createAdminBtn">
+                    <i class="fas fa-user-plus"></i> Create Admin Account
+                </button>
+            </form>
+        </div>
+
+        <!-- Links Section -->
+        <div class="links-section">
+            <button class="link-btn" onclick="toggleAdminManagement()">
+                <i class="fas fa-cog"></i> Admin Management
+            </button>
+            <span style="margin: 0 10px;">•</span>
+            <button class="link-btn" onclick="testConnection()">
+                <i class="fas fa-plug"></i> Test Connection
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            backendUrl: 'https://my-backend-1-jk7w.onrender.com',
+            localBackendUrl: 'http://localhost:3000',
+            sessionKey: 'ecoloop_admin_session',
+            sessionDuration: 30 * 24 * 60 * 60 * 1000 // 30 days
+        };
+
+        // State Management
+        let isUsingLocalBackend = false;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Check for existing session
+            checkExistingSession();
+            
+            // Setup form listeners
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('adminForm').addEventListener('submit', handleCreateAdmin);
+            
+            // Test backend connection
+            testBackendConnection();
+        }
+
+        // Check existing session
+        function checkExistingSession() {
+            const session = localStorage.getItem(CONFIG.sessionKey);
+            if (session) {
+                try {
+                    const sessionData = JSON.parse(session);
+                    if (sessionData.expiry > Date.now()) {
+                        // Session is valid, redirect to dashboard
+                        showAlert('Session found! Redirecting to dashboard...', 'info');
+                        setTimeout(() => {
+                            window.location.href = 'admin-dashboard.html';
+                        }, 1500);
+                        return;
+                    } else {
+                        // Session expired
+                        localStorage.removeItem(CONFIG.sessionKey);
+                    }
+                } catch (error) {
+                    console.error('Session parsing error:', error);
+                    localStorage.removeItem(CONFIG.sessionKey);
+                }
+            }
+        }
+
+        // Test backend connection
+        async function testBackendConnection() {
+            // First test deployed backend admin endpoint specifically
+            try {
+                const response = await fetch(`${CONFIG.backendUrl}/api/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: 'test@test.com', password: 'test' })
+                });
+                
+                if (response.status === 401 || response.status === 400) {
+                    // 401/400 means endpoint exists but credentials are wrong
+                    console.log('✅ Deployed admin backend available');
+                    isUsingLocalBackend = false;
+                    return;
+                } else if (response.status === 404) {
+                    throw new Error('Admin endpoint not found');
+                }
+            } catch (error) {
+                console.log('⚠️ Deployed admin backend failed, trying local backend...');
+                
+                // Try local backend admin endpoint
+                try {
+                    const localResponse = await fetch(`${CONFIG.localBackendUrl}/api/admin/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: 'test@test.com', password: 'test' })
+                    });
+                    
+                    if (localResponse.status === 401 || localResponse.status === 400) {
+                        console.log('✅ Local admin backend available');
+                        isUsingLocalBackend = true;
+                        showAlert('Using local backend for development', 'info');
+                        return;
+                    } else {
+                        throw new Error('Local admin endpoint not found');
+                    }
+                } catch (localError) {
+                    console.error('❌ No admin backend available');
+                    showAlert('No admin backend connection available. Please ensure backend is running.', 'warning');
+                }
+            }
+        }
+
+        // Handle login
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            // Validate inputs
+            if (!validateEmail(email)) {
+                showAlert('Please enter a valid email address', 'danger');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showAlert('Password must be at least 6 characters', 'danger');
+                return;
+            }
+            
+            // Show loading state
+            setLoginButtonLoading(true);
+            
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Login successful
+                    const sessionData = {
+                        ...result.session,
+                        expiry: rememberMe ? Date.now() + CONFIG.sessionDuration : Date.now() + (24 * 60 * 60 * 1000) // 24 hours if not remembered
+                    };
+                    
+                    localStorage.setItem(CONFIG.sessionKey, JSON.stringify(sessionData));
+                    
+                    showAlert('Login successful! Redirecting to dashboard...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html';
+                    }, 1500);
+                    
+                } else {
+                    // Login failed
+                    showAlert(result.error || 'Invalid email or password', 'danger');
+                    document.getElementById('password').value = '';
+                }
+                
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Login failed. Please check your connection and try again.', 'danger');
+            } finally {
+                setLoginButtonLoading(false);
+            }
+        }
+
+        // Handle admin creation
+        async function handleCreateAdmin(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('adminName').value;
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const role = document.getElementById('adminRole').value;
+            
+            // Validate inputs
+            if (!validateEmail(email)) {
+                showAlert('Please enter a valid email address', 'danger');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showAlert('Password must be at least 8 characters', 'danger');
+                return;
+            }
+            
+            if (name.trim().length < 2) {
+                showAlert('Please enter a valid name', 'danger');
+                return;
+            }
+            
+            // Show loading state
+            const btn = document.getElementById('createAdminBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner spinner"></i> Creating Admin...';
+            btn.disabled = true;
+            
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                const response = await fetch(`${backendUrl}/api/admin/setup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password, role })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    showAlert('Admin account created successfully!', 'success');
+                    document.getElementById('adminForm').reset();
+                    toggleAdminManagement(); // Hide admin management
+                } else {
+                    showAlert(result.error || 'Failed to create admin account', 'danger');
+                }
+                
+            } catch (error) {
+                console.error('Admin creation error:', error);
+                showAlert('Failed to create admin. Please check your connection.', 'danger');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // Utility Functions
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function setLoginButtonLoading(loading) {
+            const btn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('loginBtnText');
+            
+            if (loading) {
+                btn.disabled = true;
+                btnText.innerHTML = '<i class="fas fa-spinner spinner"></i> Signing In...';
+            } else {
+                btn.disabled = false;
+                btnText.innerHTML = 'Sign In';
+            }
+        }
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordIcon = document.getElementById('passwordIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.className = 'fas fa-eye';
+            }
+        }
+
+        function toggleAdminManagement() {
+            const adminSection = document.getElementById('adminManagement');
+            adminSection.classList.toggle('active');
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alertMessage');
+            const alertText = document.getElementById('alertText');
+            const icon = alertDiv.querySelector('i');
+            
+            // Set alert type
+            alertDiv.className = `alert alert-${type}`;
+            
+            // Set icon based on type
+            const icons = {
+                success: 'fas fa-check-circle',
+                danger: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            icon.className = icons[type] || icons.info;
+            
+            // Set message
+            alertText.textContent = message;
+            
+            // Show alert
+            alertDiv.classList.add('show');
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alertDiv.classList.remove('show');
+            }, 5000);
+        }
+
+        async function testConnection() {
+            showAlert('Testing admin backend connection...', 'info');
+            
+            try {
+                const backendUrl = isUsingLocalBackend ? CONFIG.localBackendUrl : CONFIG.backendUrl;
+                
+                // Test admin endpoint specifically
+                const response = await fetch(`${backendUrl}/api/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: 'test@test.com', password: 'test' })
+                });
+                
+                if (response.status === 401 || response.status === 400) {
+                    showAlert(`✅ Admin backend connected! Using: ${isUsingLocalBackend ? 'Local' : 'Deployed'}`, 'success');
+                } else {
+                    showAlert('❌ Admin backend not available', 'danger');
+                }
+            } catch (error) {
+                showAlert('❌ Unable to connect to admin backend', 'danger');
+            }
+        }
+
+        // Add input validation feedback
+        document.getElementById('email').addEventListener('blur', function() {
+            if (this.value && !validateEmail(this.value)) {
+                this.classList.add('error');
+            } else {
+                this.classList.remove('error');
+            }
+        });
+
+        document.getElementById('password').addEventListener('blur', function() {
+            if (this.value && this.value.length < 6) {
+                this.classList.add('error');
+            } else {
+                this.classList.remove('error');
+            }
+        });
+    </script>
+</body>
+</html>

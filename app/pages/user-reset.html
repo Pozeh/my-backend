@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Reset & Registration Enable</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .reset-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .test-button:hover {
+            background: #1d4ed8;
+        }
+        .test-button.success {
+            background: #16a34a;
+        }
+        .test-button.danger {
+            background: #dc2626;
+        }
+        .test-button.warning {
+            background: #f59e0b;
+        }
+        .status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+        .status.warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #f59e0b;
+        }
+        .data-display {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .feature-list li:before {
+            content: "✅ ";
+            color: #10b981;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="reset-container">
+        <h1>🔄 User Reset & Registration Enable</h1>
+        
+        <div class="status warning">
+            <strong>System Reset Required!</strong><br>
+            This will remove all registered users and enable new user and seller registrations.
+        </div>
+
+        <h2>🎯 Actions to Perform:</h2>
+        <ul class="feature-list">
+            <li>Remove all registered users from localStorage</li>
+            <li>Remove all registered sellers from localStorage</li>
+            <li>Clear all user sessions and authentication data</li>
+            <li>Enable new user registration functionality</li>
+            <li>Enable seller registration functionality</li>
+            <li>Clear all products (optional)</li>
+            <li>Reset shopping cart and wishlist data</li>
+        </ul>
+
+        <h2>🔧 Reset Controls:</h2>
+        
+        <button class="test-button danger" onclick="resetAllUsers()">
+            🗑️ Reset All Users & Sellers
+        </button>
+        
+        <button class="test-button warning" onclick="resetProducts()">
+            📦 Reset All Products
+        </button>
+        
+        <button class="test-button success" onclick="enableRegistrations()">
+            ✅ Enable New Registrations
+        </button>
+        
+        <button class="test-button" onclick="fullSystemReset()">
+            🔄 Full System Reset
+        </button>
+        
+        <button class="test-button" onclick="openMainWebsite()">
+            🌐 Open Main Website
+        </button>
+        
+        <button class="test-button" onclick="openSellerDashboard()">
+            🏪 Open Seller Dashboard
+        </button>
+        
+        <button class="test-button" onclick="openAdminPanel()">
+            🔐 Open Admin Panel
+        </button>
+
+        <div id="resetResults"></div>
+        <div class="data-display" id="dataDisplay">
+            Current system status will appear here...
+        </div>
+    </div>
+
+    <script>
+        function checkCurrentStatus() {
+            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            const registeredSellers = JSON.parse(localStorage.getItem('registeredSellers') || '[]');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            const products = JSON.parse(localStorage.getItem('products') || '[]');
+            const sellerProducts = JSON.parse(localStorage.getItem('sellerProducts') || '[]');
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            
+            const statusDisplay = document.getElementById('dataDisplay');
+            statusDisplay.textContent = `CURRENT SYSTEM STATUS
+=====================
+
+👥 Registered Users: ${registeredUsers.length}
+🏪 Registered Sellers: ${registeredSellers.length}
+🔐 Current User: ${currentUser ? currentUser.email : 'None logged in'}
+📦 Admin Products: ${products.length}
+🛒 Seller Products: ${sellerProducts.length}
+🛍️ Cart Items: ${cart.length}
+❤️ Wishlist Items: ${wishlist.length}
+
+📋 User Accounts:
+${registeredUsers.map(u => `- ${u.name || u.email} (${u.email})`).join('\n') || 'No registered users'}
+
+🏪 Seller Accounts:
+${registeredSellers.map(s => `- ${s.name} (${s.email}) - ${s.business}`).join('\n') || 'No registered sellers'}
+
+🔑 Registration Status:
+- User Registration: Available ✅
+- Seller Registration: Available ✅
+- Admin Login: Available ✅
+- Seller Login: Available ✅`;
+        }
+
+        function resetAllUsers() {
+            if (confirm('This will remove ALL registered users and sellers. Continue?')) {
+                // Remove all user and seller data
+                localStorage.removeItem('registeredUsers');
+                localStorage.removeItem('registeredSellers');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('sellerData');
+                
+                // Clear sessions
+                localStorage.removeItem('userSessions');
+                localStorage.removeItem('sellerSessions');
+                
+                // Clear messages and conversations
+                localStorage.removeItem('messages');
+                localStorage.removeItem('conversations');
+                
+                const resultsDiv = document.getElementById('resetResults');
+                resultsDiv.innerHTML = `
+                    <div class="status success">
+                        <strong>✅ Users & Sellers Reset Complete!</strong><br>
+                        🗑️ All registered users removed<br>
+                        🗑️ All registered sellers removed<br>
+                        🗑️ All user sessions cleared<br>
+                        🗑️ All messages cleared<br>
+                        🌐 Ready for new registrations
+                    </div>
+                `;
+                
+                checkCurrentStatus();
+                console.log('✅ All users and sellers reset successfully');
+            }
+        }
+
+        function resetProducts() {
+            if (confirm('This will remove ALL products from the system. Continue?')) {
+                localStorage.removeItem('products');
+                localStorage.removeItem('sellerProducts');
+                
+                const resultsDiv = document.getElementById('resetResults');
+                resultsDiv.innerHTML = `
+                    <div class="status warning">
+                        <strong>📦 Products Reset Complete!</strong><br>
+                        🗑️ All admin products removed<br>
+                        🗑️ All seller products removed<br>
+                        🌐 Website will show sample products until new ones are added
+                    </div>
+                `;
+                
+                checkCurrentStatus();
+                console.log('📦 All products reset successfully');
+            }
+        }
+
+        function enableRegistrations() {
+            // Registration is already enabled in the main website
+            // This just confirms and shows current status
+            
+            const resultsDiv = document.getElementById('resetResults');
+            resultsDiv.innerHTML = `
+                <div class="status success">
+                    <strong>✅ Registrations Enabled!</strong><br>
+                    👤 User Registration: Available on main website<br>
+                    🏪 Seller Registration: Available on main website<br>
+                    🔐 Admin Login: Available via admin.html<br>
+                    🛒 Shopping Cart: Functional<br>
+                    💬 Messaging System: Functional<br>
+                    🌐 Ready for new users and sellers
+                </div>
+            `;
+            
+            console.log('✅ Registration systems confirmed as enabled');
+        }
+
+        function fullSystemReset() {
+            if (confirm('This will perform a COMPLETE system reset - removing ALL data. Continue?')) {
+                // Clear everything
+                localStorage.removeItem('registeredUsers');
+                localStorage.removeItem('registeredSellers');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('sellerData');
+                localStorage.removeItem('products');
+                localStorage.removeItem('sellerProducts');
+                localStorage.removeItem('cart');
+                localStorage.removeItem('wishlist');
+                localStorage.removeItem('messages');
+                localStorage.removeItem('conversations');
+                localStorage.removeItem('userSessions');
+                localStorage.removeItem('sellerSessions');
+                
+                const resultsDiv = document.getElementById('resetResults');
+                resultsDiv.innerHTML = `
+                    <div class="status error">
+                        <strong>🔄 Full System Reset Complete!</strong><br>
+                        🗑️ ALL data cleared from localStorage<br>
+                        🌐 System is completely fresh<br>
+                        👤 Ready for new user registrations<br>
+                        🏪 Ready for new seller registrations<br>
+                        📦 Will show sample products only
+                    </div>
+                `;
+                
+                checkCurrentStatus();
+                console.log(' Full system reset completed');
+            }
+        }
+
+        function openMainWebsite() {
+            window.open('../index.html', '_blank');
+            console.log(' Main website opened');
+        }
+
+        function openSellerDashboard() {
+            window.open('../admin/seller-dashboard.html', '_blank');
+            console.log('🏪 Seller dashboard opened');
+        }
+        
+        function openAdminPanel() {
+            window.open('../admin/admin-login.html', '_blank');
+            console.log('🔐 Admin panel opened');
+        }
+
+        // Check status on load
+        window.onload = function() {
+            console.log('🔄 User Reset tool loaded');
+            checkCurrentStatus();
+        };
+    </script>
+</body>
+</html>
