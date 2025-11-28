@@ -1,0 +1,864 @@
+/* ========================================
+   SAMSUNG GALAXY A16 MOBILE RESTRUCTURING SYSTEM
+   ========================================
+   Baseline: 720px visible height
+   Goal: Zero vertical scrolling on all mobile pages
+   Global resizing for all components, animations, and backgrounds
+   ======================================== */
+
+@media (max-width: 768px) {
+    
+    /* ========================================
+       GALAXY A16 BASELINE CALCULATIONS
+       ======================================== */
+    :root {
+        /* Samsung Galaxy A16 baseline (720px height) */
+        --galaxy-a16-height: 720px;
+        --current-viewport-height: 100vh;
+        
+        /* Dynamic scaling factor based on 720px baseline */
+        --mobile-scale-factor: calc(var(--current-viewport-height) / var(--galaxy-a16-height));
+        
+        /* Fixed header and footer heights */
+        --compact-header-height: 48px;
+        --compact-footer-height: 36px;
+        --available-content-height: calc(var(--current-viewport-height) - var(--compact-header-height) - var(--compact-footer-height));
+        
+        /* Ultra-compact spacing system */
+        --spacing-xs: 1px;
+        --spacing-sm: 2px;
+        --spacing-md: 3px;
+        --spacing-lg: 4px;
+        --spacing-xl: 6px;
+        --spacing-2xl: 8px;
+        --spacing-3xl: 10px;
+        
+        /* Compact typography scale */
+        --font-xs: 7px;
+        --font-sm: 8px;
+        --font-md: 9px;
+        --font-lg: 10px;
+        --font-xl: 11px;
+        --font-2xl: 12px;
+        --font-3xl: 13px;
+        --font-4xl: 14px;
+        --font-5xl: 16px;
+        --font-6xl: 18px;
+        
+        /* Compact component dimensions */
+        --button-height: 18px;
+        --input-height: 16px;
+        --icon-size: 7px;
+        --card-height: 45px;
+        --border-radius: 2px;
+        
+        /* Animation scaling */
+        --animation-scale: 0.6;
+        --animation-height: 25px;
+    }
+    
+    /* ========================================
+       GLOBAL MOBILE BODY STRUCTURE
+       ======================================== */
+    html, body {
+        height: 100vh !important;
+        max-height: var(--current-viewport-height) !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: var(--font-sm) !important;
+        line-height: 1.2 !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* ========================================
+       COMPACT STICKY HEADER
+       ======================================== */
+    .mobile-header,
+    header,
+    .header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: var(--compact-header-height) !important;
+        max-height: var(--compact-header-height) !important;
+        z-index: 9999 !important;
+        background: rgba(0, 0, 0, 0.95) !important;
+        backdrop-filter: blur(8px) !important;
+        border-bottom: 1px solid rgba(0, 255, 255, 0.2) !important;
+        padding: var(--spacing-sm) var(--spacing-md) !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+    }
+    
+    .mobile-header-content {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        height: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .mobile-logo {
+        display: flex !important;
+        align-items: center !important;
+        font-size: var(--font-lg) !important;
+        font-weight: 600 !important;
+        color: #00ffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 100% !important;
+    }
+    
+    .mobile-logo i {
+        font-size: var(--icon-size) !important;
+        margin-right: var(--spacing-xs) !important;
+        color: #00ffff !important;
+    }
+    
+    .mobile-logo span {
+        font-size: var(--font-md) !important;
+        font-weight: 600 !important;
+    }
+    
+    .mobile-search-bar {
+        flex: 1 !important;
+        max-width: 120px !important;
+        height: var(--input-height) !important;
+        margin: 0 var(--spacing-sm) !important;
+        position: relative !important;
+    }
+    
+    .mobile-search-input {
+        width: 100% !important;
+        height: 100% !important;
+        font-size: var(--font-xs) !important;
+        padding: var(--spacing-xs) var(--spacing-sm) !important;
+        border: 1px solid rgba(0, 255, 255, 0.3) !important;
+        border-radius: var(--border-radius) !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        color: white !important;
+        box-sizing: border-box !important;
+    }
+    
+    .mobile-nav-buttons {
+        display: flex !important;
+        align-items: center !important;
+        gap: var(--spacing-xs) !important;
+        height: 100% !important;
+    }
+    
+    .mobile-icon-btn,
+    .nav-btn,
+    .header-btn {
+        width: 14px !important;
+        height: 14px !important;
+        font-size: var(--icon-size) !important;
+        padding: var(--spacing-xs) !important;
+        margin: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        color: #00ffff !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: var(--border-radius) !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .mobile-icon-btn:hover,
+    .nav-btn:hover,
+    .header-btn:hover {
+        background: rgba(0, 255, 255, 0.2) !important;
+        transform: scale(1.1) !important;
+    }
+    
+    /* ========================================
+       COMPACT STICKY FOOTER
+       ======================================== */
+    .mobile-footer,
+    footer,
+    .footer {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: var(--compact-footer-height) !important;
+        max-height: var(--compact-footer-height) !important;
+        z-index: 9999 !important;
+        background: rgba(0, 0, 0, 0.95) !important;
+        backdrop-filter: blur(8px) !important;
+        border-top: 1px solid rgba(0, 255, 255, 0.2) !important;
+        padding: var(--spacing-xs) var(--spacing-sm) !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-around !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+    }
+    
+    .mobile-footer-content {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-around !important;
+        width: 100% !important;
+        height: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        gap: var(--spacing-xs) !important;
+    }
+    
+    .mobile-footer-section {
+        flex: 1 !important;
+        text-align: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        min-width: 0 !important;
+        max-width: 25% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+    }
+    
+    /* Hide all footer text content */
+    .mobile-footer-section h4,
+    .mobile-footer-section p,
+    .mobile-footer-section span,
+    .mobile-footer-section div:not(.mobile-footer-section),
+    .mobile-footer-links,
+    .mobile-footer-bottom {
+        display: none !important;
+    }
+    
+    /* Ultra-compact icon navigation */
+    .mobile-footer-section[data-section="home"]::before {
+        content: "🏠" !important;
+        font-size: 6px !important;
+        display: block !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        color: #00ffff !important;
+    }
+    
+    .mobile-footer-section[data-section="categories"]::before {
+        content: "📦" !important;
+        font-size: 6px !important;
+        display: block !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        color: #00ffff !important;
+    }
+    
+    .mobile-footer-section[data-section="account"]::before {
+        content: "👤" !important;
+        font-size: 6px !important;
+        display: block !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        color: #00ffff !important;
+    }
+    
+    .mobile-footer-section[data-section="contact"]::before {
+        content: "📞" !important;
+        font-size: 6px !important;
+        display: block !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        color: #00ffff !important;
+    }
+    
+    /* Remove footer animations */
+    .mobile-footer .animated-bg,
+    .mobile-footer .canvas-animation,
+    .mobile-footer .particle-bg,
+    .mobile-footer .futuristic-footer-bg {
+        display: none !important;
+    }
+    
+    /* ========================================
+       MAIN CONTENT SCROLLABLE AREA
+       ======================================== */
+    .mobile-main-content,
+    .middle-scroll-area,
+    main {
+        position: fixed !important;
+        top: var(--compact-header-height) !important;
+        bottom: var(--compact-footer-height) !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: var(--available-content-height) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        z-index: 1 !important;
+        background: linear-gradient(135deg, #0a4f3a 0%, #0d6b4f 50%, #0a4f3a 100%) !important;
+        padding: var(--spacing-sm) !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* ========================================
+       GLOBAL TYPOGRAPHY RESIZING
+       ======================================== */
+    h1 { font-size: var(--font-5xl) !important; margin: var(--spacing-xs) 0 !important; line-height: 1.1 !important; }
+    h2 { font-size: var(--font-4xl) !important; margin: var(--spacing-xs) 0 !important; line-height: 1.1 !important; }
+    h3 { font-size: var(--font-3xl) !important; margin: var(--spacing-xs) 0 !important; line-height: 1.1 !important; }
+    h4 { font-size: var(--font-2xl) !important; margin: var(--spacing-xs) 0 !important; line-height: 1.1 !important; }
+    h5 { font-size: var(--font-xl) !important; margin: var(--spacing-xs) 0 !important; line-height: 1.1 !important; }
+    h6 { font-size: var(--font-lg) !important; margin: var(--spacing-xs) 0 !important; line-height: 1.1 !important; }
+    p { font-size: var(--font-sm) !important; margin: var(--spacing-xs) 0 !important; line-height: 1.2 !important; }
+    span, div, label { font-size: var(--font-sm) !important; }
+    
+    /* ========================================
+       GLOBAL SPACING RESET
+       ======================================== */
+    * {
+        box-sizing: border-box !important;
+    }
+    
+    [class*="container"],
+    [class*="section"],
+    [class*="panel"],
+    [class*="wrapper"],
+    .container,
+    .section,
+    .panel,
+    .wrapper {
+        padding: var(--spacing-sm) !important;
+        margin: var(--spacing-xs) 0 !important;
+    }
+    
+    /* Remove all large margins and padding */
+    .mt-1, .mt-2, .mt-3, .mt-4, .mt-5 { margin-top: var(--spacing-xs) !important; }
+    .mb-1, .mb-2, .mb-3, .mb-4, .mb-5 { margin-bottom: var(--spacing-xs) !important; }
+    .pt-1, .pt-2, .pt-3, .pt-4, .pt-5 { padding-top: var(--spacing-xs) !important; }
+    .pb-1, .pb-2, .pb-3, .pb-4, .pb-5 { padding-bottom: var(--spacing-xs) !important; }
+    .my-1, .my-2, .my-3, .my-4, .my-5 { margin-top: var(--spacing-xs) !important; margin-bottom: var(--spacing-xs) !important; }
+    .py-1, .py-2, .py-3, .py-4, .py-5 { padding-top: var(--spacing-xs) !important; padding-bottom: var(--spacing-xs) !important; }
+    
+    /* ========================================
+       COMPACT BUTTONS AND INTERACTIVE ELEMENTS
+       ======================================== */
+    .btn,
+    .button,
+    .cta-button,
+    .action-btn,
+    .mobile-cta-button,
+    button {
+        height: var(--button-height) !important;
+        padding: var(--spacing-xs) var(--spacing-sm) !important;
+        font-size: var(--font-xs) !important;
+        border-radius: var(--border-radius) !important;
+        margin: var(--spacing-xs) !important;
+        min-height: var(--button-height) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        border: 1px solid rgba(0, 255, 255, 0.3) !important;
+        background: rgba(0, 255, 255, 0.1) !important;
+        color: #00ffff !important;
+        font-weight: 500 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    .btn:hover,
+    .button:hover,
+    button:hover {
+        background: rgba(0, 255, 255, 0.2) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 4px rgba(0, 255, 255, 0.3) !important;
+    }
+    
+    .btn-small,
+    .btn-compact {
+        height: 14px !important;
+        padding: 1px var(--spacing-xs) !important;
+        font-size: 6px !important;
+    }
+    
+    /* ========================================
+       COMPACT FORMS AND INPUTS
+       ======================================== */
+    .form-group,
+    .form-field {
+        margin-bottom: var(--spacing-xs) !important;
+    }
+    
+    .form-input,
+    .form-control,
+    input,
+    select,
+    textarea {
+        height: var(--input-height) !important;
+        padding: var(--spacing-xs) !important;
+        font-size: var(--font-xs) !important;
+        border-radius: var(--border-radius) !important;
+        border: 1px solid rgba(0, 255, 255, 0.3) !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        color: white !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+    
+    .form-label,
+    .field-label,
+    label {
+        font-size: var(--font-xs) !important;
+        margin-bottom: 1px !important;
+        color: #00ffff !important;
+        font-weight: 500 !important;
+    }
+    
+    /* ========================================
+       COMPACT CARDS AND PRODUCT ELEMENTS
+       ======================================== */
+    .card,
+    .product-card,
+    .category-card,
+    .stat-card,
+    .dashboard-card,
+    .info-card {
+        padding: var(--spacing-sm) !important;
+        margin: var(--spacing-xs) !important;
+        border-radius: var(--border-radius) !important;
+        min-height: var(--card-height) !important;
+        max-height: var(--card-height) !important;
+        background: rgba(0, 0, 0, 0.6) !important;
+        border: 1px solid rgba(0, 255, 255, 0.2) !important;
+        backdrop-filter: blur(4px) !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+    }
+    
+    .card-image,
+    .product-image,
+    .category-image {
+        height: 20px !important;
+        width: 100% !important;
+        object-fit: cover !important;
+        border-radius: var(--border-radius) !important;
+        margin-bottom: var(--spacing-xs) !important;
+    }
+    
+    .card-title,
+    .product-title,
+    .category-title {
+        font-size: var(--font-sm) !important;
+        margin: var(--spacing-xs) 0 !important;
+        line-height: 1.1 !important;
+        color: #00ffff !important;
+        font-weight: 600 !important;
+    }
+    
+    .card-text,
+    .product-text,
+    .category-text {
+        font-size: var(--font-xs) !important;
+        margin: 0 !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        line-height: 1.1 !important;
+    }
+    
+    .card-price,
+    .product-price {
+        font-size: var(--font-md) !important;
+        margin: var(--spacing-xs) 0 !important;
+        color: #00ff00 !important;
+        font-weight: 600 !important;
+    }
+    
+    /* ========================================
+       COMPACT GRID SYSTEMS
+       ======================================== */
+    .featured-grid,
+    .product-grid,
+    .mobile-featured-section {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: var(--spacing-xs) !important;
+        margin: var(--spacing-xs) 0 !important;
+    }
+    
+    .category-grid,
+    .icon-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: var(--spacing-xs) !important;
+    }
+    
+    .stats-grid,
+    .dashboard-stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: var(--spacing-xs) !important;
+    }
+    
+    /* ========================================
+       COMPACT DASHBOARD ELEMENTS
+       ======================================== */
+    .seller-dashboard,
+    .dashboard-panel,
+    .stats-panel,
+    .mobile-seller-dashboard {
+        padding: var(--spacing-sm) !important;
+        margin: var(--spacing-xs) 0 !important;
+        min-height: 35px !important;
+        max-height: 35px !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+        border: 1px solid rgba(0, 255, 255, 0.2) !important;
+        border-radius: var(--border-radius) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+    
+    .dashboard-title {
+        font-size: var(--font-md) !important;
+        margin: 0 !important;
+        color: #00ffff !important;
+        font-weight: 600 !important;
+    }
+    
+    .stat-item,
+    .stat-card {
+        padding: var(--spacing-xs) !important;
+        text-align: center !important;
+        min-height: 25px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .stat-number {
+        font-size: var(--font-lg) !important;
+        margin: 0 !important;
+        color: #00ff00 !important;
+        font-weight: 600 !important;
+    }
+    
+    .stat-label {
+        font-size: var(--font-xs) !important;
+        margin: 0 !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    /* ========================================
+       COMPACT MODALS AND POPUPS
+       ======================================== */
+    .modal,
+    .popup,
+    .dialog,
+    .mobile-modal {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90% !important;
+        max-width: 300px !important;
+        max-height: 70vh !important;
+        padding: var(--spacing-md) !important;
+        border-radius: var(--border-radius) !important;
+        background: rgba(0, 0, 0, 0.95) !important;
+        border: 1px solid rgba(0, 255, 255, 0.3) !important;
+        backdrop-filter: blur(8px) !important;
+        z-index: 10000 !important;
+        overflow-y: auto !important;
+        box-sizing: border-box !important;
+    }
+    
+    .modal-header,
+    .popup-header {
+        padding: var(--spacing-xs) 0 !important;
+        margin-bottom: var(--spacing-xs) !important;
+        border-bottom: 1px solid rgba(0, 255, 255, 0.2) !important;
+    }
+    
+    .modal-title,
+    .popup-title {
+        font-size: var(--font-md) !important;
+        margin: 0 !important;
+        color: #00ffff !important;
+        font-weight: 600 !important;
+    }
+    
+    .modal-body,
+    .popup-body {
+        padding: var(--spacing-xs) 0 !important;
+        max-height: 50vh !important;
+        overflow-y: auto !important;
+    }
+    
+    .modal-footer,
+    .popup-footer {
+        padding: var(--spacing-xs) 0 !important;
+        margin-top: var(--spacing-xs) !important;
+        border-top: 1px solid rgba(0, 255, 255, 0.2) !important;
+        display: flex !important;
+        gap: var(--spacing-xs) !important;
+        justify-content: flex-end !important;
+    }
+    
+    /* ========================================
+       COMPACT ANIMATIONS AND BACKGROUNDS
+       ======================================== */
+    .animated-bg,
+    .canvas-animation,
+    .particle-bg,
+    #ecoloopProductLayer,
+    .futuristic-hero-bg,
+    .futuristic-nyumba-bg,
+    .futuristic-footer-bg,
+    .futuristic-header-bg {
+        height: var(--animation-height) !important;
+        opacity: 0.3 !important;
+        position: absolute !important;
+        z-index: 0 !important;
+        pointer-events: none !important;
+        transform: scale(var(--animation-scale)) !important;
+        transform-origin: center !important;
+    }
+    
+    /* Welcome animation scaling */
+    .welcome-animation,
+    .hero-animation,
+    .mobile-welcome-animation {
+        height: var(--animation-height) !important;
+        font-size: var(--font-lg) !important;
+        line-height: 1.1 !important;
+        margin: var(--spacing-xs) 0 !important;
+        transform: scale(var(--animation-scale)) !important;
+    }
+    
+    /* ========================================
+       COMPACT HERO AND WELCOME SECTIONS
+       ======================================== */
+    .hero,
+    .main-banner,
+    .welcome-section,
+    .mobile-welcome-panel {
+        min-height: 30px !important;
+        max-height: 40px !important;
+        padding: var(--spacing-sm) !important;
+        margin: var(--spacing-xs) 0 !important;
+        background: rgba(0, 0, 0, 0.6) !important;
+        border: 1px solid rgba(0, 255, 255, 0.2) !important;
+        border-radius: var(--border-radius) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .hero-title,
+    .welcome-title {
+        font-size: var(--font-xl) !important;
+        margin: 0 !important;
+        color: #00ffff !important;
+        font-weight: 600 !important;
+        text-align: center !important;
+        z-index: 1 !important;
+        position: relative !important;
+    }
+    
+    .hero-subtitle,
+    .welcome-subtitle {
+        font-size: var(--font-xs) !important;
+        margin: 0 !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        text-align: center !important;
+        z-index: 1 !important;
+        position: relative !important;
+    }
+    
+    /* ========================================
+       COMPACT NYUMBASURE SECTION
+       ======================================== */
+    .nyumbasure-section,
+    .mobile-nyumbasure-panel {
+        padding: var(--spacing-sm) !important;
+        margin: var(--spacing-xs) 0 !important;
+        min-height: 30px !important;
+        max-height: 30px !important;
+        background: rgba(138, 68, 173, 0.2) !important;
+        border: 1px solid rgba(138, 68, 173, 0.4) !important;
+        border-radius: var(--border-radius) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+    
+    .mobile-nyumbasure-icon {
+        font-size: var(--icon-size) !important;
+        color: #8e44ad !important;
+        margin-right: var(--spacing-xs) !important;
+    }
+    
+    .mobile-nyumbasure-text {
+        flex: 1 !important;
+    }
+    
+    .mobile-nyumbasure-title {
+        font-size: var(--font-sm) !important;
+        margin: 0 !important;
+        color: #8e44ad !important;
+        font-weight: 600 !important;
+    }
+    
+    .mobile-nyumbasure-description {
+        font-size: var(--font-xs) !important;
+        margin: 0 !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        display: none !important; /* Hide description on mobile */
+    }
+    
+    .mobile-nyumbasure-btn {
+        height: var(--button-height) !important;
+        padding: var(--spacing-xs) var(--spacing-sm) !important;
+        font-size: var(--font-xs) !important;
+        background: rgba(138, 68, 173, 0.3) !important;
+        border: 1px solid rgba(138, 68, 173, 0.5) !important;
+        color: #8e44ad !important;
+        border-radius: var(--border-radius) !important;
+    }
+    
+    /* ========================================
+       COMPACT ICONS AND VISUAL ELEMENTS
+       ======================================== */
+    .icon,
+    [class*="icon"],
+    [class*="fa-"],
+    i {
+        font-size: var(--icon-size) !important;
+        margin: 0 var(--spacing-xs) !important;
+    }
+    
+    .icon-large {
+        font-size: calc(var(--icon-size) + 2px) !important;
+    }
+    
+    .icon-small {
+        font-size: 5px !important;
+    }
+    
+    /* ========================================
+       SCROLLBAR STYLING
+       ======================================== */
+    .mobile-main-content::-webkit-scrollbar,
+    .middle-scroll-area::-webkit-scrollbar {
+        width: 2px !important;
+    }
+    
+    .mobile-main-content::-webkit-scrollbar-track,
+    .middle-scroll-area::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .mobile-main-content::-webkit-scrollbar-thumb,
+    .middle-scroll-area::-webkit-scrollbar-thumb {
+        background: rgba(0, 255, 255, 0.3) !important;
+        border-radius: 1px !important;
+    }
+    
+    /* ========================================
+       SAFE AREA SUPPORT
+       ======================================== */
+    @supports (padding: max(0px)) {
+        .mobile-header {
+            padding-top: max(var(--spacing-sm), env(safe-area-inset-top)) !important;
+        }
+        
+        .mobile-footer {
+            padding-bottom: max(var(--spacing-xs), env(safe-area-inset-bottom)) !important;
+        }
+        
+        .mobile-main-content {
+            top: max(var(--compact-header-height), calc(var(--compact-header-height) + env(safe-area-inset-top))) !important;
+            bottom: max(var(--compact-footer-height), calc(var(--compact-footer-height) + env(safe-area-inset-bottom))) !important;
+        }
+    }
+    
+    /* ========================================
+       LANDSCAPE ORIENTATION
+       ======================================== */
+    @media (orientation: landscape) and (max-width: 768px) {
+        :root {
+            --compact-header-height: 40px;
+            --compact-footer-height: 30px;
+            --animation-height: 20px;
+            --button-height: 16px;
+            --input-height: 14px;
+        }
+        
+        .mobile-footer-section::before {
+            font-size: 5px !important;
+        }
+        
+        .hero,
+        .welcome-section {
+            min-height: 20px !important;
+            max-height: 25px !important;
+        }
+        
+        .seller-dashboard {
+            min-height: 25px !important;
+            max-height: 25px !important;
+        }
+        
+        .featured-section {
+            min-height: 30px !important;
+            max-height: 30px !important;
+        }
+    }
+    
+    /* ========================================
+       DESKTOP COMPATIBILITY (UNAFFECTED)
+       ======================================== */
+    @media (min-width: 769px) {
+        html, body {
+            height: auto !important;
+            max-height: none !important;
+            overflow: visible !important;
+            margin: initial !important;
+            padding: initial !important;
+            font-size: initial !important;
+            line-height: initial !important;
+        }
+        
+        .mobile-header,
+        .mobile-footer {
+            position: relative !important;
+            height: auto !important;
+            max-height: none !important;
+        }
+        
+        .mobile-main-content,
+        .middle-scroll-area {
+            position: static !important;
+            height: auto !important;
+            overflow: visible !important;
+            top: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: auto !important;
+        }
+        
+        /* Reset all mobile styles for desktop */
+        * {
+            transform: none !important;
+            scale: none !important;
+        }
+    }
+}
